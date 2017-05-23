@@ -1,0 +1,87 @@
+
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="InspectionModeCtrl">
+  <ion-content>  
+      <div class="ion-content">
+        <div style="padding-top:20px;">
+            <div class="item item-divider millantaTheme" style="padding-top:0px;">
+                {{ 'MENU_MODE_INSPECTION' | translate }}
+            </div>
+            <label class="item item-input item-select " style="height:40px;">
+                <select ng-change="modeDeviceSelected(data.inspectionMode)" ng-model="data.inspectionMode" style="max-width:100%;" ng-init="data.modeDevice">    
+			        <option value="Manual" ng-select="{{data.inspectionMode==''}}">{{ 'INSPECTION_USO_MANUAL' | translate }}</option>
+			        <option value="NFC">NFC</option>
+			        <option value="Translogik">Translogik</option>
+			        <!--<option value="Gun">Pistola RFID</option>-->
+			    </select> 
+            </label>
+        </div>   
+		<center>
+			<div ng-show="data.inspectionMode == 'Manual'" class="fadein fadeout">
+				<h4>{{ 'INSPECTION_USO_MANUAL' | translate }}</h4>
+				{{ 'INSPECTION_USO_MANUAL_DESC' | translate }}
+				<br>
+				<img src="img/manual_Inspection.png" class="full-image spaceOn">
+				<br>
+				{{ 'INSPECTION_USO_MANUAL_DESC_EASY' | translate }}
+			</div>
+			<div ng-show="data.inspectionMode == 'NFC'" class="fadein fadeout">
+				<h4>NFC</h4>
+				{{ 'INSPECTION_USO_NFC_DESC' | translate }}
+				<br>
+				<img src="img/nfc_inspection.png" class="full-image spaceOn">
+				<br><br>
+				{{ 'INSPECTION_USO_NFC_TWO_PARTS' | translate }}
+				<ul style="text-align:left!important;">
+					<li>* {{ 'INSPECTION_USO_NFC_CHIP' | translate }}</li>
+					<li>* {{ 'INSPECTION_USO_NFC_LECTOR' | translate }}</li>			
+				</ul>
+				<br><br>
+				{{ 'INSPECTION_USO_NFC_TECH' | translate }}
+				<br>
+				<img src="img/nfc_pairing.png" class="full-image spaceOn">		
+			</div>
+
+			<div ng-show="data.inspectionMode == 'Translogik'" class="fadein fadeout">
+				<h4>{{ 'INSPECTION_USO_TRANSLOGIK' | translate }}</h4>
+				 <strong>{{ 'INSPECTION_USO_TRANSLOGIK_PROBE' | translate }}</strong>&reg;.
+				<br>
+				<img src="img/bluetooth_inspection.png" class="full-image spaceOn">
+				<br>
+				<h4>{{ 'INSPECTION_USO_TRANSLOGIK_CONECTION' | translate }}</h4>
+				<p>
+					{{ 'INSPECTION_USO_TRANSLOGIK_STEPS' | translate }}				
+				</p>
+				<ul style="text-align:left!important;">
+					<li>* {{ 'INSPECTION_USO_TRANSLOGIK_STEP_1' | translate }}</li>
+					<li>* {{ 'INSPECTION_USO_TRANSLOGIK_STEP_2' | translate }}</li>
+					<li>* {{ 'INSPECTION_USO_TRANSLOGIK_STEP_3' | translate }}</li>
+					<li>* {{ 'INSPECTION_USO_TRANSLOGIK_STEP_4' | translate }}</li>
+					<li>* {{ 'INSPECTION_USO_TRANSLOGIK_STEP_5' | translate }}</li>
+				</ul>
+			</div>
+			<div ng-show="data.inspectionMode == 'Gun'" class="fadein fadeout">
+				<h4>Pistola RFID</h4>
+				<br>
+				<img src="img/manual_Inspection.png" class="full-image spaceOn">
+				<br>
+				Con este dispositivo podrá leer todos los tags de las llantas.
+			</div>			
+		</center>      	
+      </div>
+  </ion-content>
+</ion-view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

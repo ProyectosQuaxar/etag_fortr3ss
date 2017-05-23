@@ -1,0 +1,182 @@
+<ion-side-menus enable-menu-with-back-views="false" controller="DashboardCtrl" ng-init="init()">
+    <ion-side-menu-content>
+        <ion-nav-bar class="{{data.classNavBar}}" style="display:{{data.display}};">
+            <ion-nav-back-button class="no-text">
+            </ion-nav-back-button>
+            <ion-nav-buttons side="left" ng-click='chooseInMenu()'>
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+                </button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right" ng-click='chooseOption()'>           
+                <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()' ng-controller="DashboardCtrl">
+                </button>
+            </ion-nav-buttons>            
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+        <ion-header-bar class="expanded">
+            <img src="img/circleLogo.png" class="avatar motion spin fade">
+            <div class="menu-name-app">
+                <!--{{'MENU_APP_NAME_LABEL'|translate}}-->
+            </div>
+            <div class="menu-user-app">
+            {{data.email}}
+            </div>
+            <div class="menu-rol-app">
+            {{data.rol}}
+            </div>
+        </ion-header-bar>
+        <ion-content class="stable-bg has-expanded-header">
+            <ion-list>
+                <ion-item nav-clear menu-close href="#/app/dashboard">
+                    <img src="img/icon_gear.png" style="width:16px;height:16px;" /> {{'MENU_DASHBOARD_LABEL'|translate}}
+                </ion-item>             
+                <ion-item nav-clear menu-close href="#/app/writeTAGS">
+                    <img src="img/icon_nfc_tag.png" style="width:16px;height:16px;" /> {{'MENU_WRITE_TAGS_LABEL'|translate}}
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/inspectionMode">
+                    <img src="img/icon_inspection_method.png" style="width:16px;height:16px;" />
+                    <strong>{{ 'MENU_MODE_INSPECTION' | translate }}</strong>
+                </ion-item>                  
+                <!--[START] MENU Y SUBMENU INSPECTIONS -->
+                <ion-item nav-clear ng-click="data.showMenuInsp = !data.showMenuInsp">
+                    <img src="img/icon_inspection.png" style="width:16px;height:16px;" />
+                    {{'MENU_PERFORM_INSPECTION'|translate}}  
+                    <i class="ion-icon ion-chevron-right pull-right" ng-show="data.showMenuInsp == false || data.showMenuInsp === undefined" class="fadein fadeout"></i>
+                    <i class="ion-icon ion-chevron-down pull-right" ng-show="data.showMenuInsp == true" class="fadein fadeout"></i>
+                </ion-item>
+                <span ng-show="data.showMenuInsp == true" class="fadein fadeout">
+                    <ion-item nav-clear menu-close href="#/app/inspSemManual" ng-if="data.inspectionMode == 'Manual'" class="secondLevel" ng-click="data.showMenuInsp = !data.showMenuInsp">
+                        <img src="img/icon_inspection.png" style="width:16px;height:16px;" />
+                        {{'MENU_INSPECTION_SEM_LABEL'|translate}}
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/inspSemTranslogik" ng-if="data.inspectionMode == 'Translogik'" class="secondLevel" ng-click="data.showMenuInsp = !data.showMenuInsp">
+                        <img src="img/icon_inspection.png" style="width:16px;height:16px;" />
+                        {{'MENU_INSPECTION_SEM_LABEL'|translate}}
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/inspSemNFC" ng-if="data.inspectionMode == 'NFC'" class="secondLevel" ng-click="data.showMenuInsp = !data.showMenuInsp">
+                        <img src="img/icon_inspection.png" style="width:16px;height:16px;" />
+                        {{'MENU_INSPECTION_SEM_LABEL'|translate}}
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/inspSemGun" ng-if="data.inspectionMode == 'Gun'" class="secondLevel" ng-click="data.showMenuInsp = !data.showMenuInsp">
+                        <img src="img/icon_inspection.png" style="width:16px;height:16px;" />
+                        {{'MENU_INSPECTION_SEM_LABEL'|translate}}
+                    </ion-item>                    
+                    <ion-item nav-clear menu-close href="#/app/inspectionRend" class="secondLevel" ng-click="data.showMenuInsp = !data.showMenuInsp" ng-hide="data.inspectionMode == 'NFC'">
+                        <img src="img/icon_rend_inspection.png" style="width:16px;height:16px;" />
+                        {{'MENU_INSPECTION_REND_LABEL'|translate}}
+                    </ion-item>                    
+                </span>
+                <!--[END] MENU Y SUBMENU INSPECTIONS -->
+
+                <!--[START] MENU Y SUBMENU INFORMACION -->
+                <ion-item nav-clear ng-click="data.showMenuInf = !data.showMenuInf">
+                    <img src="img/icon_info.png" style="width:16px;height:16px;" />
+                    {{ 'MENU_ADD_INFORMATION' | translate }}
+                    <i class="ion-icon ion-chevron-right pull-right" ng-show="data.showMenuInf == false || data.showMenuInf === undefined" class="fadein fadeout"></i>
+                    <i class="ion-icon ion-chevron-down pull-right" ng-show="data.showMenuInf == true" class="fadein fadeout"></i>
+                </ion-item>
+                <span ng-show="data.showMenuInf == true"  class="fadein fadeout">
+                    <ion-item nav-clear menu-close href="#/app/addCustomer" class="secondLevel" ng-click="data.showMenuInf = !data.showMenuInf" ng-show="data.usertype != 'cliente'"  class="fadein fadeout">
+                        <img src="img/icon_customer.png" style="width:16px;height:16px;" /> {{'MENU_ADD_CUSTOMER_LABEL'|translate}}
+                    </ion-item>              
+                    <ion-item nav-clear menu-close href="#/app/addFleet" class="secondLevel" ng-click="data.showMenuInf = !data.showMenuInf">
+                        <img src="img/icon_fleet.png" style="width:16px;height:16px;" /> {{'MENU_ADD_FLEET_LABEL'|translate}}
+                    </ion-item>          
+                    <ion-item nav-clear menu-close href="#/app/addTruck" class="secondLevel" ng-click="data.showMenuInf = !data.showMenuInf">
+                        <img src="img/icon_truck.png" style="width:16px;height:16px;" /> {{'MENU_ADD_TRUCK_LABEL'|translate}}
+                    </ion-item>                    
+                    <ion-item nav-clear menu-close href="#/app/addTires" class="secondLevel" ng-click="data.showMenuInf = !data.showMenuInf">
+                        <img src="img/icon_tire.png" style="width:16px;height:16px;" /> {{'MENU_ADD_TIRE_LABEL'|translate}}
+                    </ion-item>                    
+                </span>
+                <!--[END] MENU Y SUBMENU INFORMACION --> 
+
+                <!--[START] MENU Y SUBMENU REPORTES -->
+                <ion-item nav-clear ng-click="data.showMenuReports = !data.showMenuReports" ng-hide="data.appModeStatus" class="fadein fadeout">                    
+                    <img src="img/icon_graph.png" style="width:16px;height:16px;" /> {{ 'REPORTS_REPORTS' | translate }}
+                    <i class="ion-icon ion-chevron-right pull-right" ng-show="data.showMenuReports == false || data.showMenuReports === undefined" class="fadein fadeout"></i>
+                    <i class="ion-icon ion-chevron-down pull-right" ng-show="data.showMenuReports == true" class="fadein fadeout"></i>
+                </ion-item>
+                <span ng-show="data.showMenuReports == true" class="fadein fadeout">
+                    <ion-item nav-clear menu-close href="#/app/reports" class="secondLevel" ng-click="data.showMenuReports = !data.showMenuReports">
+                        <img src="img/icon_graph_1.png" style="width:16px;height:16px;" /> {{'MENU_CLIENT_REPORT'|translate}}
+                    </ion-item>  
+                    <ion-item nav-clear menu-close href="#/app/otherReports" class="secondLevel" ng-click="data.showMenuReports = !data.showMenuReports">
+                        <img src="img/icon_graph_2.png" style="width:16px;height:16px;" /> {{ 'REPORTS_OTHER_REPORTS' | translate }}
+                    </ion-item>
+                </span>
+                <!--[END] MENU Y SUBMENU REPORTES --> 
+
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+    <ion-side-menu side="right">
+        <ion-header-bar class="dark-bg expanded">
+            <img src="img/circleLogo.png" class="avatar motion spin fade">
+            <div class="menu-name-app">
+                <!--{{'MENU_APP_NAME_LABEL'|translate}}-->
+            </div>
+            <div class="menu-rol-app">
+                <center>
+                    {{data.companyNameSelected}}
+                </center>
+            </div>
+            <div class="menu-status-app">
+                <center>
+                    <span ng-show="data.bluetooth"><i class="icon ion-bluetooth balanced"></i> {{ 'INSPECTION_BLUETOOTH' | translate }}</span>
+                    <span ng-show="!data.bluetooth"><i class="icon ion-bluetooth assertive"></i> {{ 'INSPECTION_BLUETOOTH' | translate }}</span>
+                    &nbsp;&nbsp;&nbsp;
+                    <span ng-show="data.appModeStatus"><i class="icon ion-android-phone-portrait balanced"></i> {{'CONFIG_MODO_OFFLINE'|translate}}</span>
+                    <span ng-hide="data.appModeStatus"><i class="icon ion-android-phone-portrait assertive"></i> {{'CONFIG_MODO_OFFLINE'|translate}}</span>                                        
+                </center>
+            </div>                                        
+        </ion-header-bar>
+        <ion-content class="stable-bg has-expanded-header">        
+            <ion-list>   
+                <ion-item menu-close href="#/app/bluetooth" style="margin-bottom:-20px;">
+                    <img src="img/icon_bluetooth.png" style="width:16px;height:16px;" />
+                    <strong>{{ 'INSPECTION_BLUETOOTH' | translate }}</strong>
+                </ion-item>
+                <!--                                          
+                <ion-item nav-clear menu-close href="#/app/scheduler" style="margin-top: -10px;margin-bottom: -20px;" ng-show="!data.appModeStatus">
+                    <i class="icon ion-android-calendar"></i>&nbsp;<strong>{{'MENU_CALENDAR'|translate}}</strong>
+                </ion-item>                              
+                -->
+
+                <label class="item item-input item-select" style="margin-top: -10px;margin-bottom: -20px;">
+                    <img src="img/icon_lang.png" style="width:16px;height:16px;" />&nbsp;<strong>{{'CONFIG_IDIOMA'|translate}}</strong>
+                    <select ng-change="ChangeLanguage(languague)" ng-model="languague" style="background:transparent;" ng-init="data.languague">    
+                        <option value="es" ng-selected="{{data.languague == 'es'}}">{{'CONFIG_LANG_ES'|translate}}</option>
+                        <option value="en" ng-selected="{{data.languague == 'en'}}">{{'CONFIG_LANG_EN'|translate}}</option>
+                        <option value="pt" ng-selected="{{data.languague == 'pt'}}">{{'CONFIG_LANG_PT'|translate}}</option>
+                        <option value="fr" ng-selected="{{data.languague == 'fr'}}">{{'CONFIG_LANG_FR'|translate}}</option>
+                        <option value="it" ng-selected="{{data.languague == 'it'}}">{{'CONFIG_LANG_IT'|translate}}</option>
+                        <option value="de" ng-selected="{{data.languague == 'de'}}">{{'CONFIG_LANG_DE'|translate}}</option>
+                        <option value="ja" ng-selected="{{data.languague == 'ja'}}">{{'CONFIG_LANG_JA'|translate}}</option>
+                        <option value="pl" ng-selected="{{data.languague == 'pl'}}">{{'CONFIG_LANG_PL'|translate}}</option>
+                        <option value="zh" ng-selected="{{data.languague == 'zh'}}">{{'CONFIG_LANG_ZH'|translate}}</option>
+                    </select>
+                </label>
+
+                
+                <label class="item item-input item-toggle">
+                    <img src="img/icon_offline.png" style="width:16px;height:16px;" />&nbsp;<strong style="margin-left:5px;">{{'CONFIG_MODO_OFFLINE'|translate}}</strong>
+                    <ion-toggle toggle-class="toggle-royal" ng-controller="DashboardCtrl" ng-change="selectOffline(appModeStatus)" ng-model="appModeStatus" ng-checked="data.appModeStatus" style="padding-left:20px;">
+                      {{appModeStatus}}   
+                    </ion-toggle>
+                </label>
+
+                <ion-item nav-clear menu-close href="#/app/uploadData" style="margin-top:-20px; margin-bottom:-20px;" ng-show="!data.appModeStatus">
+                    <img src="img/icon_upload.png" style="width:16px;height:16px;" />&nbsp;<strong>{{'MENU_UPLOAD_DATA2'|translate}}</strong>
+                    <span class="badge badge-assertive">{{data.totalSubmit}}</span>
+                </ion-item>  
+                <br><br><br>
+                <ion-item nav-clear menu-close href="#/app/logout" style="margin-top: 0px;">
+                    <img src="img/icon_logout.png" style="width:16px;height:16px;" /> <strong>{{'MENU_LOGOUT_LABEL'|translate}}</strong>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

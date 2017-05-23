@@ -1,0 +1,49 @@
+<ion-view hide-nav-bar="true" can-swipe-back="false" scroll="false" drag-content="true" drag-content="toggledrag" ng-init="init()">
+  <ion-content class="scroll-content ionic-scroll" style="background: transparent url('img/background.jpg') repeat scroll center center / cover ;">
+   <center>
+     <div style="transform: translate3d(0px, 0px, 0px) scale(1); min-width:100px; max-width:400px; min-height:auto; max-height:auto; vertical-align:center; margin-top:50px;" class="scroll">    
+    <div class="hero no-header flat">
+      <div class="content">                  
+          <center>
+            <img ng-src="img/logo.png" style="max-width: 350px; height: auto;margin: 0 auto;;border:none;rgba(255,255,255,.5);" class="img-round animate-enter previous-image">            
+          </center>
+          <label class="item item-input item-select" style="border:none;">
+              <div class="input-label" style="color:#ffffff;text-shadow: 2px 2px 2px #000000;">
+              {{'CONFIG_IDIOMA'|translate}}
+              </div>
+              <select ng-change="ChangeLanguage(languague)" ng-model="languague" style="background-color:transparent; color: #fff;text-shadow: 2px 2px 2px #000000;border-bottom:2px solid #ffffff;">    
+                        <option value="es" ng-selected="{{data.languague == 'es'}}">{{'CONFIG_LANG_ES'|translate}}</option>
+                        <option value="en" ng-selected="{{data.languague == 'en'}}">{{'CONFIG_LANG_EN'|translate}}</option>
+                        <option value="pt" ng-selected="{{data.languague == 'pt'}}">{{'CONFIG_LANG_PT'|translate}}</option>
+                        <option value="fr" ng-selected="{{data.languague == 'fr'}}">{{'CONFIG_LANG_FR'|translate}}</option>
+                        <option value="it" ng-selected="{{data.languague == 'it'}}">{{'CONFIG_LANG_IT'|translate}}</option>
+                        <option value="de" ng-selected="{{data.languague == 'de'}}">{{'CONFIG_LANG_DE'|translate}}</option>
+                        <option value="ja" ng-selected="{{data.languague == 'ja'}}">{{'CONFIG_LANG_JA'|translate}}</option>
+                        <option value="pl" ng-selected="{{data.languague == 'pl'}}">{{'CONFIG_LANG_PL'|translate}}</option>
+                        <option value="zh" ng-selected="{{data.languague == 'zh'}}">{{'CONFIG_LANG_ZH'|translate}}</option>
+              </select>
+          </label>
+        </div>        
+      </div>
+      <div>  
+          <label placeholder="Username" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
+            <input class="md-input" type="text" ng-model="data.username" controller="LoginCtrl">
+            <span class="input-label" ng-show="!data.username.length" translate="LOGIN_USERNAME_LABEL">{{ 'LOGIN_USERNAME_LABEL' | translate }}</span>
+            <div class="hightlight hightlight-calm">              
+            </div>
+          </label>
+            <span ng-show="!data.username.length" style="color:#FFF;" translate="LOGIN_ERROR_USER">{{ 'LOGIN_ERROR_USER' | translate }}</span>
+            <label placeholder="Password" highlight-color="energized" type="password" class="item item-input item-md-label" style="border:none;">
+            <input class="md-input" type="password"  ng-model="data.password">
+            <span class="input-label" ng-show="!data.password.length" translate="LOGIN_PASSWORD_LABEL"></span>
+            <div class="hightlight hightlight-calm"></div>
+            </label>
+            <span ng-show="!data.password.length" style="color:#FFF;" translate="LOGIN_ERROR_PASS">{{ 'LOGIN_ERROR_PASS' | translate }}</span>
+        </div>
+        <br>
+        <div style="width:100%;margin-left:12px">
+          <button class="button button-small button-assertive ink" controller="LoginCtrl" ng-click="login()" translate="LOGIN_ACCESS_LABEL"></button>
+        </div>
+   </center>
+  </ion-content>
+</ion-view>

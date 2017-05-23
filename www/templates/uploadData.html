@@ -1,0 +1,549 @@
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" ng-controller="UploadDataCtrl" data-ng-init="init()" >
+	<ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>    
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
+        </button>
+    </ion-nav-buttons>
+	<ion-content>
+    <ion-refresher pulling-text="{{'MSG_UPDATE'|translate}}" refreshing-text="{{'MSG_UPDATING'|translate}}" on-refresh="init()">
+    </ion-refresher>  
+    <div class="ion-content">
+        <div class="border-top">
+            <center>
+                <h4 style="text-transform: uppercase;">{{'MENU_UPLOAD_DATA'|translate}}:</h4>
+            </center>
+
+            
+
+            <!-- GRID ICONS FLEET-TRUCK-TIRES -->
+            <div class="row">
+                <div class="col col-33">
+                    <center ng-click="toggleFleets()">
+                        <img src="img/icon_fleet.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>{{totalFleetsToSubmit}} <span ng-if="totalFleetsToSubmit > 1 || totalFleetsToSubmit == 0">{{'DASHBOARD_FLOTAS'|translate}}</span><span ng-if="totalFleetsToSubmit == 1">{{'DASHBOARD_FLOTA'|translate}}</span></strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="toggleTrucks()">
+                        <img src="img/icon_truck.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>{{totalTruckToSubmit}} <span ng-if="totalTruckToSubmit > 1">{{'DASHBOARD_CAMIONES'|translate}}</span><span ng-if="totalTruckToSubmit == 1 || totalTruckToSubmit == 0">{{'DASHBOARD_CAMION'|translate}}</span></strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center>
+                        <img src="img/icon_tire_2.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>{{totalTiresToSubmit}} <span ng-if="totalTiresToSubmit > 1 || totalTiresToSubmit == 0">{{'DASHBOARD_LLANTAS'|translate}}</span><span ng-if="totalTiresToSubmit == 1">{{'DASHBOARD_LLANTA'|translate}}</span></strong>
+                    </center>
+                </div>
+            </div>
+            <!-- GRID ICONS FLEET-TRUCK-TIRES -->
+
+            <!------FLOTAS-->
+            <span ng-show="showFlotas" class="fadein fadeout">
+                <h4>
+                    <span class="capitalize">
+                        <span ng-if="totalFleetsToSubmit > 1 || totalFleetsToSubmit == 0">{{'DASHBOARD_FLOTAS'|translate}}</span><span ng-if="totalFleetsToSubmit == 1">{{'DASHBOARD_FLOTA'|translate}}</span>:
+                    </span>
+                    <span>                
+                        <i class="ion-icon ion-close pull-right" ng-click="showFlotas = !showFlotas"></i>
+                    </span>                 
+                </h4>             
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadFleets()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="f in storageFleets">
+                        <strong>{{'FLEET_NAME'|translate}}: {{f.nombre}}</strong><br>
+                        <strong>{{'FLEET_MANAGER'|translate}}: {{f.encargado}}</strong><br>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteFleet('{{f.nombre}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>         
+                <br><br>
+                <hr>                      
+            </span>
+            <!------CAMIONES-->
+            <span ng-show="showTrucks" class="fadein fadeout">
+                <h4>
+                    <span class="capitalize">
+                        {{totalTruckToSubmit}} <span ng-if="totalTruckToSubmit > 1">{{'DASHBOARD_CAMIONES'|translate}}</span><span ng-if="totalTruckToSubmit == 1 || totalTruckToSubmit == 0">{{'DASHBOARD_CAMION'|translate}}</span>:
+                        <span>                
+                            <i class="ion-icon ion-close pull-right" ng-click="showTrucks = !showTrucks"></i>
+                        </span> 
+                    </span>                   
+                </h4>             
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadTrucks()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                      
+               <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="t in storageTrucks">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{t.unidad}}</strong><br>
+                        <strong>{{'DASHBOARD_PLACAS_LABEL'|translate}}: {{t.placas}}</strong><br>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteTruck('{{t.tag}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>
+                <br><br>
+                <hr>                        
+            </span>        
+
+
+
+
+
+            <!-- GRID ICONS CUSTOMER-INSPECTION-INSPECTION REND-->
+            <div class="row">
+                <div class="col col-33" ng-hide="usertype != 'Auditor'">
+                    <center ng-click="toggleCustomers()">
+                        <img src="img/icon_customers.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>{{totalCustomersToSubmit}} 
+                        <span ng-if="totalCustomersToSubmit > 1 || totalCustomersToSubmit == 0">{{'DASHBOARD_CLIENTES_LABEL'|translate}}</span>
+                        <span ng-if="totalCustomersToSubmit == 1">{{'DASHBOARD_CLIENTE_LABEL'|translate}}</span></strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="toggleInspectionTrucks()">
+                        <img src="img/icon_inspection.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>{{totalInspectionsToSubmit}} <span ng-if="totalInspectionsToSubmit > 1 || totalInspectionsToSubmit == 0">{{ 'DASHBOARD_INSPECTION_TRUCKS' | translate }}</span><span ng-if="totalInspectionsToSubmit == 1">{{ 'DASHBOARD_INSPECTION_TRUCK' | translate }}</span></strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="toggleInspectionRends()">
+                        <img src="img/icon_rend_inspection.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>{{totalInspectionsToSubmit}} <span ng-if="totalInspectionsToSubmit > 1 || totalInspectionsToSubmit == 0">{{ 'MENU_INSPECTION_REND_LABEL' | translate }}</span><span ng-if="totalInspectionsToSubmit == 1">{{ 'MENU_INSPECTION_REND_LABEL' | translate }}</span></strong>
+
+                    </center>
+                </div>                    
+            </div>  
+            <!-- GRID ICONS CUSTOMER-INSPECTION-INSPECTION REND-->
+            <!------CLIENTES-->   
+            <span ng-show="showCustomers" class="fadein fadeout">
+
+                <h4>
+                    <span class="capitalize" ng-hide="usertype != 'Auditor'">                
+                        <span ng-if="totalCustomersToSubmit > 1 || totalCustomersToSubmit == 0">{{'DASHBOARD_CLIENTES_LABEL'|translate}}</span>
+                        <span ng-if="totalCustomersToSubmit == 1">{{'DASHBOARD_CLIENTE_LABEL'|translate}}</span>:
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showCustomers = !showCustomers"></i>
+                    </span>           
+
+                </h4>         
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadCustomers()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                                          
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="c in storageCustomers">
+                        <strong>{{c.company}}</strong>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteCustomer('{{c.email}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>
+                <br><br><hr>
+            </span>    
+            <!------INSPECCIONES DE CAMIÓN--> 
+            <span ng-show="showInspectionTrucks" class="fadein fadeout">
+                <h4>
+                    <span">
+                        {{totalInspectionsToSubmit}} <span ng-if="totalInspectionsToSubmit > 1 || totalInspectionsToSubmit == 0">{{ 'DASHBOARD_INSPECTION_TRUCKS' | translate }}:</span><span ng-if="totalInspectionsToSubmit == 1">{{ 'DASHBOARD_INSPECTION_TRUCK' | translate }}:</span>
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showInspectionTrucks = !showInspectionTrucks"></i>
+                    </span>                     
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadSemaphoreInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="s in storageSemaphoreInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{s.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{s.placas}}</strong>
+                        <br>
+                        <span ng-repeat="q in cantTires">
+                            <span ng-if="q.idtruck == s.idtruck">
+                                {{q.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteSemaphoreInspection('{{s.tag}}','{{s.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>
+                <br><br><hr>                               
+            </span>                         
+            <!------INSPECCIONES DE RENDIMIENTO DE CAMIÓN--> 
+            <span ng-show="showInspectionRend" class="fadein fadeout"><!--storageInspecttions-->
+                <h4>
+                    <span ng-click="inspectionRendShow = !inspectionRendShow">
+                        <span ng-if="totalRendsToSubmit > 1 || totalRendsToSubmit == 0">{{ 'DASHBOARD_INSPECTIONS_TRUCKS_REND' | translate }}:</span><span ng-if="totalRendsToSubmit == 1">{{ 'DASHBOARD_INSPECTION_TRUCK' | translate }}:</span>
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showInspectionRend = !showInspectionRend"></i>
+                    </span>                     
+                </h4>
+
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>                               
+            </span>
+
+
+
+
+
+            <!-- GRID ICONS TRUCKS BRAND-MODEL-TYPE-->
+            <div class="row">
+                <div class="col col-33">
+                    <center ng-click="toggleTruckBrands()">
+                        <img src="img/icon_truck_brand.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalTruckBrandToSubmit}} {{'TRUCK_DOWNLOAD_MARCACAMIONES_LABEL'|translate}}
+                        </strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="toggleTruckModels()">
+                        <img src="img/icon_truck_models.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalTruckModelToSubmit}} {{'DASHBOARD_DOWNLOAD_MODELOCAMIONES_LABEL'|translate}}
+                        </strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="toggleTruckTypes()">
+                        <img src="img/icon_truck_types.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalTruckTypeToSubmit}} {{'TRUCK_DOWNLOAD_TIPOCAMIONES_LABEL'|translate}}
+                        </strong>
+                    </center>
+                </div>                
+            </div>
+            <!-- GRID ICONS TRUCKS BRAND-MODEL-TYPE-->
+            
+            <!-------------------MARCA DE CAMION---------------->
+            <span ng-show="showTruckBrand" class="fadein fadeout">
+                <h4>
+                    <span>
+                        {{ 'TRUCK_MARCA_CAMION_LABEL' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showTruckBrand = !showTruckBrand"></i>
+                    </span>                     
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>     
+                <br><br><hr>                          
+            </span>            
+            <!-------------------MODELO DE CAMION---------------->        
+            <span ng-show="showTruckModel" class="fadein fadeout">
+                <h4>
+                    <span>
+                        {{ 'DASHBOARD_DOWNLOAD_MODELOCAMIONES_LABEL' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showTruckModel = !showTruckModel"></i>
+                    </span>                     
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list> 
+                <br><br><hr>                              
+            </span>                
+            <!-------------------TIPO DE CAMION---------------->        
+            <span ng-show="showTruckType" class="fadein fadeout">
+                <h4>
+                    <span>
+                        {{ 'TRUCK_DOWNLOAD_TIPOCAMIONES_LABEL' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showTruckType = !showTruckType"></i>
+                    </span>                    
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>   
+                <br><br><hr>                            
+            </span>    
+
+
+
+
+
+            <!-- GRID ICONS TIRE BRAND-MODEL-SIZE-->
+            <div class="row">                                
+                <div class="col col-33">
+                    <center ng-click="toggleTireBrands()">
+                        <img src="img/icon_tire_brand.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalTireBrandToSubmit}} {{'DASHBOARD_TIREBRANDS'|translate}}
+                        </strong>
+                    </center>
+                </div>    
+                <div class="col col-33">
+                    <center ng-click="toggleTireModels()">
+                        <img src="img/icon_tire_model.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalTireModelToSubmit}} {{'DASHBOARD_TIREMODELS'|translate}}
+                        </strong>
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="toggleTireSizes()">
+                        <img src="img/icon_tire_size.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalTireSizeToSubmit}} {{'DASHBOARD_TIRESIZES'|translate}}
+                        </strong>
+                    </center>
+                </div>                                                    
+            </div>
+            <!-- GRID ICONS TIRE BRAND-MODEL-SIZE-->
+            <!-------------------MARCA DE LLANTA---------------->
+            <span ng-show="showTireBrand" class="fadein fadeout"><!--storageInspecttions-->
+                <h4>
+                    <span>
+                        {{ 'DASHBOARD_TIREBRANDS' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showTireBrand = !showTireBrand"></i>
+                    </span>                       
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>  
+                <br><br><hr>                             
+            </span>                
+
+            <!-------------------MEDIDA DE LA LLANTA---------------->        
+            <span ng-show="showTireSize" class="fadein fadeout">
+                <h4>
+                    <span>
+                        {{ 'TIRES_TIRE_SIZE' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showTireSize = !showTireSize"></i>
+                    </span>                      
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>        
+                <br><br><hr>                       
+            </span>                
+
+            <!-------------------DISEÑO DE LA LLANTA---------------->        
+            <span ng-show="showTireModel" class="fadein fadeout">
+                <h4>
+                    <span>
+                        {{ 'TIRES_TIREDESIGN' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showTireModel = !showTireModel"></i>
+                    </span>                    
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>  
+                <br><br><hr>                             
+            </span>  
+
+
+
+
+
+
+
+            <!-- GRID PRESSURE-->
+            <div class="row">
+                <div class="col col-33">
+                    <center>
+                        &nbsp;
+                    </center>
+                </div>
+                <div class="col col-33">
+                    <center ng-click="togglePressures()">
+                        <img src="img/icon_pressure_types.png" style="width:40px;height:40px;" />
+                        <br>
+                        <strong>
+                            {{totalPressuresToSubmit}} {{'DASHBOARD_DOWNLOAD_PRESSURETYPES_LABEL'|translate}}
+                        </strong>
+                    </center>
+                </div>
+            </div>            
+            <!-- GRID PRESSURE-->
+            <!-------------------TIPO DE PRESIÓN---------------->
+
+            <span ng-show="showPressure" class="fadein fadeout"><!--storageInspecttions-->
+                <h4>
+                    <span>
+                        {{ 'DASHBOARD_DOWNLOAD_PRESSURETYPES_LABEL' | translate }}
+                    </span>
+                    <span>
+                        <i class="ion-icon ion-close pull-right" ng-click="showPressure = !showPressure"></i>
+                    </span>                    
+                </h4>        
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadRendInspection()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                   
+                <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="r in storageRendInspections">
+                        <strong>{{'DASHBOARD_UNIDAD'|translate}}: {{r.unidad}} {{'DASHBOARD_PLACAS_LABEL'|translate}}: {{r.placas}}</strong>
+                        <br>
+                        <span ng-repeat="cr in cantRendTires">
+                            <span ng-if="cr.idtruck == r.idtruck">
+                                {{cr.quantity}} {{ 'DASHBOARD_LLANTAS' | translate }}
+                            </span>
+                        </span>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteRendInspection('{{r.tag}}','{{r.idtruck}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>                               
+            </span>              
+
+        </div>        
+	</div>
+	</ion-content>
+</ion-view>
+
+
+
+

@@ -1,0 +1,34 @@
+
+<ion-modal-view >
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <h1 class="title">{{'TRUCK_ADD_TRUCK_TYPE'|translate}}</h1>
+    </ion-header-bar>
+    <ion-content>
+    <div class="list">
+      <form id="addType" name="addType">   
+        <label class="item item-input">      
+          <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_TIPO_CAMION_LABEL' | translate }}</span>
+          <input type ="text" ng-model="truckType" style="max-width:100%;" required class="inputNumber">
+        </label>
+
+        <label class="item item-select">
+          <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_TIRE_NUMBERS' | translate }}</span>
+            <select name="tiresNumber" ng-model="data.layersNumber" style="max-width:100%;" required  class="inputNumber">
+              <option value="{{$index + 1}}" ng-repeat="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">{{$index+1}} {{ 'DASHBOARD_LLANTAS' | translate }}</option>         
+            </select>
+        </label>
+        <div class="row">
+            <div class="col text-center">
+              <button class="button button-small button-positive" ng-click="addTruckType(truckType, data.layersNumber)" ng-disabled="addType.$invalid">{{'INSPECTION_AGREGAR'|translate}}</button>
+            </div>
+          </div>
+      </form>
+    </div>
+   
+    <center>
+      <a class="button button-small button-assertive" ng-click="closeModal(4)" style="padding-top:5px">
+        {{ 'REPORTS_CERRAR' | translate }}
+      </a>            
+    </center>      
+    </ion-content>
+ </ion-modal-view>

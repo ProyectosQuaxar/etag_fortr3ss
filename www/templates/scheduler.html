@@ -1,0 +1,17 @@
+<ion-view view-title="Calendario de inspecciones" hide-nav-bar="false" hide-back-button="true" class="ion-content" ng-controller="SchedulerCtrl">
+  <ion-content>
+    <center>
+    <h3>Scheduler</h3>
+    <br>
+
+    <calendar calendar-mode="mode" event-source="eventSource">
+    <br>
+    <button class="button" ng-click="add()">Agregar notificación</button>
+    <br>
+    <button class="button" ng-click="isScheduled()">está programada?</button>
+    <br>
+    <br>
+    la Notificación aparecerá en 60 segundos...            
+    </center>
+  </ion-content>
+</ion-view>

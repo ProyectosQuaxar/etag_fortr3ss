@@ -1,0 +1,57 @@
+
+<ion-modal-view >
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <h1 class="title">{{'TRUCK_ADD_PRESSURE_TYPE'|translate}}</h1>
+    </ion-header-bar>
+    <ion-content style="padding: 15px;">
+      <div class="list">
+        <form name="Pressure" id="Pressure">
+          <label class="item item-input">
+            <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_TIPO_CAMION_LABEL' | translate }}</span>
+          </label>
+          <label class="item item-select">                  
+            <select ng-model="data.truckTypeMod" style="max-width:100%;" class="form-border-bottom inputNumber" required>
+              <option ng-repeat="tt in truckTypes" value="{{tt.id}}">{{tt.nombre}}</option>
+            </select>     
+          </label>
+          <label class="item item-input" style="padding-top: 0px;">
+              <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIRESIZE' | translate }}</span>
+              <input type ="text" ng-model="tireSize" style="max-width:100%;" required  class="inputNumber">
+          </label>
+          <label class="item item-select">
+            <span class="input-label" style="font-size: 12px;">{{ 'INSPECTION_LAYERS' | translate }}</span>
+            <select name="layersNumber" ng-model="data.layersNumber" style="max-width:100%;" required class="inputNumber">
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>            
+            </select>
+          </label>
+          <label class="item item-input" style="padding-top: 0px;">
+            <span class="input-label" style="font-size: 12px;">{{ 'TIRES_PR' | translate }}</span>
+            <input type ="text" ng-model="tirePSI" style="max-width:100%;" required ng-change="detPressures(tirePSI)" class="inputNumber">
+          </label>      
+          <label class="item item-input" style="padding-top: 0px;">
+              <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_PRESSURE_MAX' | translate }}</span>
+              <input type ="text" ng-model="tireMaxPSI" style="max-width:100%;" required  class="inputNumber">
+          </label>
+          <label class="item item-input" style="padding-top: 0px;">
+              <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_PRESSURE_MIN' | translate }}</span>
+              <input type ="text" ng-model="tireMinPSI" style="max-width:100%;" required  class="inputNumber">
+          </label>
+          <label class="item item-input" style="padding-top: 0px;">
+              <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_LOAD_IN_KGS' | translate }}</span>
+              <input type ="text" ng-model="tireWeight" style="max-width:100%;" required  class="inputNumber">
+          </label>
+          <div class="row">
+            <div class="col text-center">
+              <button class="button button-small button-positive" ng-click="addPressure(data.truckTypeMod, tireSize, data.layersNumber, tirePSI, tireMaxPSI, tireMinPSI, tireWeight)" ng-disabled="Pressure.$invalid">{{'INSPECTION_AGREGAR'|translate}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <center>
+        <a class="button button-small button-assertive" ng-click="closeModal(5)" style="padding-top:5px">
+          {{ 'REPORTS_CERRAR' | translate }}
+        </a>            
+      </center>    
+    </ion-content>
+ </ion-modal-view>
+

@@ -1,0 +1,30 @@
+
+<ion-modal-view >
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <h1 class="title">{{'TRUCK_ADD_TRUCK_MODEL'|translate}}</h1>
+    </ion-header-bar>
+    <ion-content style="padding: 15px;">
+      <div class="list">      
+        <label class="item item-select" style="padding-top: 0px;">
+          <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_MARCA_CAMION_LABEL' | translate }}</span>
+            <select ng-model="truckBrand" style="max-width:100%;" required class="inputNumber">
+              <option ng-repeat="tb in truckBrands" value="{{tb.id}}">{{tb.brand}}</option>
+            </select>                      
+        </label>
+        <label class="item item-input">
+        <span class="input-label" style="font-size: 12px;">{{ 'TRUCK_MODELO_CAMION_LABEL' | translate }}</span>
+          <input type ="text" ng-model="addModel" style="max-width:100%;" class="inputNumber">
+        </label>
+        <div class="row">
+          <div class="col text-center">
+            <button class="button button-small button-positive" ng-click="addTruckModel(truckBrand, addModel)">{{'INSPECTION_AGREGAR'|translate}}</button>
+          </div>
+        </div>
+      </div>
+      <center>
+        <a class="button button-small button-assertive" ng-click="closeModal(2)" style="padding-top:5px">
+          {{ 'REPORTS_CERRAR' | translate }}
+        </a>            
+      </center>     
+    </ion-content>
+ </ion-modal-view>

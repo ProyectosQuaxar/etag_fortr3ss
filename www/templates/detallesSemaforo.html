@@ -1,0 +1,39 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <h1 class="title">{{ 'REPORTS_SEMAPHORE_STATUS' | translate }}
+      <span ng-if="detailCColor == 'Rojo'">{{ 'REPORTS_STATUS_RED' | translate }}</span>
+      <span ng-if="detailCColor == 'Amarillo'">{{ 'REPORTS_STATUS_YELLOW' | translate }}</span>
+      <span ng-if="detailCColor == 'Verde'">{{ 'REPORTS_STATUS_GREEN' | translate }}</span>
+      <span ng-if="detailCColor == 'Blanco'">{{ 'REPORTS_STATUS_WHITE' | translate }}</span>
+      </h1>
+    </ion-header-bar>
+    <ion-content>
+
+<div class="list card">
+    <div class="item item-body">
+    <div ng-repeat="tus in truckUnidadSem" style="border-top:1px solid #9E9E9E;">      
+      <p>
+        <strong>{{'REPORTS_UNITS_DET_UNIDAD'|translate}}:</strong> {{tus.unidad}}&nbsp;&nbsp;
+        <strong>{{'REPORTS_UNITS_DET_TAG'|translate}}:</strong> {{tus.tag_camion}}<br>
+        <strong>{{'REPORTS_DATEINSPECTION'| translate}}:</strong> {{ tus.fecha | date:'dd MMMM yyyy hh:mm' | translate}}<br>
+        <strong>{{'REPORTS_UNITS_DET_MARCA'|translate}}:</strong> {{tus.marca}},
+        <strong>{{'REPORTS_UNITS_DET_MODELO'|translate}}:</strong> {{tus.modelo}},
+        <strong>{{'REPORTS_UNITS_DET_PLACAS'|translate}}:</strong> {{tus.placas}}            
+      </p>
+
+      <div class="list">        
+          <p style="transition-delay: 0.24s;" nav-clear="" menu-close="" ng-repeat="tls in truckLlantasSem"ng-if="tls.tag_camion == tus.tag_camion && tls.status == detailCColor">                                          
+            <strong>{{'REPORTS_POSICION'|translate}}:</strong> {{tls.posicion}}&nbsp;&nbsp;&nbsp;&nbsp; {{tls.marca}} - {{tls.diseno}} , {{tls.medida}}          
+          </p>                                               
+      </div>        
+    </div> 
+
+    </div>
+    <center>
+      <a class="button button-small button-assertive" ng-click="closeModal(3)">
+        {{ 'REPORTS_CERRAR' | translate }}
+      </a>            
+    </center>     
+  </div>    
+    </ion-content>
+ </ion-modal-view>

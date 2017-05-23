@@ -1,0 +1,129 @@
+<ion-view hide-nav-bar="true" can-swipe-back="false" scroll="false" drag-content="false" drag-content="toggledrag" ng-init="init()" animation="slide-in-down">
+<style type="text/css">
+.slider1{
+    background-color: #01BBD4;
+}
+.slider2{
+    background-color: #8BC24A;
+}
+.slider3{
+    background-color: #FF9700;
+}
+.slider4{
+    background-color: #019587;
+}
+.slider5{
+    background-color: #E91D62;
+}
+</style>
+<ion-content scroll="false">
+  <ion-slides  options="options" slider="data.slider">
+    
+    <ion-slide-page class="slider1">        
+        <center>            
+           <div class="col-67">
+                <br><br>        
+                <img src="img/logoBlack.png" style="max-width:250px;height:auto;"/>
+                <br>
+                <br><br>
+                <p style="color:#FFFFFF;">
+                    <h1 style="color:#FFFFFF;">{{ 'SLIDER_APP' | translate }}</h1>
+                    <br>
+                    {{ 'SLIDER_WELCOME' | translate }}                
+                </p>                
+           </div>            
+        </center>
+    </ion-slide-page>
+
+    <ion-slide-page class="slider2">
+        <center>
+           <div class="col-67">
+                <br><br>        
+                <img src="img/logoBlack.png" style="max-width:250px;height:auto;"/>                
+                <br><br>
+                <p style="color:#FFFFFF;">
+                    {{ 'SLIDER_DESCRIPTION' | translate }}            
+                </p>
+        </center>
+    </ion-slide-page>
+
+    <ion-slide-page class="slider3">
+        <center>
+           <div class="col-67">
+                <br><br>
+                <img src="img/logoBlack.png" style="max-width:250px;height:auto;"/>                
+                <br><br>
+                <p style="color:#FFFFFF;">
+                    {{ 'SLIDER_LANGUAGUES' | translate }}
+                    <br>
+                    *&nbsp;{{ 'CONFIG_LANG_ES' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_EN' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_FR' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_PT' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_IT' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_DE' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_JA' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_PL' | translate }}
+                    *&nbsp;{{ 'CONFIG_LANG_ZH' | translate }}                
+                </p>
+                <img src="img/languagues.png" style="max-width:200px;height:auto;"/>
+        </center>
+    </ion-slide-page>
+
+    <ion-slide-page class="slider4">
+        <center>
+           <div class="col-67">
+                <br><br>
+                <img src="img/logoBlack.png" style="max-width:250px;height:auto;"/>                
+                <br><br>
+                <p style="color:#FFFFFF;">
+                    <h1 style="color:#FFFFFF;">{{ 'MENU_CALENDAR' | translate }}</h1>
+                    <br>
+                    {{ 'SLIDER_CALENDAR_DESC' | translate }}
+                    <br>              
+                </p>
+                <img src="img/noWifi.png" style="max-width:200px;height:auto;"/>
+            </div>
+        </center>  
+    </ion-slide-page>
+
+    <ion-slide-page class="slider5">
+        <center>
+           <div class="col-67">
+                <br><br>
+                <img src="img/logoBlack.png" style="max-width:250px;height:auto;"/>
+                <br><br>
+                <p style="color:#FFFFFF;">
+                    <h1 style="color:#FFFFFF;">{{ 'MENU_WRITE_TAGS_LABEL' | translate }}</h1>
+                    <br>
+                    {{ 'SLIDER_WRITE_TAGS_DESC' | translate }}
+                    <br>              
+                </p>
+                <img src="img/phoneSignal.png" style="max-width:250px;height:auto;"/>
+            </div>
+        </center>  
+    </ion-slide-page>
+  </ion-slides>
+</ion-content>
+<div class="fixed-outside">
+<!--    
+  <div class="row">
+        <div class="col">
+            <button class="button button-circle button-energized icon ion-log-in"></button>
+        </div>
+        <div class="col">
+            <button class="button button-circle button-positive icon ion-social-facebook"></button>
+        </div>
+    </div>
+
+    <p class="text-center"><a href="#/app/forgot-password">Forgot password</a></p>
+    -->
+    <p class="text-center">
+        <button id="fab" class="button button-assertive button-fab button-fab-bottom-middle" ng-click="exit()">
+            <i class="icon ion-android-close"></i>
+        </button>            
+    </p>
+</div>
+</ion-view>
+
+

@@ -1,0 +1,94 @@
+<ion-view title="{{ 'DETAIL_TRUCK' | translate }}" hide-back-button="false" >
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <center><h4>{{'DET_COND_LABEL'|translate}}</h4></center>
+    </ion-header-bar>
+    <ion-content>
+
+{{truckDetails}}
+<div class="list card">
+    <p  ng-repeat="t in data.truckUnidad">
+      <strong>{{'REPORTS_UNITS_DET_INSPECCION'|translate}}:</strong> {{ t.fecha | date:'dd MMMM yyyy hh:mm' }}
+    </p>
+    <center>
+      <h5 ng-repeat="t in data.truckUnidad"> 
+      <table style="border:none;">
+        <tr style="border:none;">
+          <td colspan="4" ng-if="t.nombreOperador"><strong>{{'REPORTS_UNITS_DRIVER_LABEL'|translate}}:</strong> {{t.nombreOperador}} <br></td>
+        </tr>
+        <tr style="border:none;">
+          <td>
+            {{t.marca}},{{t.modelo}} 
+            <i class="icon ion-pricetag" style="color:#388e3c;" item-right ng-if="t.tag_instalado == 'SI'"></i>
+          </td>          
+        </tr>
+        <tr style="border:none;">
+          <td><strong>{{'REPORTS_UNITS_DET_PLACAS'|translate}}:</strong> {{t.placas}}, <strong>{{'REPORTS_UNITS_DET_TAG'|translate}}:</strong> {{t.tag_camion}}</td>
+        </tr>
+        <tr style="border:none;">
+          <strong>{{'REPORTS_UNITS_DET_UNIDAD'|translate}}:</strong> {{t.unidad}}&nbsp;&nbsp;      
+        </tr>
+        <tr style="border:none;">
+          <td>
+            <strong>{{ 'REPORTS_GENERAL_REND' | translate }}</strong>: {{data.truckRend | number : 2}} kms x mm    
+          </td>
+        </tr>
+      </table>                 
+      </h5> 
+    </center>
+
+    <div class="item item-body">
+
+    <div ng-repeat="t in data.truckTipo">
+      <center><img src="http://millantacamion.com/millantarfid/static/images/trucktypes/{{t.img}}" style="min-height: 10px;max-height: 400px;"></center>
+      <center><h3>{{t.nombre}} {{ 'REPORTS_DE' | translate }} {{t.num_llantas}} {{'REPORTS_TIRES'|translate}}.</h3></center>
+    </div>
+       
+          <div style="transition-delay: 0.24s;" nav-clear="" menu-close="" ng-repeat="t in data.truckDetails">
+                  <!--<img src="img/llanta.png" style="max-width:60px; max-height:60px;margin-top:30px;">-->
+                  <i class="icon ion-ios-checkmark" style="color:#388e3c;" ng-if="u.inspeccion" item-right></i>                        
+                  <h2 style="font-weight:600;"><strong>{{'REPORTS_POSICION'|translate}}:</strong> {{t.posicion}}&nbsp; {{t.marca}} - {{t.diseno}} , {{t.medida}}</h2>
+                  <p><i class="ion-pricetag" style="color:#388e3c; margin-left:10px;" item-right ng-if="t.tag == 'SI'"></i>
+                    <strong>{{'REPORTS_STATUS'|translate}}</strong>: 
+                    <span ng-if="t.status == 'Rojo'" style="color:#FF0000;1px 1px 2px rgba(150, 150, 150, 1);"><i class="ion-record"></i>&nbsp;{{'REPORTS_ROJO'|translate}}</span>
+                    <span ng-if="t.status == 'Amarillo'" style="color:#FFFF00;1px 1px 2px rgba(150, 150, 150, 1);"><i class="ion-record"></i>&nbsp;{{'REPORTS_AMARILLO'|translate}}</span>
+                    <span ng-if="t.status == 'Verde'" style="color:#00B22D;1px 1px 2px rgba(150, 150, 150, 1);"><i class="ion-record"></i>&nbsp;{{'REPORTS_VERDE'|translate}}</span>
+                    <span ng-if="t.status == 'Blanco'" style="color:#D6D6D6;1px 1px 2px rgba(150, 150, 150, 1);"><i class="ion-record"></i>&nbsp;{{'REPORTS_BLANCO'|translate}}</span>
+                    &nbsp;&nbsp; 
+                    <span ng-if="t.psi != null"><strong>{{'REPORTS_PSI'|translate}}</strong>: {{t.psi}}</span>&nbsp;&nbsp; 
+                    <span ng-if="t.r1 != null"><strong>{{'REPORTS_REMANENTE'|translate}}</strong>: {{t.r1}}<br></span>
+                    <span ng-if="t.observaciones != null"><strong>{{'REPORTS_OBSERVACIONES'|translate}}</strong>:<br>
+                      <span ng-repeat="(key, val) in t.observaciones" if="val != ''">{{key+1}}.- {{val}}<br></span>
+                    </span>
+                    <span>
+                    <br>
+                    <strong>{{'REPORTS_RENDIMIENTO'|translate}} :</strong>
+
+                      <table>
+                            <thead>
+                                <tr>
+                                    <th>{{ 'REPORTS_ANIO' |translate}}</th>
+                                    <th>{{ 'REPORTS_KM'|translate}}</th>
+                                    <th>{{ 'REPORTS_REM '|translate}}</th>
+                                    <th>{{ 'REPORTS_PROM'|translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="(key, value) in t.rendimiento">
+                                    <td>{{data.meses[value.mes]}} {{value.anio}}</td>
+                                    <td>{{value.kilometros}} kms</td>
+                                    <td>{{value.remanente}}mm</td>
+                                    <td>
+                                      <span ng-if="key == 0"><strong>{{ 'REPORTS_INITIAL_INSPECTION' | translate }}</strong></span>
+                                      <span ng-if="key != 0">{{value.rendKilometro | number : 2}} kms x mm</span>
+                                    </td>                                    
+                                </tr>                                             
+                            </tbody>
+                        </table>                                          
+                    </span>
+                    </p>                                                                  
+                    <br><br><br>      
+          </div>                                                
+    </div>
+  </div>    
+    </ion-content>
+ </ion-modal-view>

@@ -1,0 +1,97 @@
+
+<ion-view view-title="Inspection" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="InspectionCtrl">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
+        </button>
+    </ion-nav-buttons>
+	<ion-content>
+		<ion-scroll direction="y">
+			<ion-slides  options="options" slider="data.slider">
+				<ion-slide-page style="background-color:#FFFFFF;" ng-repeat="it in data.inspectionTires track by $index">
+					<center>
+						<h3><img src="img/icon_tire_brand.png" style="max-width:25px;height:auto;"/>Posición #{{it.position}}</h3>
+					</center>
+					<table>
+						<tr>
+							<td style="text-align:right;"><strong>TAG:</strong></td>
+							<td>								
+									{{it.tagId}}
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><strong>TAG Instalado:</strong></td>
+							<td>
+									{{it.tagInstalado}}
+							</td>
+						</tr>							
+						<tr>
+							<td style="text-align:right;"><strong>Marca:</strong></td>
+							<td>
+								<span ng-repeat="tireBrand in data.tireBrands">
+									<span ng-if="tireBrand.id == it.tireBrand">
+										{{tireBrand.nombre}}										
+									</span>									
+								</span>									
+							</td>
+						</tr>	
+						<tr>
+							<td style="text-align:right;"><strong>Modelo:</strong></td>
+							<td>
+								<span ng-repeat="tireModel in data.tireModels">
+									<span ng-if="tireModel.id == it.tireModel">
+										{{tireModel.nombre}}										
+									</span>									
+								</span>									
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align:right;"><strong>Medida:</strong></td>
+							<td>
+								<span ng-repeat="tireSize in data.tireSizes">
+									<span ng-if="tireSize.id == it.tireSize">
+										{{tireSize.medida}}										
+									</span>									
+								</span>									
+							</td>							
+							<td>
+									{{it.tireSize}}
+							</td>
+						</tr>																								
+	                    <tr>
+	                        <td style="text-align:right;"><strong>Remanente:</strong></td>
+	                        <td>
+	                            <label class="item-stacked-label form-border-bottom">               
+	                                <input type="number" ng-model="data.dr1" style="border-bottom:1px solid #F4001E; font-size:16px;"/>
+	                            </label>                                
+	                        </td>
+	                    </tr>  
+	                    <tr>
+	                        <td style="text-align:right;"><strong>PSI:</strong></td>
+	                        <td>
+	                            <label class="item-stacked-label form-border-bottom">               
+	                                <input type="number" ng-model="data.psi" style="border-bottom:1px solid #F4001E; font-size:16px;"/>
+	                            </label>                                
+	                        </td>
+	                    </tr>                     				
+					</table>				
+					<center><h4>Condiciones Encontradas </h4></center>
+					<div ng-repeat="tc in data.tireConditions track by $index">
+						<ion-checkbox ng-model="isChecked">{{tc.title}}</ion-checkbox>
+					</div>
+	                <label class="form-border-bottom" style="width:100%; ">               
+	                    ​<textarea ng-model="data.comments" rows="3" style="border-bottom:1px solid #F4001E; font-size:16px; width:100%;" placeholder="Comments"></textarea>
+	                </label>  
+	                <br> 				
+					<center>
+						<button class="button button-small button-assertive" ng-click="addTireInspection('{{it.position}}','{{it.tireModel}}','{{it.tireSize}}','{{it.tagId}}','{{it.tagInstalado}}')">Agregar</button>					
+					</center>
+					<br> 				 
+				</ion-slide-page>
+			</ion-slides>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

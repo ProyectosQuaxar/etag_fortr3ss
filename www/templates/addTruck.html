@@ -1,0 +1,104 @@
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="TruckCtrl">
+  <ion-content>
+    <center><h3 class="marginTop">{{'MENU_ADD_TRUCK_LABEL'|translate}}</h3></center>    
+      <div class="spaceOn-PaddingRight">
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_CLIENTE_LABEL'|translate}} </span>            
+          </label>
+          <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+              <select ng-model="company" style="max-width:100%;" ng-change="getFlotas(company)" required  class="inputNumber">
+                  <option ng-repeat="c in customers" value="{{c.id}}" ng-selected="{{c.id == company}}">{{c.nameCompany}}</option>
+              </select>
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_FLOTA_LABEL'|translate}} <span class="assertive">*</span></span>
+          </label>
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+              <select ng-model="fleet" style="max-width:100%;" required  class="inputNumber">
+                  <option ng-repeat="f in fleets" value="{{f.id}}" ng-selected="{{f.id == fleetSelId || f.id == idFlota}}">{{f.nombre}}</option>
+              </select>
+          </label>    
+          <button class="button button-fab button-small button-calm pull-right button-InRight" ng-click="openModal(1)"><i class="icon ion-plus-round"></i></button>      
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_MARCA_CAMION_LABEL'|translate}} <span class="assertive">*</span></span>
+          </label>          
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">        
+              <select ng-model="truckBrandTag" style="max-width:100%;" ng-change="getTruckModelsbyMarca(truckBrandTag)" ng-options = "x.id as x.brand for x in truckBrands" ng-init="truckBrandTag = truckBrands[0]" required  class="inputNumber">                 
+              </select>
+          </label>          
+          <button class="button button-fab button-small button-calm pull-right button-InRight" ng-click="openModal(2)"><i class="icon ion-plus-round"></i></button>
+          <label class="item item-input item-stacked-label">
+              <span class="input-label">{{'TRUCK_MODELO_CAMION_LABEL'|translate}} <span class="assertive">*</span></span>
+          </label>          
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">              
+            <select ng-model="truckModel" style="max-width:100%;" class="inputNumber" required>
+                <option ng-repeat="tm in truckModels | filter:{truckBrand:truckBrandTag}" value="{{tm.id}}" ng-selected="tm.id == data.truckModel">{{tm.model}}</option>
+            </select>                      
+          </label>
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'TRUCK_PLACAS_LABEL'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="placa" required class="inputNumber"/>
+          </label>
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'TRUCK_NUMERO_CAMION_LABEL'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="unidad" required ng-change="setTAGTruck(unidad)"  class="inputNumber"/>
+          </label>         
+
+          <button class="button button-fab button-small button-balanced pull-right button-InRightMiddle" ng-click="openModal(3)"> <i class="icon ion-help"></i></button>
+
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'TRUCK_TAG_CAMION_LABEL'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="tag" required style="width:100%;"  class="inputNumber"/>            
+          </label>                               
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'TRUCK_NOMBRE_OPERADOR_LABEL'|translate}}</span>
+            <input type="text" ng-model="nombreOperador" required  class="inputNumber"/> 
+          </label>
+          <button class="button button-fab button-small button-calm pull-right button-InRight" ng-click="openModal(4)"><i class="icon ion-plus-round"></i></button> 
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_TIPO_CAMION_LABEL'|translate}}</span>
+          </label>           
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">              
+            <select ng-model="data.truckType" style="max-width:100%;" class="form-border-bottom inputNumber" ng-change="getPressureTypeByTruckType(data.truckType)">
+                <option ng-repeat="tt in truckTypes" value="{{tt.id}}">{{tt.nombre}}</option>
+            </select>                      
+          </label>
+          <button class="button button-fab button-small button-calm pull-right button-InRight" ng-click="openModal(5)"><i class="icon ion-plus-round"></i></button> 
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_PRESSURE_TYPE'|translate}} <span class="assertive">*</span></span>
+          </label>            
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">              
+            <select ng-model="pressureType" style="max-width:100%;" class="form-border-bottom inputNumber" required>
+                <option ng-repeat="pt in pressureTypes | filter:{idTruckType:data.truckType}" value="{{pt.id}}" >
+                  {{pt.psi}} PSI - {{pt.layers}} Capas - {{pt.tireSize}}
+                </option>
+            </select>                      
+          </label>          
+          <label class="item item-input">
+            <span class="input-label" style="font-weight:bold;">{{'TRUCK_TAG_INSTALADO_LABEL'|translate}}</span>
+            <ion-toggle toggle-class="toggle-assertive" ng-model="tagInstalado" style="padding-right:20px;width:50%;">
+              {{appModeStatus}}   
+            </ion-toggle>            
+          </label>
+          <label class="item item-input">
+            <span class="input-label" style="font-weight:bold;">{{ 'TRUCK_INSERT_TIRES_BEFORE' | translate }}</span>                    
+          </label>
+            <ion-toggle toggle-class="toggle-assertive" ng-model="data.tiresBefore" style="padding-right:20px;width:95%;">
+            </ion-toggle>            
+          <div ng-show="data.tiresBefore" class="fadein fadeout">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">{{ 'TIRES_MILEAGE' | translate }} <span class="assertive">*</span></span>
+            </label>          
+            <label class="item item-input form-border-bottom">
+              <input type ="number" class="inputNumber" ng-model ="data.kms" style="max-width:100%;" required ng-disabled="data.tiresAvailable == 'true'">
+            </label>            
+          </div>                 
+        </div>     
+            <center>
+            	<button class="button button-small button-assertive" ng-click="insertTruck(company, fleet, truckModel, placa, tag, unidad, pressureType, tagInstalado, nombreOperador, data.truckType, data.tiresBefore)">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
+            </center>
+    </div>
+  </ion-content>
+</ion-view>

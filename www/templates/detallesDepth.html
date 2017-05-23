@@ -1,0 +1,44 @@
+
+<ion-modal-view>
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+        <h1 class="title">
+            {{ 'TIRES_TIRE_DETAILS' | translate }}
+        </h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="ion-content">
+            <center>
+                <img src="img/remnant.png" style="width:100%; height:auto;">
+            </center>
+            <div style="padding:10px;text-align:justify;">
+                <span>                
+                    <strong class="balanced">1) {{ 'INSPECTION_MODAL_ROUND_BAND' | translate }}</strong> {{ 'INSPECTION_MODAL_ROUND_BAND_DESC' | translate }}
+                    <br>
+                    <strong class="assertive">3) {{ 'REPORTS_REMANENTE' | translate }}</strong> {{ 'INSPECTION_REMANT_DESC' | translate }}
+ <strong class="energized">(2) {{ 'INSPECTION_RANURAS' | translate }} </strong> {{ 'INSPECTION_BAND' | translate }}.
+                    <br><br>
+                    <center>
+                        <img src="img/icon_take_depth.png" style="width:100%; height:auto;">
+                    </center>                    
+                    <strong>{{ 'MENU_INSPECTION_SEM_LABEL' | translate }}</strong> {{ 'INSPECTION_MODAL_PRESSURE_1' | translate }}
+                    <br>{{ 'INSPECTION_MODAL_PRESSURE_1' | translate }}<br>
+                    <br>{{ 'INSPECTION_MODAL_PRESSURE_2' | translate }}<br>
+                    <br>{{ 'INSPECTION_MODAL_PRESSURE_3' | translate }}<br>
+                    <br>{{ 'INSPECTION_MODAL_PRESSURE_4' | translate }}<br>
+                    <br>{{ 'INSPECTION_MODAL_PRESSURE_5' | translate }}<br>
+                    <br>
+                    <center>
+                        <img src="img/icon_take_depth_positions.png" style="width:100%; height:auto;">
+                    </center> 
+                    <strong>{{ 'MENU_INSPECTION_REND_LABEL' | translate }}</strong>
+                    <br>{{ 'INSPECTION_MODAL_PRESSURE_6' | translate }}<br>
+            	</span>                   	
+            </div>
+            <center>
+              <a class="button button-small button-assertive" ng-click="closeModal(5)" style="padding-top:5px">
+                {{ 'REPORTS_CERRAR' | translate }}
+              </a>            
+            </center> 
+        </div>  
+    </ion-content>
+ </ion-modal-view>

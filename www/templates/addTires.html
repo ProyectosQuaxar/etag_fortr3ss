@@ -1,0 +1,60 @@
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" ng-init="init()" ng-controller="TiresCtrl">
+  <ion-content>
+    <center>
+      <br>
+      <img src="img/icon_tire.png" style="max-width:200px;height:auto;"/>                   
+      <br>
+      <h3 class="marginTop">{{'MENU_ADD_TIRE_LABEL'|translate}}</h3></center>    
+      <div class="ion-content">
+      <form id="addTires" name="addTires">
+        <div class="list">
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_CLIENTE_LABEL'|translate}}</span>            
+          </label>
+          <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+              <select ng-model="company" style="max-width:100%;" ng-change="getFlotas(company)" required>
+                  <option ng-repeat="c in customers" value="{{c.id}}">{{c.nameCompany}}</option>
+              </select>
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{'TRUCK_FLOTA_LABEL'|translate}}</span>
+          </label>
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+              <select ng-model="fleet" style="max-width:100%;" ng-change="getTrucksByFleet(fleet)" required>
+                  <option ng-repeat="f in fleets" value="{{f.id}}"  ng-selected="{{f.id == fleetSelId || f.id == idFlota}}">{{f.nombre}}</option>
+              </select>
+          </label>
+
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{ 'TIRES_NUMBER_UNIT' | translate }}</span>
+          </label>
+
+          <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+              <select ng-model="truckId" style="max-width:100%;" ng-change="findTires(truckId)" required>  
+                <option ng-repeat="truck in trucks" value="{{truck}}">{{ 'DASHBOARD_UNIDAD' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
+              </select> 
+          </label>
+          <label class="item item-input item-stacked-label">
+            <span class="input-label">{{ 'TIRES_MILEAGE' | translate }}</span>
+          </label>          
+          <label class="item item-input form-border-bottom">
+            <input type ="number" class="inputNumber" ng-model ="data.kms" style="max-width:100%;" required ng-disabled="data.tiresAvailable == 'true'">
+          </label>
+          <label>
+          <center>
+            <span ng-show="data.tiresInTruck == 'true'" class="assertive">
+            {{ 'TIRES_YA_REGISTRADAS' | translate }} <br>
+            {{data.llantasRegistradas}} {{ 'DASHBOARD_LLANTAS' | translate }}
+            </span>             
+          </center>            
+            </span>
+          </label>
+        </div>     
+            <center>
+              <button class="button button-small button-assertive" ng-click="startInsertTires()" ng-disabled="data.tiresAvailable == 'true'">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
+            </center>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

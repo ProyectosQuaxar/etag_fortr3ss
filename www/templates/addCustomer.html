@@ -1,0 +1,113 @@
+
+<ion-view view-title="" ng-controller="CustomerCtrl">
+  <ion-content>
+    <center>
+      <h3 class="marginTop">{{'MENU_ADD_CUSTOMER_LABEL'|translate}}</h3>
+    </center>    
+      <div class="ion-content">
+        <div class="list">
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_COMPANY'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="company" required/>
+          </label>
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_EMAIL'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="email" required/>
+          </label>
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_PASSWORD_LABEL'|translate}} <span class="assertive">*</span></span>
+            <input type="password" ng-model="password" required/>
+          </label>                 
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_ADDRESS'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="address" required/>
+          </label>  
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_PHONE'|translate}} <span class="assertive">*</span></span>
+            <input type="tel" ng-model="phone" required maxlength="10" />
+          </label>
+          <center>
+            <span class="assertive" ng-show="phone.length < 10" class="fadein fadeout">{{'CUSTOMER_PHONE_INVALID' | translate }}</span>
+          </center>
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_NAME_CONTACT'|translate}} <span class="assertive">*</span></span>
+            <input type="text" ng-model="contact" required/>
+          </label>            
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_JOB'|translate}} <span class="assertive">*</span></span>
+          </label>
+          <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+            <select ng-model="job" style="max-width:100%;">
+              <option value='ADMINISTRADOR DE ARRENDAMIENTO'>{{ 'CUSTOMER_ADMIN_ARREND' | translate }}</option>
+              <option value='ADMINISTRADOR(A)'>{{ 'CUSTOMER_ADMINSTRATOR' | translate }}</option>
+              <option value='APODERADO LEGAL'>{{ 'CUSTOMER_APODERAD_LEGAL' | translate }}</option>
+              <option value='COMPRAS'>{{ 'CUSTOMER_COMPRAS' | translate }}</option>
+              <option value='CONTADOR'>{{ 'CUSTOMER_CONTADOR' | translate }}</option>
+              <option value='DESARROLLO LOGISTICO'>{{ 'CUSTOMER_DESARROLLO_LOGISTICO' | translate }}</option>
+              <option value='DUEÑ@'>{{ 'CUSTOMER_DUENO' | translate }}</option>
+              <option value='EMPRESA'>{{ 'CUSTOMER_EMPRESA' | translate }}</option>
+              <option value='ENCARGADO'>{{ 'CUSTOMER_ENCARGADO' | translate }}</option>
+              <option value='ENCARGADO COMPRAS'>{{ 'CUSTOMER_ENCARGADO_COMPRAS' | translate }}</option>
+              <option value='ENCARGADO DE FLOTA'>{{ 'CUSTOMER_ENCARGADO_FLOTAS' | translate }}</option>
+              <option value='ENCARGADO DE MANTENIMIENTO'>{{ 'CUSTOMER_ENCARGADO_MANTENIMIENTO' | translate }}</option>
+              <option value='Encargado De Taller'>{{ 'CUSTOMER_ENCARGADO_TALLER' | translate }}</option>
+              <option value='GERENTE'>{{ 'CUSTOMER_GERENTE' | translate }}</option>
+              <option value='GERENTE DE COMPRAS'>{{ 'CUSTOMER_GERENTE_COMPRAS' | translate }}</option>
+              <option value='GERENTE DE MANTENIMIENTO'>{{ 'CUSTOMER_GERENTE_MANTENIMIENTO' | translate }}</option>
+              <option value='Gerente General'>{{ 'CUSTOMER_GERENTE_GENERAL' | translate }}</option>
+              <option value='JEFA DE AREA'>{{ 'CUSTOMER_JEFE_AREA' | translate }}</option>
+              <option value='JEFE DE AREA'>{{ 'CUSTOMER_JEFA_AREA' | translate }}</option>
+              <option value='JEFE DE COMPRAS '>{{ 'CUSTOMER_JEFE_COMPRAS' | translate }}</option>
+              <option value='JEFE DE MANTENIMIENTO'>{{ 'CUSTOMER_JEFE_MANTENIMIENTO' | translate }}</option>
+              <option value='JEFE DE MAQUINARIA '>{{ 'CUSTOMER_JEFE_MAQUINARIA' | translate }}</option>
+              <option value='LLANTAS '>{{ 'CUSTOMER_LLANTAS' | translate }}</option>
+              <option value='LOGÍSTICA'>{{ 'CUSTOMER_LOGISTICS' | translate }}</option>
+              <option value='SUPERVISOR'>{{ 'CUSTOMER_SUPERVISOR' | translate }}</option>
+              <option value='SUPERVISOR DE LLANTAS'>{{ 'CUSTOMER_SUPERVISOR_LLANTAS' | translate }}</option>              
+            </select>
+          </label>          
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_STATUS'|translate}} <span class="assertive">*</span></span>
+          </label>  
+          <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+            <select ng-model="status" style="max-width:100%;">
+              <option value="ACTIVO">{{'CUSTOMER_STATUS_ACTIVE'|translate}}</option>                
+              <option value="INACTIVO">{{'CUSTOMER_STATUS_INACTIVE'|translate}}</option>   
+            </select>
+          </label>
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_USERT_TYPE'|translate}} <span class="assertive">*</span></span>
+          </label>  
+          <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+            <select ng-model="type" style="max-width:100%;">
+              <option value="FULL">{{'CUSTOMER_USER_FULL'|translate}}</option>                
+              <option value="TRIAL">{{'CUSTOMER_USERT_TRIAL'|translate}}</option>   
+            </select>
+          </label> 
+          <center>
+            <span class="balanced" ng-show="type == 'TRIAL'" class="fadein fadeout">{{'CUSTOMER_TRIAL' | translate }}</span>
+            <span class="balanced" ng-show="type == 'FULL'">{{'CUSTOMER_FULL' | translate }}</span>
+          </center>          
+          <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'CUSTOMER_NUMBER_CUSTOMER_ASSIGNED'|translate}}</span>
+            <input type="text" ng-model="data.customerNumber" ng-change="getCustomerNumber(data.customerNumber)"/>
+          </label>
+          <label class="assertive" ng-show="companyAssigned" class="fadein fadeout">
+            <center>
+              {{'CUSTOMER_ERROR_NUMERO_CLIENTEASIGNADO'|translate}}:<br>
+              <strong>{{data.companyName}}</strong>
+            </center>            
+          </label>
+
+          <label class="item item-input">
+            <span class="input-label" style="font-weight:bold;">{{ 'CUSTOMER_INSERT_FLEET_BEFORE' | translate }}</span>                    
+          </label>
+            <ion-toggle toggle-class="toggle-assertive" ng-model="data.fleetBefore" style="padding-right:20px;width:95%;">
+            </ion-toggle>              
+        </div>     
+            <center>
+              <button class="button button-small button-assertive" ng-click="insertCustomer(company, email, password, address, phone, contact, job, status, type, data.customerNumber)" ng-disabled="phone.length < 10">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
+            </center>
+    </div>
+  </ion-content>
+</ion-view>

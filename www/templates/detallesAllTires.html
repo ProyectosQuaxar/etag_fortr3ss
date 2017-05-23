@@ -1,0 +1,46 @@
+
+<ion-modal-view>
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+        <h1 class="title">
+            {{ 'TIRES_TIRE_DETAILS' | translate }}
+        </h1>
+    </ion-header-bar>
+    <ion-content>
+    
+    <img src="img/writeTagsTire.png" style="width:100%; height:auto;">
+    <br><br>
+    <div style="padding:10px;">
+    	<span>
+    		<strong>
+    			1) {{ 'CUSTOMER_NUMBER_CUSTOMER_ASSIGNED' | translate }}:
+    		</strong>&nbsp;{{ 'TRUCK_CUSTOMER_NUMBER_DESC' | translate }},             
+            <span ng-if="idAccount != 0">
+                {{ 'TRUCK_CUSTOMER_NUMBER_IS' | translate }} <strong>{{idAccount}}</strong>
+            </span>
+            <span ng-if="idAccount == 0">
+                {{ 'TRUCK_CUSTOMER_NUMBER_NOT_ASSIGNED' | translate }}.
+            </span>
+    	</span>
+    	<br>
+    	<span>
+    		<strong>
+    			2) {{ 'TIRES_NUMBER_UNIT' | translate }}:
+    		</strong>&nbsp;{{ 'TRUCK_TRUCK_UNIT_DESC' | translate }}.
+    	</span>
+        <br>
+        <span>
+            <strong>
+                3) {{ 'TIRES_POSITION_TIRE' | translate }}:
+            </strong>&nbsp;{{ 'TIRES_POSITION_TIRE_DESC' | translate }}.
+        </span>
+    </div>
+    <br><br>
+    <img src="img/positions.png" style="width:100%; height:auto;">
+    <br><br><br>
+    <center>
+      <a class="button button-small button-assertive" ng-click="closeModal(1)" style="padding-top:5px">
+        {{ 'REPORTS_CERRAR' | translate }}
+      </a>            
+    </center>   
+    </ion-content>
+ </ion-modal-view>

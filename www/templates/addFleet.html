@@ -1,0 +1,92 @@
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" data-ng-controller="FleetCtrl">
+  <ion-content>
+    <center><h3 class="marginTop">{{'MENU_ADD_FLEET_LABEL'|translate}}</h3></center>
+    <br>
+
+      <ion-checkbox ng-model="isChecked" ng-click="getCustomerInfo()" ng-show="usertype == 'cliente'" class="fadein fadeout">
+          {{ 'FLEET_I_THE_SAME_SUPERVISOR' | translate }}
+      </ion-checkbox> 
+
+      <div class="ion-content">
+        <form id="addFleet" name="addFleet">
+          <div class="list">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">{{'FLEET_COMPANY'|translate}} <span class="assertive">*</span>
+              </span>            
+            </label>
+            <label class="item item-input item-select" style="margin-top:-20px;">      
+                <select ng-model="company" style="max-width:100%;" ng-change="getFlotas(company)" required class="inputNumber">
+                    <option ng-repeat="c in customers" value="{{c.id}}" ng-selected="{{c.id == company}}">{{c.nameCompany}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_NAME'|translate}} <span class="assertive">*</span></span>
+              <input type="text" ng-model="fleet" required  class="inputNumber"/>
+            </label>       
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_STREET'|translate}} <span class="assertive">*</span></span>
+              <input type="text" ng-model="street" required class="inputNumber"/>
+            </label>   
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_SUBURB'|translate}} <span class="assertive">*</span></span>
+              <input type="text" ng-model="suburb" required class="inputNumber"/>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_COUNTRY'|translate}} <span class="assertive">*</span></span>
+            </label>
+            <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+                <select ng-model="fleetCountry" ng-init="getCountries()" style="max-width:100%;" ng-change="getStates(fleetCountry)" required class="inputNumber">
+                    <option ng-repeat="c in countries" value="{{c.id}}">{{c.nombre}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_STATE'|translate}} <span class="assertive">*</span></span>
+            </label>              
+            <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+                <select ng-model="fleetState" style="max-width:100%;" ng-change="getCities(fleetState)" required class="inputNumber">
+                    <option ng-repeat="s in states" value="{{s.id}}">{{s.nombre}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_CITY'|translate}} <span class="assertive">*</span></span>
+            </label>              
+            <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+                <select ng-model="fleetCity" style="max-width:100%;" required class="inputNumber">
+                    <option ng-repeat="c in cities" value="{{c.id}}">{{c.nombre}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_PHONE'|translate}} <span class="assertive">*</span></span>
+              <input type="tel" ng-model="phone" required class="inputNumber"/>
+            </label>    
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_EMAIL'|translate}} <span class="assertive">*</span></span>
+              <input type="email" ng-model="email" required class="inputNumber"/>
+            </label>     
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_PASSWORD_LABEL'|translate}} <span class="assertive">*</span></span>
+              <input type="password" ng-model="password" required class="inputNumber"/>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_MANAGER'|translate}} <span class="assertive">*</span></span>
+              <input type="text" ng-model="manager" required class="inputNumber"/>
+            </label>
+            <label class="item item-input item-stacked-label form-border-bottom">
+              <span class="input-label">{{'FLEET_ROLECHANGE'|translate}} <span class="assertive">*</span></span>
+            </label>            
+            <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+                <select ng-model="rol" style="max-width:100%;" ng-change="getFlotas(company)" required  class="inputNumber">
+                  <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] track by $index" value="{{$index}}">{{$index + 1}} {{'FLEET_MONTHS'|translate}}</option>
+                </select>
+            </label>                                             
+            <label>
+              <h6>{{'FLEET_ROLECHANGE_DESC'|translate}}</h6>
+            </label>
+          </div>     
+              <center>
+                <button class="button button-small button-assertive" ng-click="insertFleet(company, fleet, street, suburb, fleetCountry, fleetState, fleetCity, phone, email, password, manager, rol)" ng-disabled="addFleet.$invalid">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
+              </center>
+        </form>
+      </div>
+  </ion-content>
+</ion-view>

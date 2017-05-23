@@ -1,0 +1,98 @@
+<gap:plugin name="com.chariotsolutions.nfc.plugin" />
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="lib/ion-md-input/css/ion-md-input.min.css" rel="stylesheet">
+    <link href="lib/ionic-material/dist/ionic.material.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+    <link href="css/tabSlideBox.css" rel="stylesheet">
+    <link rel="stylesheet" src="lib/ionic-calendar/dist/css/calendar.min.css"/>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script> 
+    <script src="js/filters.js"></script> 
+    <script src="js/tabSlideBox.js"></script> 
+
+    <script src="lib/ion-md-input/js/ion-md-input.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-translate/angular-translate.js"></script> 
+    <script src="lib/angular-route/angular-route.js"></script> 
+    <script src="lib/ngstorage/ngStorage.min.js"></script>
+    <script src="lib/ngCordova/ng-cordova.js"></script>
+    <script src="lib/ngCordova-nfc/nfc.js"></script>
+    <script src="lib/chart.js/dist/Chart.min.js"></script>
+    <script src="lib/angular-chart.js/dist/angular-chart.js"></script> 
+    <script src="lib/ionic-calendar/dist/js/calendar-tpls.min.js"></script>
+    <script src="lib/ionic-toast-master/dist/ionic-toast.bundle.min.js"></script>
+
+
+    <!--Added to support the pdf generation, note file is a custom build w/ some of my own code SVG pie charts-->
+    <script src="lib/pdfmake/build/pdfmake.min.js"></script>
+    <script src="lib/pdfmake/build/vfs_fonts.js"></script>
+    <script src="lib/angular-base64/angular-base64.js"></script>
+    <script src="lib/pdfmake/build/pdfmake.js"></script>
+    <script src="lib/pdfmake/build/vfs_fonts.js"></script>
+    <script src="lib/pdfjs-dist/build/pdf.js"></script>  
+    <script src="lib/angular-pdf/dist/angular-pdf.js"></script>
+    <script src="lib/chance/chance.js"></script>
+    <script src="js/html2canvas.js"></script>
+    <script src="js/ng-cordova.min.js"></script>
+    <script src="js/reportBuilderSvc.js"></script>
+    <script src="js/reportService.js"></script>
+
+    
+    <!-- CONTROLADORES POR SEPARADO -->
+    <script src="js/controllers/config.js"></script>
+    <script src="js/controllers/customer.js"></script>
+    <script src="js/controllers/dashboard.js"></script>
+    <script src="js/controllers/fleets.js"></script>
+    <script src="js/controllers/inspectionMode.js"></script>
+    <script src="js/controllers/inspectionRend.js"></script>
+    <script src="js/controllers/inspectionSem.js"></script>
+    <script src="js/controllers/login.js"></script>
+    <script src="js/controllers/logout.js"></script>
+    <script src="js/controllers/NFC.js"></script>
+    <script src="js/controllers/reports.js"></script>
+    <script src="js/controllers/scheduler.js"></script>
+    <script src="js/controllers/slider.js"></script>
+    <script src="js/controllers/tires.js"></script>
+    <script src="js/controllers/trucks.js"></script>
+    <script src="js/controllers/uploadData.js"></script>
+    <script src="js/controllers/bluetooth.js"></script>
+    
+    <script src="js/translate.js"></script>
+  </head>
+
+  <body ng-app="starter">
+    <ion-nav-view></ion-nav-view>
+  </body>
+</html>

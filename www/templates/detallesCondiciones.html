@@ -1,0 +1,47 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <center><h1 class="title">{{detailCCondicion}}</h1></center>      
+    </ion-header-bar>
+    <ion-content>
+
+<center>
+  <p style="color:red; padding:10px;">
+<span ng-if="detailCCondicion == 'CORTE'">{{'TBL_COND_CORTE_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'DESGASTE IRREGULAR'">{{'TBL_COND_DESGASTEIRREGULAR_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'DUAL MAL PAREADO'">{{'TBL_COND_DUAL_MAL_PAREADO_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'FALTA BIRLO Y TUERCA'">{{'TBL_COND_FALTABIRLO_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'FUGA DE AIRE PIVOTE'">{{'TBL_COND_FUGAAIRE_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'LLANTA DESECHO'">{{'TBL_COND_LLANTADESECHO_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'LLANTA PARA RENOVAR'">{{'TBL_COND_LLANTARENOVAR_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'PONCHADA'">{{'TBL_COND_PONCHADA_DESC'|translate}}</span>
+<span ng-if="detailCCondicion == 'VALVULA SIN TAPON' || detailCCondicion == 'VALVULA SIN TAPÓN'">{{'TBL_COND_VALVULASINTAPON_DESC'|translate}}</span>
+</p>
+</center>
+<div class="list card">
+    <div class="item item-body">
+    <div ng-repeat="tus in truckUnidadSem" style="border-top:1px solid #9E9E9E;">      
+      <p>
+        <strong>{{ 'REPORTS_UNITS_DET_UNIDAD' | translate }}:</strong> {{tus.unidad}}&nbsp;&nbsp;
+        <strong>{{'REPORTS_UNITS_DET_TAG'|translate}}:</strong> {{tus.tag_camion}}<br>
+        <strong>{{'REPORTS_DATEINSPECTION'| translate}}:</strong> {{ tus.fecha | date:'dd MMMM yyyy hh:mm' | translate}}<br>
+        <strong>{{'REPORTS_UNITS_DET_MARCA'|translate}}:</strong> {{tus.marca}},
+        <strong>{{'REPORTS_UNITS_DET_MODELO'|translate}}:</strong> {{tus.modelo}},
+        <strong>{{'REPORTS_UNITS_DET_PLACAS'|translate}}:</strong> {{tus.placas}}            
+      </p>
+
+      <div class="list">        
+          <p style="transition-delay: 0.24s; color:red;" nav-clear="" menu-close="" ng-repeat="tls in truckLlantasSem" ng-if="tls.tag_camion == tus.tag_camion">                                          
+            <strong>{{ 'REPORTS_POSICION' | translate }} :</strong> {{tls.posicion}}&nbsp;&nbsp;&nbsp;&nbsp; {{tls.marca}} - {{tls.diseno}} , {{tls.medida}}          
+          </p>                                               
+      </div>        
+    </div> 
+  </div>
+
+    <center>
+      <a class="button button-small button-assertive" ng-click="closeModal(4)">
+        {{ 'REPORTS_CERRAR' | translate }}
+      </a>            
+    </center>  
+  </div>    
+    </ion-content>
+ </ion-modal-view>

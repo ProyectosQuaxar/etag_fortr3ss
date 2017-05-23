@@ -1,0 +1,128 @@
+<ion-view view-title="{{ 'REPORTS_OTHER_REPORTS' | translate }}" hide-back-button="true" ng-init="init()">
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+  <ion-content>
+        <center>    
+        <br>        
+            <p>{{ 'REPORTS_CHOOSE_DATA_RANGE' | translate }}.</p>
+        </center>
+        <br>
+
+                    <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right ">
+            <div class="list">                                            
+                <label class="item item-input item-select" style="width:50%; float:left;">
+                <div class="input-label">
+                        {{ 'REPORTS_DE' | translate }}:
+                    </div>
+                    <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
+                        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select" style="width:50%; float:left;">
+                    <div class="input-label">
+                        {{ 'REPORTS_HASTA' | translate }}:
+                    </div>  
+                    <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
+                        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
+                    </select>                                                       
+                </label>
+                </div>      
+                <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
+                <label class="item" style="border:none;width:25%; float:left;">
+                    <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphAnalisis(initDate,endDate);graphSemaforos(initDate,endDate);"></button>              
+                </label>                 
+                    </div>  
+
+<tab-slide-box class="tabbed-slidebox" tab="0"> <!-- ng-show="{{ generalInfo.llantas !== undefined}}" -->    
+    <div class="tsb-icons">
+        <div class="tsb-ic-wrp">
+            <a href="javascript:;">{{ 'REPORTS_ANALYSIS' | translate }}</a>
+            <a href="javascript:;">{{ 'REPORTS_SEMAPHORE' | translate }}</a>
+            <a href="javascript:;">{{ 'CUSTOMER_LLANTAS' | translate }}</a>
+        </div>
+    </div>
+    
+    <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index);slideIndexChangedReports($index,'reportes');">  
+    <ion-slide>
+        <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
+
+        <div  style="margin: 0 auto; max-width:600px">
+            <div class="im-wrapper">
+                <h4 class="no-border no-padding-bottom">{{ 'REPORTS_ANALYSIS' | translate }}</h4>
+            </div>
+
+            <div  style="margin: 0 auto; max-width:600px">            
+        <br><br><br>
+
+        <canvas id="line" class="chart chart-bar" chart-data="dataAnalisis" chart-labels="labelsAnalisis" chart-series="seriesAnalisis" chart-options="optionsAnalisis" chart-dataset-override="datasetOverrideAnalisis" chart-click="onClickAnalisis" style="max-width:100%; height:40px; padding:10px;" chart-legend="true">
+            </div>
+        <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ 'REPORTS_MES' | translate }}</th>
+                        <th style="text-transform: uppercase;">{{ 'DASHBOARD_CAMIONES' | translate }}</th>
+                        <th>{{ 'CUSTOMER_LLANTAS' | translate }}</th>                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="l in labelsAnalisis track by $index">
+                        <td>{{l}}</td>
+                        <td>{{dataAnalisis[0][$index]}}</td>
+                        <td>{{dataAnalisis[1][$index]}}</td>
+                    </tr>                                             
+                </tbody>
+            </table>      
+        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>    
+        </div>
+        </ion-scroll>
+    </ion-slide>       
+        <ion-slide>
+            <div class="im-wrapper">
+                <h4 class="no-border no-padding-bottom">{{ 'REPORTS_SEMAFORO' | translate }}</h4>
+            </div>
+
+
+        <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
+
+            <div  style="margin: 0 auto; max-width:600px">          
+        <br>
+        <canvas id="line" class="chart chart-bar" chart-data="dataSemaforos" chart-labels="labelsSemaforos" chart-series="seriesSemaforos" chart-options="optionsSemaforos" chart-dataset-override="datasetOverrideSemaforos" chart-click="onClickSemaforos" style="max-width:100%; height:40px; padding:10px;" chart-legend="true" chart-colors="coloursSemaforos"></canvas>   
+            </div>
+            <br><br>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ 'REPORTS_MES' | translate }}</th>
+                        <th style="text-transform: uppercase;">{{ 'REPORTS_ROJO' | translate }}</th>
+                        <th style="text-transform: uppercase;">{{ 'REPORTS_AMARILLO' | translate }}</th>                    
+                        <th style="text-transform: uppercase;">{{ 'REPORTS_VERDE' | translate }}</th>                    
+                        <th style="text-transform: uppercase;">{{ 'REPORTS_BLANCO' | translate }}</th>                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="l in labelsAnalisis track by $index">
+                        <td>{{l}}</td>
+                        <td>{{dataSemaforos[0][$index]}} %</td>
+                        <td>{{dataSemaforos[1][$index]}} %</td>
+                        <td>{{dataSemaforos[2][$index]}} %</td>
+                        <td>{{dataSemaforos[3][$index]}} %</td>
+                    </tr>                                             
+                </tbody>
+            </table>      
+                
+        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
+
+        </ion-scroll>
+
+      </ion-list>
+        </ion-slide>   
+        </ion-slide>
+    </ion-slide-box>
+    </tab-slide-box>
+  </ion-content>
+</ion-view>
+

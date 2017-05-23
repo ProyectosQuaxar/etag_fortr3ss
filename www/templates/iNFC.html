@@ -1,0 +1,146 @@
+<ion-view view-title="{{ 'INSPECTION_NFC' | translate }}" hide-nav-bar="false" hide-back-button="true" ng-controller="InspectionCtrl">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>    
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
+        </button>
+    </ion-nav-buttons>
+        <label ng-repeat="record in tag.ndefMessage" style="position: absolute; top: 50px; width: 100%; z-index:1000;background-color:transparent;display:inline;text-align:center;">
+            <center>
+                <span style="float:left;margin-top:9px;">
+                {{ 'INSPECTION_TAG_LEIDO' | translate }}: 
+                </span>
+                <input type="text" value="{{ record | decodePayload }}" id="tagTruck" style="float:left;color:red;background-color:transparent;" />            
+            </center>
+        </label>  	    
+	<ion-content>
+			<br>
+			<center>				
+				<span ng-show="data.activatedNFC" class="balanced">NFC Activado <img src="img/nfc.png" style="max-width:10px;height:auto;"/> <br> Deslice su teléfono por tag de las llantas</span>
+				<span ng-show="!data.activatedNFC" class="assertive">NFC Desactivado <img src="img/nfc.png" style="max-width:10px;height:auto;"/></span>
+			</center>
+			<center ng-if="data.tiresRegistred != 0"<<>				
+				<img ng-src="{{data.truckImg}}" style="min-height: 10px;max-height: 400px;" ng-if="data.truckImg"/>
+			</center>
+            <div ng-repeat="it in data.inspectionTires">
+                <a class="item item-avatar" ng-click="showLlanta = !showLlanta" style="padding-left:75px;">
+                	<img src="img/icon_tire2.png"/>
+                  	<h1 style="overflow:visible!important;margin-top:0px;font-size:18px;">
+						<center>
+							<strong>								
+								<span ng-repeat="tireBrand in data.tireBrands">
+									<span ng-if="tireBrand.id == it.tireBrand">
+										{{tireBrand.nombre}}
+									</span>
+								</span> 
+								<span ng-repeat="tireModel in data.tireModels">
+									<span ng-if="tireModel.id == it.tireModel">
+										{{tireModel.nombre}}										
+									</span>
+								</span> 								
+								<span ng-repeat="tireSize in data.tireSizes">
+									<span ng-if="tireSize.id == it.tireSize">
+										{{tireSize.medida}}										
+									</span>									
+								</span>	
+							</strong>
+						</center>                  	
+                  	</h1>
+                    <p style="text-align:center;">{{it.tagId}} {{ 'TIRES_POSITION' | translate }} #{{it.position}}                    	
+                        <i class="ion ion-pricetag balanced" ng-if="it.tagInstalado == 'SI'"></i>
+                        <i class="ion ion-pricetag assertive" ng-if="it.tagInstalado == 'NO'"></i>
+                    </p>                    
+                </a>
+
+				<div style="background-color:#FFFFFF;" ng-show="showLlanta" class="fadein fadeout">					
+					<table>
+						<tr>
+							<td style="text-align:right;vertical-align:middle;"><strong>{{ 'INSPECTION_TAG_DETECTADO' | translate }}:</strong></td>
+							<td style="text-align:left;vertical-align:middle;">
+								<input type="hidden" ng-model="data.tagDetected">
+								<strong>
+									<span ng-if="data.tagDetected == 'SI'">{{ 'INSPECTION_TAG_DETECTADO_SI' | translate }}</span>
+									<span ng-if="data.tagDetected == 'NO'">{{ 'INSPECTION_TAG_DETECTADO_NO' | translate }}</span>
+								</strong>&nbsp;
+								<a class="assertive" ng-click="getTag('{{it.tagId}}')" style="padding:0 15px; float: right;">
+									{{ 'INSPECTION_TAG_COMPROBAR' | translate }}
+								</a>			
+							</td>
+						</tr>								
+						<tr>
+							<td style="text-align:right;"><strong>{{ 'INSPECTION_REMANENTE' | translate }}:</strong></td>
+							<td>
+								<label class="item-stacked-label form-border-bottom">               
+									<input type="number" ng-model="data.dr" style="border-bottom:1px solid #F4001E; font-size:16px;"/>
+								</label>                                
+							</td>
+						</tr>  
+						<tr>
+							<td style="text-align:right;"><strong>{{ 'INSPECTION_PSI' | translate }}:</strong></td>
+							<td>
+								<label class="item-stacked-label form-border-bottom">               
+									<input type="number" ng-model="data.psi" style="border-bottom:1px solid #F4001E; font-size:16px;"/>
+								</label>                                
+							</td>
+						</tr>                   				
+					</table>
+	                <div class="row">
+	                    <div class="col col-sm-3">
+	                        <center>
+	                            <h4 ng-click="showOtherConditions = ! showOtherConditions">
+	                                {{ 'INSPECTION_CONDITIONS_FOUNDS' | translate }}
+	                                <i class="ion-icon ion-chevron-up pull-right" ng-show="showOtherConditions == false || showOtherConditions === undefined" class="fadein fadeout"></i>
+	                                <i class="ion-icon ion-chevron-down pull-right" ng-show="showOtherConditions == true" class="fadein fadeout"></i>
+	                            </h4>
+	                        </center>
+	                    </div>                                      
+	                </div>
+					<label class="item item-checkbox ng-empty ng-valid" ng-repeat="tc in data.tireConditions" ng-show="showOtherConditions">
+						<label class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle" for="{{tc.title}}">
+							<input type="checkbox" class="ng-pristine ng-untouched ng-valid ng-empty" ng-click="stateChanged()" ng-model="selection.ids[tc.title]" name="group" id="{{tc.title}}">
+							<i class="checkbox-icon"></i>
+							</label>
+							<div class="item-content disable-pointer-events">
+								<span>{{tc.title}}</span>
+							</div>
+					</label>						
+					 <label class="form-border-bottom" style="width:100%; ">               
+                    ​<textarea ng-model="data.comments" rows="3" style="border-bottom:1px solid #F4001E; font-size:16px; width:100%;" placeholder="{{ 'INSPECTION_COMMENT' | translate }}"></textarea>
+	                </label>
+	                <br><br>
+	                <div ng-hide="disableArea">
+	                    <label class="item item-input item-stacked-label" hidden>
+	                        <span class="input-label">* {{'INSPECTION_ADD_OTHER_CONDITIONS_I'|translate}}</span><br>
+	                        <span class="input-label">{{'INSPECTION_ADD_OTHER_CONDITIONS_II'|translate}}</span>
+	                    </label>
+	                    <label class="form-border-bottom" style="width:100%; ">               
+	                        ​<textarea ng-model="data.others" rows="3" ng-disabled = "disableArea"style="border-bottom:1px solid #F4001E; font-size:16px; width:100%;" placeholder="{{ 'INSPECTION_OTHER_CONDITION' | translate }}"></textarea>
+	                    </label>                  
+	                </div>          
+	                <br><br>
+					<center>
+						<button class="button button-small button-assertive" ng-click="addTireInspection(it)" style="z-index:1000">{{ 'INSPECTION_AGREGAR' | translate }}</button>			
+					</center>
+					<br><br>
+				</div>				  
+
+            </div>			
+		<div ng-if="data.tiresRegistred == 0">
+			<br>
+			<center>
+				<h4>{{ 'INSPECTION_FINISHED_INSPECTIONS' | translate }}</h4>
+				<hr>
+				<h4>{{ 'INSPECTION_NOT_TIRES_TO_INSPETION' | translate }}</h4>
+				<br>
+				<img src="img/icon_inspection_finished.png" class="full-image spaceOn">
+				<br><br>
+
+                <button class="button button-assertive button-fab button-fab-bottom-middle" ng-click="recallToInspection()">
+                    <i class="icon ion-android-close"></i>
+                </button>
+			</center>
+		</div>
+	</ion-content>
+</ion-view>
