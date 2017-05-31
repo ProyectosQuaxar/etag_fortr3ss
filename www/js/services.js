@@ -161,12 +161,7 @@ angular.module('starter.services', [])
         return $http({method:"GET", url:url+ 'getCustomerData/' + id}).then(function(result){
             return result.data;
         });
-    }
-    function getCustomerData(url, id){
-        return $http({method:"GET", url:url+ 'getRendByFleet/' + id}).then(function(result){
-            return result.data;
-        });
-    }
+    }   
     function getRendByFleet(url,i,y,m,s){
         return $http({method:"GET", url:url+ 'getRendByFleet?idFlota='+i+ '&year='+y+ '&month='+m+ '&idsSemaforos='+s}).then(function(result){
             return result.data;
@@ -237,8 +232,11 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
-
-
+    function getAllCustomers(url){
+        return $http({method:"GET", url:url+ 'getAllCustomers'}).then(function(result){
+            return result.data;
+        });
+    }
 
     return { 
         login:function(url, nm, pw){
@@ -375,7 +373,10 @@ angular.module('starter.services', [])
         },
         addTruckModel:function(url, lang, brandId, model){
             return addTruckModel(url, lang, brandId, model);
-        }                
+        },
+        getAllCustomers:function(url){
+            return getAllCustomers(url);
+        }                  
     }
 })
 

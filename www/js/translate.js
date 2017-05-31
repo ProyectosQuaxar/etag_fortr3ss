@@ -22,7 +22,9 @@ REPORTS_PERCENT: 'Porcentaje',
 REPORTS_PERDIDAS: 'Pérdidas',
 UPLOAD_UPLOAD: 'Subir',
 CUSTOMER_PHONE_INVALID: 'Número telefónico debe contener 10 digitos',
-CUSTOMER_INSERT_FLEET_BEFORE: 'Ir a insertar flota después'
+CUSTOMER_INSERT_FLEET_BEFORE: 'Ir a insertar flota después',
+TRUCK_ANIO: 'Año del camión'
+
 		});
         $translateProvider.translations('en', {
         CONFIG_IDIOMA: 'Languague',
@@ -463,7 +465,9 @@ UPLOAD_DONE: 'Done!',
 UPLOAD_UPLOAD: 'Upload',
 CUSTOMER_PHONE_INVALID: 'Número telefónico debe contener 1 digitos',
 CUSTOMER_PHONE_INVALID: 'Phone number must contain 10 digits',
-CUSTOMER_INSERT_FLEET_BEFORE: 'Go to insert fleet'
+CUSTOMER_INSERT_FLEET_BEFORE: 'Go to insert fleet',
+TRUCK_ANIO: 'Truck year',
+
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',

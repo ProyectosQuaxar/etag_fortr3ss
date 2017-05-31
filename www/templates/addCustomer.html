@@ -24,7 +24,7 @@
           </label>  
           <label class="item item-input item-stacked-label form-border-bottom">
             <span class="input-label">{{'CUSTOMER_PHONE'|translate}} <span class="assertive">*</span></span>
-            <input type="tel" ng-model="phone" required maxlength="10" />
+            <input type="tel" ng-model="phone" required minlength="10" maxlength="10" />
           </label>
           <center>
             <span class="assertive" ng-show="phone.length < 10" class="fadein fadeout">{{'CUSTOMER_PHONE_INVALID' | translate }}</span>

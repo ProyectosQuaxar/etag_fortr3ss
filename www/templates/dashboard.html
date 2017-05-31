@@ -20,6 +20,8 @@
                 <div class="item item-divider millantaTheme">
                     {{'DASHBOARD_COMPANY_DESC'|translate}}
                 </div>
+
+                <!--
                 <div class="item item-text-wrap form-border-bottom" style="margin-top:-10px;">
                     <label class="item item-input item-select " style="height:40px;">
                         <select ng-model="company" ng-change="selectCliente(company);" style="max-width:100%;">
@@ -27,7 +29,24 @@
                             <option ng-repeat="c in customers" value="{{c.id}}" ng-selected="{{c.id == company}}">{{c.nameCompany}}</option>
                         </select>
                     </label>
+                </div> -->
+                
+                <div id="customers" class="item form-border-bottom" style="margin-top:-10px;">
+                    <input type="data.search" id="data.search" style= "margin-left: 15px;" placeholder="..." ng-model="data.search"/>
+                    <button ng-if="data.search.length" class="button button-icon ion-android-close" ng-click="clearSearch()">
+                    </button>
                 </div>
+                 <ul id="customers_ul" style="margin-top:-10px; margin-left: 10px;">
+                    <li ng-repeat="c in customers | filter:data.search | orderBy: orderList" style="margin-top: 5px;" ng-click="selectCliente(c.id)" ng-model="company">
+                      {{c.nameCompany}}<br/>
+                    </li>
+                </ul>
+                <!--
+                <div class="list">
+                    <li class="item" ng-model = "company" ng-repeat="c in customers" ng-selected ="{{c.id == company}}">{{c.nameCompany}}</li>
+                </div> -->
+                
+
             </div>
             <br>            
             <center ng-if="totalReceive > 0">

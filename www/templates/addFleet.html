@@ -10,15 +10,35 @@
       <div class="ion-content">
         <form id="addFleet" name="addFleet">
           <div class="list">
+          
             <label class="item item-input item-stacked-label">
               <span class="input-label">{{'FLEET_COMPANY'|translate}} <span class="assertive">*</span>
               </span>            
             </label>
+            <!--
             <label class="item item-input item-select" style="margin-top:-20px;">      
                 <select ng-model="company" style="max-width:100%;" ng-change="getFlotas(company)" required class="inputNumber">
                     <option ng-repeat="c in customers" value="{{c.id}}" ng-selected="{{c.id == company}}">{{c.nameCompany}}</option>
                 </select>
-            </label>
+            </label> -->
+
+                <center>
+                  <button class="button button-full button-assertive" ng-click="showCustomers = !showCustomers; clearSearch();"> - </button>
+                </center>                
+                 
+                  <div id="customers" class="item  form-border-bottom" style="margin-top:-10px;">
+                    <input type="data.search" id="data.companyNameSelected" style= "margin-left: 15px;" placeholder="..." ng-model="data.companyNameSelected" ng-value="c.id"/>
+                    
+                  </div>
+                <span ng-show="showCustomers" class="fadein fadeout">
+                
+                  <ul id="customers_ul" style="margin-top:-10px; margin-left: 10px;" ng-click="showCustomers = !showCustomers">
+                    <li ng-repeat="c in customers | filter:data.companyNameSelected | orderBy: orderList" style="margin-top: 5px;" ng-model="nameCompany" ng-click="selectCustomer(c.id)" >{{c.nameCompany}}<br/>
+                    </li>
+                  </ul>
+                </span>
+           
+
             <label class="item item-input item-stacked-label form-border-bottom">
               <span class="input-label">{{'FLEET_NAME'|translate}} <span class="assertive">*</span></span>
               <input type="text" ng-model="fleet" required  class="inputNumber"/>
@@ -57,7 +77,7 @@
             </label>
             <label class="item item-input item-stacked-label form-border-bottom">
               <span class="input-label">{{'FLEET_PHONE'|translate}} <span class="assertive">*</span></span>
-              <input type="tel" ng-model="phone" required class="inputNumber"/>
+              <input type="tel" ng-model="phone" minlength="10" maxlength="10" required class="inputNumber"/>
             </label>    
             <label class="item item-input item-stacked-label form-border-bottom">
               <span class="input-label">{{'FLEET_EMAIL'|translate}} <span class="assertive">*</span></span>

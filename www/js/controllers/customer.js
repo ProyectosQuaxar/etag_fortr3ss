@@ -2,6 +2,7 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
     .controller('CustomerCtrl', function($ionicPlatform, $scope, $ionicLoading, $ionicPopup, $localStorage, Data, Check, $translate, $rootScope, StorageService, $state, $timeout) {
   	    $scope.data.fleetBefore = true;
   	    
+
   	    $ionicPlatform.offHardwareBackButton(function() {
           console.log("Hola"); 
         });
@@ -55,13 +56,17 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
                 });
                 $scope.companyAssigned = idFound;
             	$scope.data.companyName = nameComp; 
+            	
+
 			} else {
 				var DataPromise = Data.getCustomerNumber($rootScope.url, $scope.data.customerNumber)
             	DataPromise.then(function(result) {
                     if (result['company'] != '') {
+                    	console.log(result['company']);
                         //SI LA COMPAÑÍA EXISTE
                         $scope.companyAssigned = true;
-                        $scope.data.companyName = result['company'];                        
+                        $scope.data.companyName = result['company'];
+
                     }else{
                         $scope.companyAssigned = false;
                     }
@@ -199,8 +204,8 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 	                    customerNumber: customerNumber
 	                }
 	                console.log(customer)
-
 	                StorageService.addCustomer(customer);
+
 					
 	                var msgOk = $translate.instant('CUSTOMER_SAVED_SUCCESSFULY')
 	                $ionicLoading.hide();
@@ -228,21 +233,76 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 	                    if (result['message'] == 'success') {
 	                        //DATOS CARGADOS
 	                        $ionicLoading.hide();
-	                        var info = $translate.instant('MSG_INFORMATION');
-	                        var aceptar = $translate.instant('MSG_ACEPTAR');
-	                        var msgSuccess = $translate.instant('MSG_DATA_SUCCESS');
-	                        var tryAgain = $translate.instant('MSG_TRY_AGAIN');
-	                        $ionicPopup.alert({
+	                        $scope.$broadcast('scroll.refreshComplete');
+		                    var info = $translate.instant('MSG_INFORMATION');
+		                    var aceptar = $translate.instant('MSG_ACEPTAR');
+		                    var msgSuccess = $translate.instant('MSG_DATA_SUCCESS');		                    
+		                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+		                    console.log("contenido de result ID: " + result['id']);
+		                    $localStorage.company = result['id'];
+		                    console.log("Este es el ID: " + result['id']);
+		                    console.log("Contenido de $localStorage.company ");
+		                    console.log($localStorage.company);
+
+		                    var DataPromise = Data.getAllCustomers($rootScope.url)
+			            	DataPromise.then(function(result) {
+			                    if (result['data'] != '') {
+			                    	console.log("Este es el contenido de DATA")
+			                    	console.log(result['data']);
+			                    	console.log("Lo pasamos a localStorage")
+			                        $localStorage.customers = result['data'];
+			                        console.log("Y lo pasamos a customers...")
+			                        $scope.customers = result['data'];
+			                        console.log(result['data'])
+
+			                    }else{
+			                       console.log("no hacemos nada...");
+			                    }
+			                }, function(reason) {
+			                    //ERROR DE CONEXIÓN
+			                    $ionicLoading.hide();
+			                    var error = $translate.instant('MSG_ERROR');
+			                    var aceptar = $translate.instant('MSG_ACEPTAR');
+			                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+			                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+			                    $ionicLoading.hide();
+			                    $ionicPopup.alert({
+			                        title: error,
+			                        template: '<center><p>' + errorConexion + '<br/><b>' + tryAgain + '</b></p></center>',
+			                        okText: aceptar,
+			                        okType: 'button-assertive'
+			                    });
+			                })
+
+		                    console.log($localStorage.company);
+		                    //$scope.getCustomerNumber(customerNumber);
+		                    $localStorage.companyName = company;
+		                    console.log($localStorage.companyName)
+		                   
+
+	                        if ($scope.data.fleetBefore == true){		                       
+		                        $ionicPopup.alert({
+		                            title: info,
+		                            template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+		                            okText: aceptar,
+		                            okType: 'button-balanced'
+	                       		});
+		                         console.log("Contenido de $localStorage.company...");
+		                    	console.log($localStorage.company);
+	                       		 $state.go("app.addFleet", {
+				                    animation: 'slide-in-down'
+				                });
+		                    } else if ($scope.data.fleetBefore == false) {
+		                    	$ionicPopup.alert({
 	                            title: info,
 	                            template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
 	                            okText: aceptar,
 	                            okType: 'button-balanced'
-	                        });
-
-			                $state.go("app.dashboard", {
-			                    animation: 'slide-in-down'
-			                });
-
+		                        });
+				                $state.go("app.dashboard", {
+				                    animation: 'slide-in-down'
+				                });
+		                    }            
 
 	                    } else if (result['message'] == 'error') {
 	                        //DATOS CON ERRORES O INCOMPLETOS
@@ -297,5 +357,9 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 	                });
 	            }        		
         	}
+        }
+
+        $scope.refreshCustomers = function() {
+
         }    	
     })

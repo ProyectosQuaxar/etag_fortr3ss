@@ -7,6 +7,7 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
         $scope.inspectionMode = '';
         $scope.dataTrucks = false;
         $scope.dataTires = false;
+        $scope.search = "";
         
         $ionicPlatform.offHardwareBackButton(function() {
             console.log("Hola"); 
@@ -24,7 +25,15 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
             }
         }, 100);
 
+        $scope.clearSearch = function() {
+            console.log("Se presiono el boton para borrar...");
+            $scope.data.search = "";
+        };
 
+        $scope.selectCompany = function(company) {
+            console.log("Se presiono un elemento de la lista");
+            console.log(company);            
+        }
 
         $scope.showOkMessage = function(error){
           var popTitle = $translate.instant('MSG_ERROR')
@@ -527,8 +536,8 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                                 $scope.totalReceive += 1;
                             }
 
-
                             $ionicLoading.hide();
+                            $scope.data.search = "";
                             $scope.changeCompany = false;
                             $state.go('app.dashboard', {
                                 animation: 'slide-in-down'

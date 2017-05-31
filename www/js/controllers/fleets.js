@@ -6,6 +6,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
     $scope.countries = {};
     $scope.states = {};
     $scope.cities = {};
+    console.log($localStorage.company)
     
         $ionicPlatform.offHardwareBackButton(function() {
           console.log("Hola"); 
@@ -14,12 +15,42 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         }, 100);
         
         $scope.init = function(){
+                    
             $scope.customers = $localStorage.customers;
+            console.log($scope.customers);
             $scope.countries = $localStorage.countries;            
             $scope.states = $localStorage.states;            
             $scope.cities = $localStorage.cities;
             $scope.usertype = $localStorage.usertype;
+            $scope.data.companyNameSelected = $localStorage.companyName;
+            console.log($localStorage.company)
+            console.log($localStorage.companyName)
+            $scope.getCustomerInfo;
+
         }
+
+        $scope.selectCustomer = function (id) {
+            console.log("Se presiono el boton " + id);
+            $scope.company = id;
+            console.log("Nuevo ID " + $scope.company)
+            angular.forEach($localStorage.customers, function(value, key) {
+                        if (id == value.id) {
+                            $localStorage.companyName = value.nameCompany;
+                            $scope.nameCompany = value.nameCompany;
+                            $localStorage.customerEmail = value.email;
+                        }
+                    });
+            $scope.data.companyNameSelected = $scope.nameCompany;
+            console.log($scope.nameCompany)
+            $localStorage.company = id;
+            console.log($localStorage.company);
+            $scope.$broadcast('scroll.refreshComplete');
+        }
+
+         $scope.clearSearch = function() {
+            console.log("Se presiono el boton para borrar...");
+            $scope.data.companyNameSelected = "";
+        };
 
         $scope.showOkMessage = function(error){
           var popTitle = $translate.instant('MSG_ERROR')
