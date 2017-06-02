@@ -47,9 +47,13 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
             $scope.$broadcast('scroll.refreshComplete');
         }
 
+        
+
          $scope.clearSearch = function() {
             console.log("Se presiono el boton para borrar...");
             $scope.data.companyNameSelected = "";
+            var inputFocus = document.getElementById("customersInput");
+            inputFocus.focus();
         };
 
         $scope.showOkMessage = function(error){

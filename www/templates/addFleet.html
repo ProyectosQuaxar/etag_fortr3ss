@@ -23,12 +23,11 @@
             </label> -->
 
                 <center>
-                  <button class="button button-full button-assertive" ng-click="showCustomers = !showCustomers; clearSearch();"> - </button>
+                  <button class="button button-full button-assertive" ng-click="showCustomers = !showCustomers; clearSearch(); showForm=true; focusInput=true"> - </button>
                 </center>                
                  
-                  <div id="customers" class="item  form-border-bottom" style="margin-top:-10px;">
-                    <input type="data.search" id="data.companyNameSelected" style= "margin-left: 15px;" placeholder="..." ng-model="data.companyNameSelected" ng-value="c.id"/>
-                    
+                  <div id="customers" class="item item-input item-stacked-label form-border-bottom" style="margin-top:-10px;">
+                    <input type="data.search" class="input-label"  focus-me="focusInput" id="data.companyNameSelected" style= "margin-top: 10px;" placeholder="..." ng-model="data.companyNameSelected" ng-value="c.id"/>                    
                   </div>
                 <span ng-show="showCustomers" class="fadein fadeout">
                 

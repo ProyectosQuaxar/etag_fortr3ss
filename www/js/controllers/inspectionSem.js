@@ -13,6 +13,11 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         $scope.disableArea = true;          
         $scope.data.imgCamion = ''
         $scope.showButtons = false;
+        $scope.data.tireModels = $localStorage.tireModels;
+        $scope.data.tireSizes = $localStorage.tireSizes;
+        $scope.data.tireBrands = $localStorage.tireBrands;
+        console.log($scope.data.tireBrands);
+
         /*
         $scope.tag = nfcService.tag;
         */
@@ -25,7 +30,48 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         });
         $ionicPlatform.registerBackButtonAction(function(event) {
         }, 100);
-            
+        
+        $scope.getSizesByBrand = function(tirebrand) {
+            if ($localStorage.appModeStatus) {
+                //si el modo offline está activado                
+                $scope.data.tireSizes = $localStorage.tireSizes;
+            } else {
+                //si hay conexión a internet
+                var DataPromise = Data.getTireSizebyBrand($rootScope.url, tirebrand)
+                DataPromise.then(function(result) {
+                    if (result['medidas']) {
+                        $scope.data.tireSizes = result['medidas'];
+                    }
+
+                }, function(reason) {
+                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                    $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)
+                })
+            }
+        }
+
+        $scope.getDesignBySize = function(size) {
+            console.log(size);
+            if ($localStorage.appModeStatus) {
+                //si el modo offline está activado                
+                $scope.data.tireModels = $localStorage.tireModels;
+                console.log($scope.data.tireModels);
+            } else {
+                //si hay conexión a internet
+                var DataPromise = Data.getTireDesignbySize($rootScope.url, size)
+                DataPromise.then(function(result) {
+                    if (result['diseno']) {
+                        $scope.data.tireModels = result['diseno'];
+                    }
+                }, function(reason) {
+                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                    $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)
+                })
+            }
+        }
+
         $scope.stateChanged = function(){
             angular.forEach($scope.selection.ids, function(value, key) {                
                 if(key == "OTRA"){
@@ -79,6 +125,10 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             });            
         }       
         $scope.init = function() {
+            $scope.data.tireModels = $localStorage.tireModels;
+            $scope.data.tireSizes = $localStorage.tireSizes;
+            $scope.data.tireBrands = $localStorage.tireBrands;
+            console.log($scope.data.tireBrands);
             $scope.inspectionMode = $localStorage.inspectionMode;
             $scope.trucks = $localStorage.trucks;
             $scope.data.kilometraje = 0;
@@ -133,6 +183,39 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
           });                    
         }
 
+        $scope.openModal = function() {        
+            $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.openModal = function(index) {
+            console.log("Entramos al modal!" + index)
+            if (index == 1) $scope.oModal1.show();           
+        };
+
+        $scope.closeModal = function(index) {
+            if (index == 1) $scope.oModal1.hide();           
+        };
+
+        // Execute action on hide modal
+        $scope.$on('modal.hidden', function() {
+        // Execute action
+        });
+        // Execute action on remove modal
+        $scope.$on('modal.removed', function() {
+        // Execute action
+        });
+
+        $ionicModal.fromTemplateUrl('templates/editTire.html', {
+        id: '1', // We need to use and ID to identify the modal that is firing the event!
+        scope: $scope,
+        backdropClickToClose: false,
+        animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.oModal1 = modal;
+        });
 
         $scope.findTruck = function(tagCamion) {
             $scope.tagCamion = tagCamion;

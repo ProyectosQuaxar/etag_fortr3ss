@@ -93,8 +93,12 @@
                     <label class="form-border-bottom" style="width:100%; ">               
                         ​<textarea ng-model="data.others" rows="3" ng-disabled = "disableArea"style="border-bottom:1px solid #F4001E; font-size:16px; width:100%;" placeholder="{{ 'INSPECTION_OTHER_CONDITION' | translate }}"></textarea>
                     </label>                  
-                </div>          
-                <br><br>
+                </div>
+                <br>
+				<center>
+					<button class="button button-small button-balanced" ng-click="openModal(1)" style="z-index:1000">{{ 'TIRES_EDIT_TIRE' | translate }}</button>			
+				</center>          
+                <br>
 				<center>
 					<button class="button button-small button-assertive" ng-click="addTireInspection(it)" style="z-index:1000">{{ 'INSPECTION_AGREGAR' | translate }}</button>			
 				</center>

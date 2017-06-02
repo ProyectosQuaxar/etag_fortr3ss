@@ -254,6 +254,7 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 			                        console.log("Y lo pasamos a customers...")
 			                        $scope.customers = result['data'];
 			                        console.log(result['data'])
+			                        $
 
 			                    }else{
 			                       console.log("no hacemos nada...");

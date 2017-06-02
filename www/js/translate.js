@@ -23,7 +23,9 @@ REPORTS_PERDIDAS: 'Pérdidas',
 UPLOAD_UPLOAD: 'Subir',
 CUSTOMER_PHONE_INVALID: 'Número telefónico debe contener 10 digitos',
 CUSTOMER_INSERT_FLEET_BEFORE: 'Ir a insertar flota después',
-TRUCK_ANIO: 'Año del camión'
+TRUCK_ANIO: 'Año del camión',
+TIRES_EDIT_TIRE: 'Editar llanta',
+
 
 		});
         $translateProvider.translations('en', {
@@ -467,6 +469,8 @@ CUSTOMER_PHONE_INVALID: 'Número telefónico debe contener 1 digitos',
 CUSTOMER_PHONE_INVALID: 'Phone number must contain 10 digits',
 CUSTOMER_INSERT_FLEET_BEFORE: 'Go to insert fleet',
 TRUCK_ANIO: 'Truck year',
+TIRES_EDIT_TIRE: 'Edit tire',
+
 
         });
         $translateProvider.translations('pt', {
