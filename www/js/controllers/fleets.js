@@ -52,8 +52,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
          $scope.clearSearch = function() {
             console.log("Se presiono el boton para borrar...");
             $scope.data.companyNameSelected = "";
-            var inputFocus = document.getElementById("customersInput");
-            inputFocus.focus();
+           
         };
 
         $scope.showOkMessage = function(error){
@@ -158,7 +157,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         }
 
         $scope.insertFleet = function(company, fleet, street, suburb, fleetCountry, fleetState, fleetCity, phone, email, password, manager, rol) {
-
+            console.log(company + " " + fleet  + " " +  street  + " " + suburb + " " +  fleetCountry + " " +  fleetState + " " +  fleetCity + " " +  phone + " " +  email + " " +  password + " " +  manager + " " +  rol)
             if ($localStorage.appModeStatus) {
                 //si el modo offline está activado
                 //comparamos si la compañia seleccionada es la misma que    
