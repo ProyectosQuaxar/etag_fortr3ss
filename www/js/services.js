@@ -143,6 +143,7 @@ angular.module('starter.services', [])
         });
     }  
     function insertFleet(url, lang, idCliente, nombre, calle, colonia, ciudad, estado, pais, telefono, email, password, adminId, encargado, roldeCambio){
+        console.log(url+ 'insertFleet?lang=' + lang + '&idCliente=' + idCliente + '&nombre=' + nombre + '&calle=' + calle + '&colonia=' + colonia + '&ciudad=' + ciudad + '&estado=' + estado + '&pais=' + pais + '&telefono=' + telefono + '&email=' + email + '&password=' + password + '&adminId=' + adminId + '&encargado=' + encargado + '&roldeCambio=' + roldeCambio)
         return $http({method:"GET", url:url+ 'insertFleet?lang=' + lang + '&idCliente=' + idCliente + '&nombre=' + nombre + '&calle=' + calle + '&colonia=' + colonia + '&ciudad=' + ciudad + '&estado=' + estado + '&pais=' + pais + '&telefono=' + telefono + '&email=' + email + '&password=' + password + '&adminId=' + adminId + '&encargado=' + encargado + '&roldeCambio=' + roldeCambio }).then(function(result){
             return result.data;
         });

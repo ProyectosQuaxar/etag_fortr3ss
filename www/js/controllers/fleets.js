@@ -202,6 +202,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 });
 
                 var DataPromise = Data.insertFleet($rootScope.url, $localStorage.languague, company, fleet, street, suburb, fleetCity, fleetState, fleetCountry, phone, email, password, $localStorage.userId, manager, rol)
+                console.log(company + " " + fleet  + " " + street  + " " + suburb  + " " + fleetCity  + " " + fleetState  + " " + fleetCountry  + " " + phone  + " " + email  + " " + password  + " " + $localStorage.userId  + " " + manager  + " " + rol);
                 DataPromise.then(function(result) {
                         if (result['message'] == 'success') {
                             //DATOS CARGADOS
@@ -226,7 +227,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             } else {
                                 console.log("POR ALGUNA RAZON COMPANY IS undefined")
                             }
-
+                            
                             if ($scope.data.truckAfter == true){                             
                                 $ionicPopup.alert({
                                     title: info,
@@ -248,10 +249,12 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                                 $state.go("app.dashboard", {
                                     animation: 'slide-in-down'
                                 });
-                            }            
-
+                            }          
 
                             /************ ACTUALIZAMOS LOS DATOS DE ESTE CLIENTE **********/
+                            /*$state.go("app.dashboard", {
+                                animation: 'slide-in-down'
+                            });*/
                            
                         } else if (result['message'] == 'error') {
                             //DATOS CON ERRORES O INCOMPLETOS
