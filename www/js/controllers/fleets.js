@@ -1,6 +1,6 @@
 angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
 .controller('FleetCtrl', function($ionicPlatform, ionicMaterialInk, $scope, $localStorage, $translate, $ionicLoading, $ionicPopup, Data, StorageService, $rootScope, $state, $timeout) {
-          
+    $scope.data.truckAfter = true;    
     $scope.customers = {};
     $scope.fleets = {};
     $scope.countries = {};
@@ -14,8 +14,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         $ionicPlatform.registerBackButtonAction(function(event) {
         }, 100);
         
-        $scope.init = function(){
-                    
+        $scope.init = function(){                    
             $scope.customers = $localStorage.customers;
             console.log($scope.customers);
             $scope.countries = $localStorage.countries;            
@@ -23,10 +22,10 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
             $scope.cities = $localStorage.cities;
             $scope.usertype = $localStorage.usertype;
             $scope.data.companyNameSelected = $localStorage.companyName;
+            $scope.company = $localStorage.company;
             console.log($localStorage.company)
             console.log($localStorage.companyName)
             $scope.getCustomerInfo;
-
         }
 
         $scope.selectCustomer = function (id) {
@@ -207,25 +206,53 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         if (result['message'] == 'success') {
                             //DATOS CARGADOS
                             $ionicLoading.hide();
+
+
                             var info = $translate.instant('MSG_INFORMATION');
                             var aceptar = $translate.instant('MSG_ACEPTAR');
                             var msgSuccess = $translate.instant('FLEET_SAVED_SUCCESSFULY');
                             var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+
+
                             $ionicPopup.alert({
                                 template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
                                 okText: aceptar,
                                 okType: 'button-balanced'
                             });
+
                             /************ ACTUALIZAMOS LOS DATOS DE ESTE CLIENTE **********/
                             if($localStorage.company){
                                 $scope.selectCliente($localStorage.company)
                             } else {
                                 console.log("POR ALGUNA RAZON COMPANY IS undefined")
                             }
+
+                            if ($scope.data.truckAfter == true){                             
+                                $ionicPopup.alert({
+                                    title: info,
+                                    template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+                                    okText: aceptar,
+                                    okType: 'button-balanced'
+                                });
+                                
+                                 $state.go("app.addTruck", {
+                                    animation: 'slide-in-down'
+                                });
+                            } else if ($scope.data.truckAfter == false) {
+                                $ionicPopup.alert({
+                                title: info,
+                                template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+                                okText: aceptar,
+                                okType: 'button-balanced'
+                                });
+                                $state.go("app.dashboard", {
+                                    animation: 'slide-in-down'
+                                });
+                            }            
+
+
                             /************ ACTUALIZAMOS LOS DATOS DE ESTE CLIENTE **********/
-                            $state.go("app.dashboard", {
-                                animation: 'slide-in-down'
-                            });
+                           
                         } else if (result['message'] == 'error') {
                             //DATOS CON ERRORES O INCOMPLETOS
                             $ionicLoading.hide();
@@ -433,6 +460,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         $ionicLoading.hide();
                     } else if (result['message'] == "User invalid") {
                          alert("USUARIO INVALIDO")
+                         // http://www.querisa.co/uploads/2032.jpg 
                          $ionicLoading.hide();
                     } else {
                         $ionicLoading.hide();

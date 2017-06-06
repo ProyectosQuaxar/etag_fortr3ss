@@ -25,9 +25,11 @@ CUSTOMER_PHONE_INVALID: 'Número telefónico debe contener 10 digitos',
 CUSTOMER_INSERT_FLEET_AFTER: 'Ir a insertar flota después',
 TRUCK_ANIO: 'Año del camión',
 TIRES_EDIT_TIRE: 'Editar llanta',
-CUSTOMER_INSERT_TRUCK_AFTER: 'Ir a insertar camión después'
+CUSTOMER_INSERT_TRUCK_AFTER: 'Ir a insertar camión después',
+FLEET_CHANGE_COMPANY: 'Cambiar compañía '
 
 		});
+
         $translateProvider.translations('en', {
         CONFIG_IDIOMA: 'Languague',
 CONFIG_LANG_DE: 'German',
@@ -470,6 +472,7 @@ CUSTOMER_INSERT_FLEET_AFTER: 'Go to insert fleet',
 TRUCK_ANIO: 'Truck year',
 TIRES_EDIT_TIRE: 'Edit tire',
 CUSTOMER_INSERT_TRUCK_AFTER: 'Go to insert truck after'
+
 
         });
         $translateProvider.translations('pt', {

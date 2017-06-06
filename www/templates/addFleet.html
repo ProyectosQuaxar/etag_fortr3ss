@@ -23,16 +23,20 @@
             </label> -->
 
                 <center>
-                  <button class="button button-full button-assertive" ng-click="showCustomers = !showCustomers; clearSearch(); showForm=true; focusInput=true"> - </button>
-                </center>                
-                 
-                  <div id="customers" class="item item-input item-stacked-label form-border-bottom" style="margin-top:-10px;">
-                    <input type="data.search" class="input-label"  focus-me="focusInput" id="data.companyNameSelected" style= "margin-top: 10px;" placeholder="..." ng-model="data.companyNameSelected" ng-value="c.id"/>                    
+                  <button class="button button-full button-assertive" ng-click="showCustomers = !showCustomers; clearSearch(); showForm=true; focusInput=true">{{'FLEET_CHANGE_COMPANY' | translate}}</button>
+                </center>           
+
+                  <div class="item item-input item-stacked-label form-border-bottom"  style="margin-top:-10px;">
+                    <input type="data.search" class="input-label"  focus-me="focusInput" id="data.companyNameSelected" style= "margin-top: 10px;" placeholder="..." ng-model="data.companyNameSelected"/>                    
+                  </div>
+
+                  <div id="customers" class="item" style="margin-top:-10px;">
+                    <input type="hidden" class="input-label"  focus-me="focusInput" id="data.companyNameSelected" style= "margin-top: 10px;" placeholder="..." ng-model="company" ng-value="c.id"/>
                   </div>
                 <span ng-show="showCustomers" class="fadein fadeout">
                 
                   <ul id="customers_ul" style="margin-top:-10px; margin-left: 10px;" ng-click="showCustomers = !showCustomers">
-                    <li ng-repeat="c in customers | filter:data.companyNameSelected | orderBy: orderList" style="margin-top: 5px;" ng-model="nameCompany" ng-click="selectCustomer(c.id)" >{{c.nameCompany}}<br/>
+                    <li ng-repeat="c in customers | filter:data.companyNameSelected | orderBy: orderList" style="margin-top: 5px;" ng-model="data.companyNameSelected" ng-click="selectCustomer(c.id)" >{{c.nameCompany}}<br/>
                     </li>
                   </ul>
                 </span>
@@ -104,11 +108,11 @@
             <label class="item item-input">
               <span class="input-label" style="font-weight:bold;">{{ 'CUSTOMER_INSERT_TRUCK_AFTER' | translate }}</span>                    
             </label>
-            <ion-toggle toggle-class="toggle-assertive" ng-model="data.truckBefore" style="padding-right:20px;width:95%;">
+            <ion-toggle toggle-class="toggle-assertive" ng-model="data.truckAfter" style="padding-right:20px;width:95%;">
             </ion-toggle>    
           </div>     
               <center>
-                <button class="button button-small button-assertive" ng-click="insertFleet(company, fleet, street, suburb, fleetCountry, fleetState, fleetCity, phone, email, password, manager, rol)" ng-disabled="addFleet.$invalid">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
+                <button class="button button-small button-assertive" ng-click="insertFleet(data.companyNameSelected, fleet, street, suburb, fleetCountry, fleetState, fleetCity, phone, email, password, manager, rol)" ng-disabled="addFleet.$invalid">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
               </center>
         </form>
       </div>
