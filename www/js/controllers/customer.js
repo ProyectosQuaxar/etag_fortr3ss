@@ -255,6 +255,30 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 			                        $scope.customers = result['data'];
 			                        console.log(result['data'])
 			                        
+	                        if ($scope.data.fleetBefore == true){		                       
+		                        $ionicPopup.alert({
+		                            title: info,
+		                            template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+		                            okText: aceptar,
+		                            okType: 'button-balanced'
+	                       		});
+		                         console.log("Contenido de $localStorage.company...");
+		                    	console.log($localStorage.company);
+	                       		 $state.go("app.addFleet", {
+				                    animation: 'slide-in-down'
+				                });
+		                    } else if ($scope.data.fleetBefore == false) {
+		                    	$ionicPopup.alert({
+	                            title: info,
+	                            template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+	                            okText: aceptar,
+	                            okType: 'button-balanced'
+		                        });
+				                $state.go("app.dashboard", {
+				                    animation: 'slide-in-down'
+				                });
+		                    } 
+			                        
 
 			                    }else{
 			                       console.log("no hacemos nada...");
@@ -280,30 +304,7 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 		                    $localStorage.companyName = company;
 		                    console.log($localStorage.companyName)
 		                   
-
-	                        if ($scope.data.fleetBefore == true){		                       
-		                        $ionicPopup.alert({
-		                            title: info,
-		                            template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
-		                            okText: aceptar,
-		                            okType: 'button-balanced'
-	                       		});
-		                         console.log("Contenido de $localStorage.company...");
-		                    	console.log($localStorage.company);
-	                       		 $state.go("app.addFleet", {
-				                    animation: 'slide-in-down'
-				                });
-		                    } else if ($scope.data.fleetBefore == false) {
-		                    	$ionicPopup.alert({
-	                            title: info,
-	                            template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
-	                            okText: aceptar,
-	                            okType: 'button-balanced'
-		                        });
-				                $state.go("app.dashboard", {
-				                    animation: 'slide-in-down'
-				                });
-		                    }            
+           
 
 	                    } else if (result['message'] == 'error') {
 	                        //DATOS CON ERRORES O INCOMPLETOS

@@ -17,6 +17,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         $scope.init = function(){
             $scope.data.truckAfter == true;                       
             $scope.customers = $localStorage.customers;
+            console.log($localStorage.customers)
             console.log($scope.customers);
             $scope.countries = $localStorage.countries;            
             $scope.states = $localStorage.states;            

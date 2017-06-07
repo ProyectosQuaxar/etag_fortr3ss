@@ -1,0 +1,71 @@
+
+<ion-modal-view >
+    <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
+      <h1 class="title">{{'TIRES_EDIT_TIRE'|translate}}</h1>
+    </ion-header-bar>
+    <ion-content style="padding: 15px;">
+    <div class="list">
+      <label class="item item-select" style="padding-top: 0px;">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_POSITION' | translate }}</span>
+         <select ng-model="tirePosition" style="max-width:100%;" required >
+            <option ng-repeat="tire in data.inspectionTires" ng-value="{{tire.position}}" >{{tire.position}}</option>
+          </select>                  
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TAG_HASBEEN_INSTALLED' | translate }}</span>
+          <ion-toggle style="height:45px;padding-right: 10px; margin-right: 30px;" toggle-class="toggle-assertive" ng-model="tagInstalado">{{appModeStatus}}   
+          </ion-toggle> 
+      </label>      
+      <!--
+      <label class="item item-select" style="padding-top: 0px;">
+          <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIREBRAND' | translate }}</span>
+            <select ng-model="brandmId" style="max-width:100%;" required class="inputNumber">
+              <option ng-repeat="brands in data.tireBrands" ng-value="{{brands.id}}" ng-selected="brands.id == brandId">{{brands.nombre}}</option>
+            </select>                       
+        </label>
+      -->
+      <label class="item item-select" style="padding-top: 0px;">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIREBRAND' | translate }}</span>
+          <select ng-model="tirebrand" style="max-width:100%;" ng-change="getSizesByBrand(tirebrand)" required>
+            <option ng-repeat="brand in data.tireBrands" value="{{brand.id}}">{{brand.nombre}}</option>
+        </select>
+      </label>
+
+      <label class="item item-select" style="padding-top: 0px;">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIRESIZE' | translate }}</span>
+          <select ng-model="size" style="max-width:100%;" ng-change="getDesignBySize(size)" required>
+            <option ng-repeat="sizes in data.tireSizes" ng-value="{{sizes.id}}" ng-selected="sizes.id == size">{{sizes.medida}}</option>
+          </select>
+      </label>
+
+      <label class="item item-select" style="padding-top: 0px;">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIREDESIGN' | translate }}</span>
+          <select ng-model="design" style="max-width:100%;" required>
+            <option ng-repeat="model in data.tireModels">{{model.nombre}}</option>
+          </select>
+      </label>
+      
+      <label class="item item-input">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_PRICE' | translate }}</span>
+          <input type ="number" ng-model ="price" class="inputNumber" style="max-width:100%;" required>
+      </label>
+      
+      <label class="item item-input">
+        <span class="input-label" style="font-size: 12px;">{{ 'TIRES_DOT' | translate }}</span>
+          <input type ="text" ng-model ="dot" class="inputNumber" style="max-width:100%;" required>
+      </label>
+      
+      <div class="row">
+            <div class="col text-center">
+              <button class="button button-small button-positive" ng-click="">{{'INSPECTION_AGREGAR'|translate}}</button>
+            </div>
+          </div>
+        <center>
+          <a class="button button-small button-assertive" ng-click="closeModal(1)" style="padding-top:5px">
+            {{ 'REPORTS_CERRAR' | translate }}
+          </a>            
+        </center>    
+      </div>
+    </ion-content>
+ </ion-modal-view>
