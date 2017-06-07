@@ -1,6 +1,6 @@
 angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
 .controller('FleetCtrl', function($ionicPlatform, ionicMaterialInk, $scope, $localStorage, $translate, $ionicLoading, $ionicPopup, Data, StorageService, $rootScope, $state, $timeout) {
-    $scope.data.truckAfter = true;    
+    $scope.data.truckAfter == true;    
     $scope.customers = {};
     $scope.fleets = {};
     $scope.countries = {};
@@ -14,7 +14,8 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         $ionicPlatform.registerBackButtonAction(function(event) {
         }, 100);
         
-        $scope.init = function(){                    
+        $scope.init = function(){
+            $scope.data.truckAfter == true;                       
             $scope.customers = $localStorage.customers;
             console.log($scope.customers);
             $scope.countries = $localStorage.countries;            
@@ -419,9 +420,9 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
 
                         $ionicLoading.hide();
                         $scope.changeCompany = false;
-                        $state.go('app.dashboard', {
+                        /*$state.go('app.dashboard', {
                             animation: 'slide-in-down'
-                        });
+                        });*/
 
                     } else {
                         $ionicLoading.hide();

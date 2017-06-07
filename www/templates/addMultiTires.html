@@ -81,6 +81,13 @@
 							<option ng-repeat="model in data.tireModels">{{model.nombre}}</option>
 						</select>
 					</label>
+					<label class="item item-select" style="padding-top: 0px;">
+						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TYPE_TYRE' | translate }}</span>
+						<select ng-model ="data.tireType" style="max-width:100%;" required>
+							<option value="NUEVA">{{ 'TIRES_NEW' | translate }}</option>
+							<option value="RENOVADA">{{ 'TIRES_RENEWED' | translate }}</option>							
+						</select>
+					</label>
 					<label class="item item-input">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_PRICE' | translate }}</span>
 						<input type ="number" ng-model ="price" class="inputNumber" style="max-width:100%;" required>
@@ -142,7 +149,7 @@
                 </div>
                 <br><br>			    							    
 			    <center>
-			    	<button class="button button-smaill button-balanced" ng-click="insertTire(tirebrand, size, design,  price, dot, t.tag, t.posicion, wear, pressure, tagInstalado, data.semaphore)">{{ 'MSG_SUBMIT_LABEL' | translate }} {{ 'DASHBOARD_LLANTA' | translate }}</button>
+			    	<button class="button button-smaill button-balanced" ng-click="insertTire(tirebrand, size, design, data.tireType, price, dot, t.tag, t.posicion, wear, pressure, tagInstalado, data.semaphore)">{{ 'MSG_SUBMIT_LABEL' | translate }} {{ 'DASHBOARD_LLANTA' | translate }}</button>
 			    </center>
 			    <br><br>
         	</div>	 

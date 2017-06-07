@@ -188,8 +188,8 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
-    function insertTire(url, lang, cliente, flota, unidad, marcaLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId){
-        return $http({method:"GET", url:url+ 'submitLlantaNueva?cliente=' + cliente + '&lang=' + lang + '&flota=' + flota + '&unidad=' + unidad + '&marcaLlanta=' + marcaLlanta + '&medidaLlanta=' + medidaLlanta + ' &disenoLlanta=' + disenoLlanta + '&precio=' + precio + '&dot=' + dot + '&tag=' + tag + '&posicion=' + posicion + '&semaforo=' + semaforo + '&desgaste=' + desgaste + '&kilometraje=' + kilometraje + '&presion=' + presion + '&tagInstalado=' + tagInstalado + '&condiciones=' + condiciones + '&idHistorial=' + inspTruckId }).then(function(result){
+    function insertTire(url, lang, cliente, flota, unidad, marcaLlanta, tipoLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId){
+        return $http({method:"GET", url:url+ 'submitLlantaNueva?cliente=' + cliente + '&lang=' + lang + '&flota=' + flota + '&unidad=' + unidad + '&marcaLlanta=' + marcaLlanta + '&tipoLlanta=' + tipoLlanta + '&medidaLlanta=' + medidaLlanta + '&disenoLlanta=' + disenoLlanta + '&precio=' + precio + '&dot=' + dot + '&tag=' + tag + '&posicion=' + posicion + '&semaforo=' + semaforo + '&desgaste=' + desgaste + '&kilometraje=' + kilometraje + '&presion=' + presion + '&tagInstalado=' + tagInstalado + '&condiciones=' + condiciones + '&idHistorial=' + inspTruckId }).then(function(result){
             return result.data;
         });
     }
@@ -348,8 +348,8 @@ angular.module('starter.services', [])
         getTireDesignbySize:function(url, id){
             return getTireDesignbySize(url, id);
         },
-        insertTire:function(url, lang, cliente, flota, unidad, marcaLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId){
-            return insertTire(url, lang, cliente, flota, unidad, marcaLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId);
+        insertTire:function(url, lang, cliente, flota, unidad, marcaLlanta, tipoLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId){
+            return insertTire(url, lang, cliente, flota, unidad, marcaLlanta, tipoLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId);            
         },
         custInfoData:function(url, id, company){
             return custInfoData(url, id, company);

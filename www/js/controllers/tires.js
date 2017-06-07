@@ -454,7 +454,8 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             $ionicScrollDelegate.scrollTop();
         }
 
-        $scope.insertTire = function(tirebrand, size, design,  price, dot, tag, truckPos, wear, pressure, tagInstalado, semaphore){
+        $scope.insertTire = function(tirebrand, size, design, tireType, price, dot, tag, truckPos, wear, pressure, tagInstalado, semaphore){
+            console.log(tirebrand + " " + size + " " + design+ " " + tireType+ " " +price+ " " + dot+ " " + tag+ " " + truckPos+ " " + wear+ " " + pressure+ " " + tagInstalado+ " " + semaphore)
             var nullValues = 0;
             var otherDetected = false;
             if ($scope.isValid(tagInstalado)) {
@@ -504,6 +505,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             console.log("Marca: " + tirebrand)
             console.log("Medida: " + size)
             console.log("Diseño: " + design)
+            console.log("Tipo de llanta:" + tireType)
             console.log("Precio: " + price) 
             console.log("DOT: " + dot)
             console.log("TAG Llanta: " + tag)                    
@@ -627,7 +629,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
                         //Procedemos a insertar llantas
                         var loading = $translate.instant('MSG_LOADING');
-                        var DataPromise = Data.insertTire($rootScope.url, $localStorage.languague, submitDataTruck.company, submitDataTruck.fleet, submitDataTruck.truckId, tirebrand, size, design, price, dot, tag, truckPos, semaphore, wear, submitDataTruck.kms, pressure, tagInstalado, condFounds, $localStorage.inspectionId);
+                        var DataPromise = Data.insertTire($rootScope.url, $localStorage.languague, submitDataTruck.company, submitDataTruck.fleet, submitDataTruck.truckId, tirebrand, tireType, size, design, price, dot, tag, truckPos, semaphore, wear, submitDataTruck.kms, pressure, tagInstalado, condFounds, $localStorage.inspectionId);
                         DataPromise.then(function(result) {
 
                             console.log(result['result'])

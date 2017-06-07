@@ -3,7 +3,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
 .run(function($localStorage, $window, $translate, $ionicPlatform, $rootScope, $cordovaBluetoothSerial) {
     //$rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
     //$rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
-    //x|$rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
+    //$rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
 
     $rootScope.baseurl = 'http://10.6.159.12:8090/millantarfid/';
     $rootScope.url = 'http://10.6.159.12:8090/millantarfid/mobileApp/';
