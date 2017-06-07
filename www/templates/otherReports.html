@@ -4,13 +4,13 @@
         </button>
       </ion-nav-buttons>
   <ion-content>
-        <center>    
-        <br>        
-            <p>{{ 'REPORTS_CHOOSE_DATA_RANGE' | translate }}.</p>
-        </center>
+        <center><h4>{{customerName}}</h4>
         <br>
+        {{ 'REPORTS_CHOOSE_DATA_RANGE' | translate }}.
+        </center>  
+        <center>    
 
-                    <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right ">
+        <div style="text-align:right; padding:5px 0px;" class="button-fab-bottom-right ">
             <div class="list">                                            
                 <label class="item item-input item-select" style="width:50%; float:left;">
                 <div class="input-label">
@@ -30,7 +30,7 @@
                 </label>
                 </div>      
                 <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
-                <label class="item" style="border:none;width:25%; float:left;">
+                <label class="item" style="border:none;width:25%; float:left;margin-top:-25px;">
                     <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphAnalisis(initDate,endDate);graphSemaforos(initDate,endDate);"></button>              
                 </label>                 
                     </div>  
@@ -49,9 +49,7 @@
         <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
 
         <div  style="margin: 0 auto; max-width:600px">
-            <div class="im-wrapper">
-                <h4 class="no-border no-padding-bottom">{{ 'REPORTS_ANALYSIS' | translate }}</h4>
-            </div>
+        <h4 class="no-border no-padding-bottom">{{ 'REPORTS_ANALYSIS' | translate }}</h4>
 
             <div  style="margin: 0 auto; max-width:600px">            
         <br><br><br>
@@ -80,9 +78,7 @@
         </ion-scroll>
     </ion-slide>       
         <ion-slide>
-            <div class="im-wrapper">
-                <h4 class="no-border no-padding-bottom">{{ 'REPORTS_SEMAFORO' | translate }}</h4>
-            </div>
+        <h4 class="no-border no-padding-bottom">{{ 'REPORTS_SEMAFORO' | translate }}</h4>
 
 
         <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >

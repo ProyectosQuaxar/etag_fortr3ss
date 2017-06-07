@@ -373,8 +373,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
 
                     if (result) {
                         $scope.fechas = result['fechas'];
-                        $scope.generalInfo = result['generalInfo'];
-                        $scope.generalInfo.llantas = $scope.generalInfo[0].llantas
+                        $scope.generalInfo.llantas = result['llantas'];
                         console.log("Llantas: " + $scope.generalInfo.llantas)
                         $scope.meses = [
                             '',
@@ -404,7 +403,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                         var mesRevision =  $scope.inspeccionMes;
                         $scope.cliente = $localStorage.cliente                        
                         $scope.roldeCambio = $localStorage.roldeCambio                        
-                        $scope.generalInfo.unidades = $scope.generalInfo[0].unidades
+                        $scope.generalInfo.unidades = result['unidades'];
 
                         console.log("Información general: " + $scope.generalInfo.unidades);
                         console.log($scope.meses[mesRevision]);
@@ -658,7 +657,6 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                                var tipo = $scope.unidadesResumen[i].tipo;                               
                                 StorageService.addList(inspeccion, unidad, tipo); 
                             }                    
-                    console.log($localStorage.list);
                 } else {
                     $ionicLoading.hide();
                     $ionicPopup.alert({
@@ -832,9 +830,8 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
             if (result) {
                 $scope.fechas = result['fechas'];
 
-                $scope.generalInfo = result['generalInfo'];
-                $scope.generalInfo.llantas = $scope.generalInfo[0].llantas
-                $scope.generalInfo.unidades = $scope.generalInfo[0].unidades
+                $scope.generalInfo.llantas = result['llantas'];
+                $scope.generalInfo.unidades = result['unidades'];
                 $scope.meses = [
                             '',
                             $translate.instant('REPORTS_ENERO'),
@@ -861,7 +858,6 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 console.log($scope.inspeccionMes);
 
                 $scope.cliente = $localStorage.cliente
-                $scope.generalInfo.unidades = $scope.generalInfo[0].unidades
 
                 $localStorage.idSemaforos = result['idSemaforos'];
                 $localStorage.idFlota = result['idFlota'];
