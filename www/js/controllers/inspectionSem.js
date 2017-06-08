@@ -18,9 +18,9 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         $scope.data.tireBrands = $localStorage.tireBrands;
         console.log($scope.data.tireBrands);
 
-        /*
-        $scope.tag = nfcService.tag;
-        */
+        
+        /*$scope.tag = nfcService.tag;*/
+        
         
         $scope.data.dr = bluetooth.milimetraje_;
         $scope.data.psi = bluetooth.pressure_;
@@ -2434,6 +2434,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 $scope.showSuccessMessage($translate.instant('INSPECTION_TIRE_SAVED_SUCCESSFULLY'))
 
                                 var tiresToInspection = $localStorage.inspectionTires;
+                                console.log($localStorage.inspectionTires)
                                 for (i = 0; i < tiresToInspection.length; i++) {                                
                                     if (tiresToInspection[i].tagId == tire.tagId) {                                    
                                         $localStorage.inspectionTires.splice(i, 1);
@@ -2458,7 +2459,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
                                 console.log("ONLINE: "+$scope.data.dr)
                                 //ONLINE START
-                                var DataPromise = Data.insertTireHistorial($rootScope.url, $scope.userId, tire.tagId, $scope.data.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, $scope.data.kilometraje, $scope.data.truckTag, $scope.data.dr, $scope.data.psi, $scope.data.comments, condFounds, $scope.data.tagDetected);                    
+                                var DataPromise = Data.insertTireHistorial($rootScope.url, $scope.userId, tire.tagId, $scope.data.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, $scope.data.kilometraje, $scope.data.truckTag, $scope.data.dr, $scope.data.psi, $scope.data.comments, condFounds, $scope.data.tagDetected, $scope.data.tireType);                    
                                 DataPromise.then(function(result) {
                                     if (result['message'] == "success") {                            
                                         var tiresToInspection = $localStorage.inspectionTires;

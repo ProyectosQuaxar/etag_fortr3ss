@@ -998,6 +998,12 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             }
         }
 
+        $scope.recallToInspection = function() {
+            $state.go('app.dashboard', {
+                animation: 'slide-in-down'
+            });            
+        }
+
         $scope.addTireSize = function(brandId, tireSize){
             console.log(brandId)
             console.log(tireSize)

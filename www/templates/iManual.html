@@ -50,7 +50,7 @@
 								<input type="number" ng-model="data.dr" style="border-bottom:1px solid #F4001E; font-size:16px;"/>
 							</label>                                
 						</td>
-					</tr>  
+					</tr>    
 					<tr>
 						<td style="text-align:right;"><strong>{{ 'INSPECTION_PSI' | translate }}:</strong></td>
 						<td>
@@ -58,7 +58,18 @@
 								<input type="number" ng-model="data.psi" style="border-bottom:1px solid #F4001E; font-size:16px;"/>
 							</label>                                
 						</td>
-					</tr>                   				
+					</tr> 
+					<tr>
+                        <td tyle="text-align:right;vertical-align:middle;"><strong>{{ 'TIRES_TYPE_TYRE' | translate }}:</strong></td>
+                        <td>
+                        	<label class="item item-select">    
+	                            <select ng-model ="data.tireType" style="max-width:100%;" required>
+	                                <option value="NUEVA" ng-selected="it.tireType == 'NUEVA'">{{ 'TIRES_NEW' | translate }}</option>
+	                                <option value="RENOVADA" ng-selected="it.tireType == 'RENOVADA'">{{ 'TIRES_RENEWED' | translate }}</option>
+	                            </select>
+                            <label> 	
+                        </td>
+                    </tr>               				
 				</table>
                 <div class="row">
                     <div class="col col-sm-3">
