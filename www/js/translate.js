@@ -26,7 +26,10 @@ CUSTOMER_INSERT_FLEET_AFTER: 'Ir a insertar flota después',
 TRUCK_ANIO: 'Año del camión',
 TIRES_EDIT_TIRE: 'Editar llanta',
 CUSTOMER_INSERT_TRUCK_AFTER: 'Ir a insertar camión después',
-FLEET_CHANGE_COMPANY: 'Cambiar compañía '
+FLEET_CHANGE_COMPANY: 'Cambiar compañía ',
+MENU_INSPECTION_MODE: 'Seleccione el método de inspección',
+MENU_INSPECTION_GUN: 'Inspección por Pistola RFID'
+
 
 		});
 
@@ -471,8 +474,9 @@ CUSTOMER_PHONE_INVALID: 'Phone number must contain 10 digits',
 CUSTOMER_INSERT_FLEET_AFTER: 'Go to insert fleet',
 TRUCK_ANIO: 'Truck year',
 TIRES_EDIT_TIRE: 'Edit tire',
-CUSTOMER_INSERT_TRUCK_AFTER: 'Go to insert truck after'
-
+CUSTOMER_INSERT_TRUCK_AFTER: 'Go to insert truck after',
+MENU_INSPECTION_MODE: 'Select Inspection Method',
+MENU_INSPECTION_GUN: 'Inspection by RFID Gun'
 
         });
         $translateProvider.translations('pt', {

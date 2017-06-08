@@ -1,10 +1,10 @@
 
-<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="InspectionModeCtrl">
+<ion-view view-title="{{ 'MENU_MODE_INSPECTION' | translate }}" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="InspectionModeCtrl">
   <ion-content>  
       <div class="ion-content">
         <div style="padding-top:20px;">
             <div class="item item-divider millantaTheme" style="padding-top:0px;">
-                {{ 'MENU_MODE_INSPECTION' | translate }}
+                {{ 'MENU_INSPECTION_MODE' | translate }}
             </div>
             <label class="item item-input item-select " style="height:40px;">
                 <select ng-change="modeDeviceSelected(data.inspectionMode)" ng-model="data.inspectionMode" style="max-width:100%;" ng-init="data.modeDevice">    

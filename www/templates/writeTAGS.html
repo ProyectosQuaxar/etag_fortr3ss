@@ -1,11 +1,11 @@
-<ion-view view-title="" controller="NFCCtrl" ng-init="init()">
+<ion-view view-title="{{ 'MENU_WRITE_TAGS_LABEL' | translate }} NFC" controller="NFCCtrl" ng-init="init()">
   <ion-content>
     <ion-slides  options="options" slider="data.slider" style="height:100%!important;width:auto;">
         <ion-slide-page>
           <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
             <div class="content">
                 <center>
-                  <h4>{{ 'MENU_WRITE_TAGS_LABEL' | translate }} NFC</h4>                
+                  <!--<h4>{{ 'MENU_WRITE_TAGS_LABEL' | translate }} NFC</h4> --> <br>                
                   <img src="img/nfc_inspection.png" style="max-width:200px;height:auto;"/>
                   <label class="item item-input item-stacked-label form-border-bottom leftZero" style="border:1px solid #fff;">
                   <span class="input-label">{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</span>

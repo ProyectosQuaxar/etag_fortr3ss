@@ -186,6 +186,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         $scope.openModal = function() {        
             $scope.modal.show();
         };
+
         $scope.closeModal = function() {
             $scope.modal.hide();
         };
@@ -364,6 +365,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                 });
             }
         }
+
         $scope.findTruck2 = function(){            
             $scope.tagCamion = angular.element(document.querySelector('#tagTruck'))[0].value;            
 
