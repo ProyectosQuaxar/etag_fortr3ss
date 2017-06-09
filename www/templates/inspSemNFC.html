@@ -1,4 +1,4 @@
-<ion-view view-title="" class="ion-content" data-ng-init="init()" ng-controller="InspectionCtrl">
+<ion-view view-title="{{ 'INSPECTION_NFC' | translate }}" class="ion-content" data-ng-init="init()" ng-controller="InspectionCtrl">
     <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
@@ -18,7 +18,7 @@
             <ion-slides  options="options" slider="data.slider" style="height:100%!important;width:auto;">
                 <ion-slide-page>
                     <center>
-                        <h4>{{ 'INSPECTION_NFC' | translate }}</h4>
+                        <!--<h4>{{ 'INSPECTION_NFC' | translate }}</h4>--><br>
                         <div class="col-67">
                             <span ng-show="data.activatedNFC" class="balanced">{{ 'INSPECTION_NFC_ACTIVATED' | translate }} <img src="img/nfc.png" style="max-width:10px;height:auto;"/> <br> {{ 'INSPECTION_DESLICE_TELEFONO' | translate }}</span>
                             <span ng-show="!data.activatedNFC" class="assertive">{{ 'INSPECTION_NFC_DEACTIVATED' | translate }} <img src="img/nfc.png" style="max-width:10px;height:auto;"/></span>            

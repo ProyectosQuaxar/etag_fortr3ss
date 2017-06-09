@@ -2,6 +2,7 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
 .controller('NFCCtrl', ['$scope', '$window', '$timeout','$localStorage','$ionicLoading','$ionicPopup','$translate', function ($scope, $window, $timeout, $localStorage, $ionicLoading, $ionicPopup, $translate) {
     
                 $scope.write, $scope.erase;
+                $scope.truckType = "";
 
                 function reset() {
                     $timeout(function () {
@@ -101,12 +102,34 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
                 }
 
                 $scope.init = function(){
+                    console.log("Entramos a init")
                 	$scope.trucks = $localStorage.trucks;
+                    console.log($scope.trucks)
                     $scope.data.pos = 1;
+                    $scope.$broadcast('scroll.refreshComplete');   
                 }
 
                 $scope.getTag = function(tagValue){
                 	$scope.data.tagValue = tagValue;
+                    console.log("A buscar..." + tagValue)
+                    angular.forEach($localStorage.trucks, function(value, key) {                            
+                        if(value.tag == tagValue){
+                           console.log(value.tipo);
+                           $scope.truckType = value.tipo;                            
+                        }
+                    }); 
+
+                    angular.forEach($localStorage.truckTypes, function(value, key) {                            
+                        if(value.id == $scope.truckType){
+                           console.log(value.id);
+                           $scope.truckTiresNumber = value.numLlantas;                            
+                           console.log($scope.truckTiresNumber);
+                        }
+                    }); 
+
+
+                    
+
                 }
 
                 $scope.getNumberTag = function(tagValue){
@@ -164,4 +187,10 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
                     }
                     
                 }
+
+                $scope.getDataTruck = function(){
+
+                }
+
+
 }]);

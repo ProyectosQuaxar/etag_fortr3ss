@@ -16,6 +16,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         $scope.data.tireModels = $localStorage.tireModels;
         $scope.data.tireSizes = $localStorage.tireSizes;
         $scope.data.tireBrands = $localStorage.tireBrands;
+        $scope.tagId = '';
         console.log($scope.data.tireBrands);
 
         /*
@@ -101,7 +102,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             $scope.oModal1 = modal;
         });
 
-        $scope.openModal = function(index) {
+        $scope.openModal = function(index, tagId) {
+            console.log(tagId)            
             if (index == 1) $scope.oModal1.show();
         };
 
@@ -191,8 +193,12 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             $scope.modal.hide();
         };
 
-        $scope.openModal = function(index) {
+        $scope.openModal = function(index, tagId) {
+            $scope.data.myTagId = tagId;
+            console.log("ID: " + tagId)
             console.log("Entramos al modal!" + index)
+            $scope.tires = $localStorage.tires;
+            console.log($scope.tires);
             if (index == 1) $scope.oModal1.show();           
         };
 

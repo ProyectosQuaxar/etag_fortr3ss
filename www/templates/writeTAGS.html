@@ -1,6 +1,10 @@
 <ion-view view-title="{{ 'MENU_WRITE_TAGS_LABEL' | translate }} NFC" controller="NFCCtrl" ng-init="init()">
   <ion-content>
+  <br>
+   <ion-refresher pulling-text="{{'MSG_UPDATE'|translate}}" refreshing-text="{{'MSG_UPDATING'|translate}}" on-refresh="init()"  class="fadein fadeout" ng-controller="NFCCtrl"></ion-refresher>
+   <br>
     <ion-slides  options="options" slider="data.slider" style="height:100%!important;width:auto;">
+    <br>
         <ion-slide-page>
           <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
             <div class="content">
@@ -16,7 +20,12 @@
                       <select ng-model="data.tagCamion" style="max-width:100%;" ng-change="getTag(data.tagCamion)">   
                         <option ng-repeat="truck in trucks" value="{{truck.tag}}">{{ 'DASHBOARD_TAG' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
                       </select> 
-                  </label>    
+                  </label>
+
+                  <div id="truckTiresNumber" class="item" style="margin-top:-10px;">
+                    <input type="input-label" class="input-label" style= "margin-top: 10px;" ng-model="truckTiresNumber"/>
+                  </div>
+
                   <br>  
                   <center>
                     <strong>{{ 'NFC_WRITE_TAG' | translate }}</strong>
