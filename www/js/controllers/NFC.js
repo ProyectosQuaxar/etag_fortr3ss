@@ -2,7 +2,9 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
 .controller('NFCCtrl', ['$scope', '$window', '$timeout','$localStorage','$ionicLoading','$ionicPopup','$translate', function ($scope, $window, $timeout, $localStorage, $ionicLoading, $ionicPopup, $translate) {
     
                 $scope.write, $scope.erase;
+                $scope.truckTiresNumber = "";
                 $scope.truckType = "";
+                $scope.data.pos = 1;
 
                 function reset() {
                     $timeout(function () {
@@ -137,28 +139,40 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
                     numberTag = numberTag.replace(/[^0-9]/gi, '');
                     $scope.data.tagValue = numberTag;
                     $scope.data.tagCamion = numberTag;
+                    $scope.data.pos = 1;
                 }
 
                 $scope.inc = function(){
-                    var position = parseInt($scope.data.pos);
-                    $scope.data.pos = position + 1;
-                    if($scope.data.tagCamion === undefined){
-                        if($scope.data.tagValue !== undefined){
-                            $scope.data.tagCamion = $scope.data.tagValue;
+                    var position = parseInt($scope.data.pos);  
+                    console.log(position)
+                    console.log($scope.data.pos)
+                    
+                    if ($scope.data.pos <= $scope.truckTiresNumber ){
+                        console.log("Posicion actual ->" + $scope.data.pos)
+
+                        if($scope.data.tagCamion === undefined){
+                            if($scope.data.tagValue !== undefined){
+                                $scope.data.tagCamion = $scope.data.tagValue;
+                            } else {
+                                var msgError = $translate.instant('NFC_WRITE_TAG')
+                                var popTitle = $translate.instant('MSG_ERROR')
+                                var aceptar = $translate.instant('MSG_ACEPTAR')
+                                $ionicLoading.hide();
+                                $ionicPopup.alert({
+                                    title: popTitle,
+                                    template: '<center><p><b>' + msgError + '</p></center>',
+                                    okText: aceptar,
+                                    okType: 'button-assertive'
+                                });                            
+                            }
                         } else {
-                            var msgError = $translate.instant('NFC_WRITE_TAG')
-                            var popTitle = $translate.instant('MSG_ERROR')
-                            var aceptar = $translate.instant('MSG_ACEPTAR')
-                            $ionicLoading.hide();
-                            $ionicPopup.alert({
-                                title: popTitle,
-                                template: '<center><p><b>' + msgError + '</p></center>',
-                                okText: aceptar,
-                                okType: 'button-assertive'
-                            });                            
+                            $scope.data.tagValue = $scope.data.tagCamion + (position < 10 ? '0' : '') + position;
                         }
-                    } else {
-                        $scope.data.tagValue = $scope.data.tagCamion + (position < 10 ? '0' : '') + position;
+                        $scope.data.pos = position + 1;
+                        console.log("Nueva posicion ->" + $scope.data.pos)
+                    }   if ($scope.data.pos > $scope.truckTiresNumber ) {
+                        $scope.data.pos = $scope.data.pos - 1;
+                        console.log("No se puede incrementar mas..." + $scope.data.pos);
                     }
                 }
 

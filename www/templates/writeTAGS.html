@@ -21,11 +21,6 @@
                         <option ng-repeat="truck in trucks" value="{{truck.tag}}">{{ 'DASHBOARD_TAG' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
                       </select> 
                   </label>
-
-                  <div id="truckTiresNumber" class="item" style="margin-top:-10px;">
-                    <input type="input-label" class="input-label" style= "margin-top: 10px;" ng-model="truckTiresNumber"/>
-                  </div>
-
                   <br>  
                   <center>
                     <strong>{{ 'NFC_WRITE_TAG' | translate }}</strong>
