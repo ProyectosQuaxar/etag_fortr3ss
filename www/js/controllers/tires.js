@@ -46,6 +46,8 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
         }, 100);    
 
         $scope.init = function() {
+            $scope.fleets = $localStorage.fleets;
+            console.log("Contenido de Fleets: " + $scope.fleets);
             $scope.customers = $localStorage.customers;
             $scope.data.tireModels = $localStorage.tireModels;
             if($localStorage.addTire){
@@ -88,9 +90,9 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 console.log("company: " + company + " localStorage: " + $localStorage.company)           
                 if (company == $localStorage.company) {
                     //seleccionar las flotas almacenadas en Storage
-
                     $scope.fleet = $localStorage.fleet;
                     $scope.fleets = $localStorage.fleets;
+                    console.log($scope.fleets)
                     $scope.idFlota = $localStorage.idFlota;
                 } else {
                     //informamos que 
@@ -540,7 +542,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                         }
                     }
                 });
-                console.log("entonces, las condicones encontradas son: " + condFounds)
+                console.log("entonces, las condiciones encontradas son: " + condFounds)
                 
                 if(otherDetected){
                     if($scope.data.others === undefined || $scope.data.others == ""){
@@ -620,6 +622,34 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                                 $localStorage.addTire.splice(i, 1);
                             }
                         }    
+
+                        console.log("[company]: " + submitDataTruck.company)
+                        console.log("[fleet]: " + submitDataTruck.fleet)
+                        console.log("[truckId]: " + submitDataTruck.truckId)
+                        console.log("[kms] : " + submitDataTruck.kms)
+
+                        var tireAdd = {
+                            id: tag,
+                            camionId: submitDataTruck.truckId,
+                            customerId: submitDataTruck.company,
+                            desgaste: wear,
+                            flotaId: submitDataTruck.fleet ,
+                            kilometraje: submitDataTruck.kms,
+                            position: truckPos,
+                            pr: pressure,
+                            price: price,
+                            registerDate: null,
+                            semaforo: semaphore,
+                            tagId: tag,
+                            tagInstalado: tagInstalado,
+                            tireBrand: tirebrand,
+                            tireModel: design,
+                            tireSize: size,
+                            tireType: tireType,
+                            year: dot
+                        }
+
+                        StorageService.addTire(tireAdd);
                         $scope.data.addTire = $localStorage.addTire;
                         $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
                         $ionicScrollDelegate.scrollTop();
@@ -1120,7 +1150,10 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
         }
        
+        $scope.recallToInspection = function() {
+             $state.go('app.dashboard', {
+                animation: 'slide-in-down'
+            });     
+        }
 
-
-
-    })
+})

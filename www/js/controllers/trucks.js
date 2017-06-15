@@ -20,6 +20,8 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         $scope.company = $localStorage.company;
         $scope.customers = $localStorage.customers;
         $scope.fleets = $localStorage.fleets;
+        console.log("Local: " + $localStorage.fleets);
+        console.log("Scope: " + $scope.fleets);
         $scope.fleetSelId = $localStorage.fleetSelId;
         $scope.fleetSelName = $localStorage.fleetSelName;
         $scope.truckBrands = $localStorage.truckBrands;
@@ -68,6 +70,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         $scope.tag = $localStorage.companyIdAccount + unidad
     }
     $scope.getFlotas = function(company) {
+        console.log("Entramos a cambiar cliente...");
         if ($localStorage.appModeStatus) {
             //si el modo offline está activado
             //comparamos si la compañia seleccionada es la misma que             
@@ -75,6 +78,8 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 //seleccionar las flotas almacenadas en Storage
                 $scope.fleet = $localStorage.fleet;
                 $scope.fleets = $localStorage.fleets;
+                console.log("Scope" + $scope.fleets);
+                console.log("Local" + $localStorage.fleets);
                 $scope.idFlota = $localStorage.idFlota;
             } else {
                 //informamos que 
@@ -109,6 +114,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
             })
         }
     }
+
     $scope.getTruckModelsbyMarca = function(id) {
         if ($localStorage.appModeStatus) {
             console.log("Entró en Offline")
@@ -223,7 +229,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
 
         }
     }
-    $scope.insertTruck = function(company, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo, tiresBefore) {                
+    $scope.insertTruck = function(company, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo, tiresBefore) {                
         console.log("insertar llantas? " + tiresBefore)
         if(tiresBefore){
             //SI AGREGAREMOS LLANTAS DESPUES
@@ -251,11 +257,13 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                     if ($localStorage.appModeStatus) {
                         //si el modo offline está activado
                         //comparamos si la compañia seleccionada es la misma que    
-
+                        console.log("Como estamos en modo offline mandaremos estos datos")
+                        console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo);
                         var truck = {
                             idFlota: idFlota,
                             idModelo: idModelo,
                             placas: placas,
+                            anio: anio,
                             tag: tag,
                             unidad: unidad,
                             pressureType: pressureType,
@@ -264,12 +272,48 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             tipo: tipo
                         }
 
-
-
-                        StorageService.addTruck(truck);             
+                        StorageService.addTruck(truck);   
+                        $localStorage.trucks.push({id: tag, idFlota: idFlota, idModelo: idModelo, nombreOperador: nombreOperador, 
+                            placas: placas, pressureType: pressureType, tag: tag, tagInstalado: tagInstalado, tipo: tipo, unidad: unidad, year: anio});          
                         console.log("entró e imprimió el siguiente mensaje:")
                         console.log($translate.instant('TRUCK_SAVED_SUCCESSFULY'))
                         $scope.showSuccessMessage($translate.instant('TRUCK_SAVED_SUCCESSFULY'));
+                        /** El desmadre comienza desde aquí **/
+
+                        angular.forEach($localStorage.truckTypes, function(value, key) {                    
+                            if(tipo == value.id){
+                                $scope.data.imgTruck = $rootScope.baseurl + "static/images/trucktypes/" + value.img;
+                                $scope.data.numLlantas = value.numLlantas;
+                                $scope.data.truckTypeName = value.nombre
+                            }
+                        });
+
+                        console.log("el numero de llantas a registrar es: " + $scope.data.numLlantas)
+                        //$scope.data.truckInspectionated = truckData;
+                        console.log("entonces el camión es? ")
+                        console.log($scope.data.truckInspectionated)
+                        
+                        //Insertamos llanta a llanta
+                        $localStorage.addTire = [];           
+                        $scope.data.tireConditions = $localStorage.tireConditions;
+                        for (var i=1; i<$scope.data.numLlantas+1; i++) {
+                            $localStorage.addTire.push(
+                                {posicion: i, tag: tag+(i < 10 ? '0' : '') + i}
+                            );                
+                        }
+
+                        angular.forEach($localStorage.truckTypes, function(value, key) {                    
+                            if(tipo == value.id){
+                                $scope.data.imgTruck = $rootScope.baseurl + "static/images/trucktypes/" + value.img;
+                                $scope.data.numLlantas = value.numLlantas;
+                                $scope.data.truckTypeName = value.nombre
+                            }
+                        });
+                        $scope.data.addTire = $localStorage.addTire;
+                        $scope.truckTypes = $localStorage.truckTypes;
+
+
+                        /** Y aqui despues del desmadre pasamos a insertar las llantas**/
                         $state.go("app.addMultiTires", {
                                 animation: 'slide-in-down'
                             });
@@ -284,9 +328,9 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             maxWidth: 200,
                             showDelay: 0
                         });
-
-
-                        var DataPromise = Data.insertTruck($rootScope.url, $localStorage.languague, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo)
+                        console.log("Mandaremos estos datos...")
+                        console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo);
+                        var DataPromise = Data.insertTruck($rootScope.url, $localStorage.languague, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo)
                         DataPromise.then(function(result) {
                             if (result['message'] == 'success') {
                                 var truckId = result['truckId'];
@@ -462,6 +506,9 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 }
 
                 StorageService.addTruck(truck);
+                 $localStorage.trucks.push({id: tag, idFlota: idFlota, idModelo: idModelo, nombreOperador: nombreOperador, 
+                            placas: placas, pressureType: pressureType, tag: tag, tagInstalado: tagInstalado, tipo: tipo, unidad: unidad, year: anio});          
+                        console.log("Guarde en localStorage")
                 $scope.showSuccessMessage($translate.instant('TRUCK_SAVED_SUCCESSFULY'))                
                 $state.go("app.dashboard", {
                         animation: 'slide-in-down'

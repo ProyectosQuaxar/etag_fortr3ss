@@ -5,9 +5,9 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
     //$rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
 
-    $rootScope.baseurl = 'http://10.6.159.12:8090/millantarfid/';
-    $rootScope.url = 'http://10.6.159.12:8090/millantarfid/mobileApp/';
-    $rootScope.urlCustomer = 'http://10.6.159.12:8090/millantarfid/mobileUserApp/';
+    $rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
+    $rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
+    $rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
     
     //$rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
     //$rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';

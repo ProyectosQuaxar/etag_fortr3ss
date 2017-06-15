@@ -1,6 +1,7 @@
 angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
 .controller('FleetCtrl', function($ionicPlatform, ionicMaterialInk, $scope, $localStorage, $translate, $ionicLoading, $ionicPopup, Data, StorageService, $rootScope, $state, $timeout) {
-    $scope.data.truckAfter == true;    
+    $scope.data.truckAfter = true;    
+    console.log($scope.data.truckAfter)
     $scope.customers = {};
     $scope.fleets = {};
     $scope.countries = {};
@@ -15,7 +16,8 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         }, 100);
         
         $scope.init = function(){
-            $scope.data.truckAfter == true;                       
+            $scope.data.truckAfter = true;                       
+            console.log($scope.data.truckAfter)
             $scope.customers = $localStorage.customers;
             console.log($localStorage.customers)
             console.log($scope.customers);
@@ -349,6 +351,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         }                        
                         $localStorage.trucks = result['trucks'];
                         $localStorage.fleets = result['fleets'];
+                        console.log($localStorage.fleets);
                         $localStorage.tires = result['tires'];
                         $localStorage.truckBrands = result['truckBrands'];
                         $localStorage.truckModels = result['truckModels'];
