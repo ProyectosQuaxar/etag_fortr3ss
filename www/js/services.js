@@ -238,6 +238,16 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
+    function sendTemporaryPassword(url, lang, email, userType){
+        return $http({method:"GET", url:url+ 'sendTemporaryPassword?lang=' + lang + '&email=' + email + '&userType=' + userType}).then(function(result){
+            return result.data;
+        });
+    }
+    function setNewPassword(url, lang, email, userType, newPassword){
+        return $http({method:"GET", url:url+ 'setNewPassword?lang=' + lang + '&email=' + email + '&userType=' + userType + '&newPassword=' + newPassword}).then(function(result){
+            return result.data;
+        });
+    }
 
     return { 
         login:function(url, nm, pw){
@@ -377,6 +387,12 @@ angular.module('starter.services', [])
         },
         getAllCustomers:function(url){
             return getAllCustomers(url);
+        },
+        sendTemporaryPassword:function(url, lang, email, userType){
+            return sendTemporaryPassword(url, lang, email, userType);
+        },
+        setNewPassword:function(url, lang, email, userType, newPassword){
+            return setNewPassword(url, lang, email, userType, newPassword);
         }                  
     }
 })

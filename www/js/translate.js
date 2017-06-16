@@ -28,9 +28,26 @@ TIRES_EDIT_TIRE: 'Editar llanta',
 CUSTOMER_INSERT_TRUCK_AFTER: 'Ir a insertar camión después',
 FLEET_CHANGE_COMPANY: 'Cambiar compañía ',
 MENU_INSPECTION_MODE: 'Seleccione el método de inspección',
-MENU_INSPECTION_GUN: 'Inspección por Pistola RFID'
-
-
+MENU_INSPECTION_GUN: 'Inspección por Pistola RFID',
+LOGIN_FORGET_PASSWORD: 'Olvidé mi contraseña',
+LOGIN_NEXT: 'SIGUIENTE',
+LOGIN_TEMPORAL_PASS: 'Contraseña temporal',
+LOGIN_TEMPORAL_PASS_DESC: 'Usted ha recibido un email con una contraseña temporal',
+LOGIN_TEMPORAL_PASS_DESC_2: 'Ingrese la contraseña recibida',
+LOGIN_ENTER_NEW_PASSWORD: 'Ingrese su nueva contraseña',
+LOGIN_RESTORE_PASSWORD: 'Restauración de contraseña',
+LOGIN_USER_INTERNO: 'Interno',
+LOGIN_USER_CUSTOMER: 'Cliente',
+LOGIN_USER_FLEET: 'Flota',
+LOGIN_USER_TYPE: 'Tipo de cuenta',
+LOGIN_ENTER_TEMPORARY_PASSWORD: 'Ya tengo mi contraseña temporal',
+LOGIN_FINALIZAR: 'FINALIZAR',
+LOGIN_TEMPORARY_PASS_DOESNT_MATCH: 'No coincide con la contraseña temporal',
+LOGIN_TEMPORARY_PASS_DOESNT_MATCH: 'No coincide con la contraseña temporal',
+LOGIN_EMAIL_NOT_FOUND: '¡Correo electrónico no encontrado!',
+LOGIN_EMAIL_NOT_RECEIVED: '¡Ingrese correo electrónico!',
+LOGIN_ERROR_UPDATE_PASSWORD: 'Error al actualizar su contraseña',
+LOGIN_ERROR_SENDING_EMAIL: 'Error enviando email'
 		});
 
         $translateProvider.translations('en', {
@@ -476,8 +493,26 @@ TRUCK_ANIO: 'Truck year',
 TIRES_EDIT_TIRE: 'Edit tire',
 CUSTOMER_INSERT_TRUCK_AFTER: 'Go to insert truck after',
 MENU_INSPECTION_MODE: 'Select Inspection Method',
-MENU_INSPECTION_GUN: 'Inspection by RFID Gun'
-
+MENU_INSPECTION_GUN: 'Inspection by RFID Gun',
+LOGIN_FORGET_PASSWORD: 'forgot my password',
+LOGIN_NEXT: 'NEXT',
+LOGIN_TEMPORAL_PASS: 'Temporary password',
+LOGIN_TEMPORAL_PASS_DESC: 'You have an email with a temporary password',
+LOGIN_TEMPORAL_PASS_DESC_2: 'Enter the temporary password received',
+LOGIN_ENTER_NEW_PASSWORD: 'Enter the new password',
+LOGIN_RESTORE_PASSWORD: 'Restore Password',
+LOGIN_USER_INTERNO: 'Internal',
+LOGIN_USER_CUSTOMER: 'Customer',
+LOGIN_USER_FLEET: 'Fleet',
+LOGIN_USER_TYPE: 'Account Type',
+LOGIN_ENTER_TEMPORARY_PASSWORD: 'I already have my temporary password',
+LOGIN_FINALIZAR: 'RESET',
+LOGIN_TEMPORARY_PASS_DOESNT_MATCH: 'Temporary password doesn\'t match',
+LOGIN_TEMPORARY_PASS_DOESNT_MATCH: 'Temporary password doesn\'t match',
+LOGIN_EMAIL_NOT_FOUND: 'Email not found!',
+LOGIN_EMAIL_NOT_RECEIVED: 'Enter Email!',
+LOGIN_ERROR_UPDATE_PASSWORD: 'Error updating password',
+LOGIN_ERROR_SENDING_EMAIL: 'Error sending email'
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',

@@ -1,7 +1,7 @@
 <ion-view hide-nav-bar="true" can-swipe-back="false" scroll="false" drag-content="true" drag-content="toggledrag" ng-init="init()">
   <ion-content class="scroll-content ionic-scroll" style="background: transparent url('img/background.jpg') repeat scroll center center / cover ;">
-   <center>
-     <div style="transform: translate3d(0px, 0px, 0px) scale(1); min-width:100px; max-width:400px; min-height:auto; max-height:auto; vertical-align:center; margin-top:50px;" class="scroll">    
+   <center ng-show="loginForm">
+     <div style="transform: translate3d(0px, 0px, 0px) scale(1); min-width:100px; max-width:400px; min-height:auto; max-height:auto; vertical-align:center;" class="scroll">    
     <div class="hero no-header flat">
       <div class="content">                  
           <center>
@@ -26,24 +26,95 @@
         </div>        
       </div>
       <div>  
-          <label placeholder="Username" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
+          <label placeholder="{{ 'LOGIN_USERNAME_LABEL' | translate }}" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
             <input class="md-input" type="text" ng-model="data.username" controller="LoginCtrl">
             <span class="input-label" ng-show="!data.username.length" translate="LOGIN_USERNAME_LABEL">{{ 'LOGIN_USERNAME_LABEL' | translate }}</span>
             <div class="hightlight hightlight-calm">              
             </div>
           </label>
-            <span ng-show="!data.username.length" style="color:#FFF;" translate="LOGIN_ERROR_USER">{{ 'LOGIN_ERROR_USER' | translate }}</span>
+            <span ng-show="!data.username.length" translate="LOGIN_ERROR_USER" class="assertive">{{ 'LOGIN_ERROR_USER' | translate }}</span>
             <label placeholder="Password" highlight-color="energized" type="password" class="item item-input item-md-label" style="border:none;">
             <input class="md-input" type="password"  ng-model="data.password">
             <span class="input-label" ng-show="!data.password.length" translate="LOGIN_PASSWORD_LABEL"></span>
             <div class="hightlight hightlight-calm"></div>
             </label>
-            <span ng-show="!data.password.length" style="color:#FFF;" translate="LOGIN_ERROR_PASS">{{ 'LOGIN_ERROR_PASS' | translate }}</span>
+            <span ng-show="!data.password.length" translate="LOGIN_ERROR_PASS" class="assertive" >{{ 'LOGIN_ERROR_PASS' | translate }}</span>
+            <br><br>
+            <span ng-click="restorePassword()" style="color:#fff;">{{ 'LOGIN_FORGET_PASSWORD' | translate }}</span>
         </div>
         <br>
         <div style="width:100%;margin-left:12px">
           <button class="button button-small button-assertive ink" controller="LoginCtrl" ng-click="login()" translate="LOGIN_ACCESS_LABEL"></button>
         </div>
    </center>
+
+   <!--RECEPCIÓN DE EMAIL-->
+    <center ng-show="restorePass" style="padding-top:150px;">
+        <img ng-src="img/logo.png" style="max-width: 250px; height: auto;margin: 0 auto;;border:none;rgba(255,255,255,.5);" class="img-round animate-enter previous-image">
+        <br>
+        <h4 style="color:#fff;text-shadow: 2px 2px 2px #000000;">{{ 'LOGIN_RESTORE_PASSWORD' | translate }}</h4> 
+        <label placeholder="{{ 'LOGIN_USERNAME_LABEL' | translate }}" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
+          <input class="md-input" type="text" ng-model="data.username" controller="LoginCtrl">
+          <span class="input-label" ng-show="!data.username.length" translate="LOGIN_USERNAME_LABEL">{{ 'LOGIN_USERNAME_LABEL' | translate }}</span>
+          <div class="hightlight hightlight-calm">              
+          </div>
+        </label>
+        <label class="item item-input item-select" style="border:none;">
+              <div class="input-label" style="color:#ffffff;text-shadow: 2px 2px 2px #000000;">
+              {{ 'LOGIN_USER_TYPE' | translate }}
+              </div>
+              <select ng-model="data.typeUser" style="background-color:transparent; color: #fff;text-shadow: 2px 2px 2px #000000;border-bottom:2px solid #ffffff;">    
+                  <option value="CLIENTE" ng-selected="typeUser == 'CLIENTE'">{{ 'LOGIN_USER_CUSTOMER' | translate }}</option>
+                  <option value="FLOTA">{{ 'LOGIN_USER_FLEET' | translate }}</option>
+                  <option value="INTERNO">{{ 'LOGIN_USER_INTERNO' | translate }}</option>
+              </select>
+          </label>        
+        <br><br>
+        <div style="width:100%;margin-left:12px">
+        <button class="button button-small ink" controller="LoginCtrl" ng-click="cancelRestore()" translate="NFC_CANCEL" style="background-color:red;color:#fff"></button>
+          <button class="button button-small button-assertive ink" controller="LoginCtrl" ng-click="comprobarEmail()" translate="LOGIN_NEXT" ng-disabled="!data.username.length"></button>          
+        </div>
+    </center>
+
+    <!--RECEPCION DE PASSWORD TEMPORAL -->
+    <center ng-show="enterCode" style="padding-top:150px;">
+        <img ng-src="img/logo.png" style="max-width: 250px; height: auto;margin: 0 auto;;border:none;rgba(255,255,255,.5);" class="img-round animate-enter previous-image">
+        <br>
+        <h4 style="color:#fff;text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);">{{ 'LOGIN_TEMPORAL_PASS_DESC' | translate }}</h4> 
+        <label placeholder="{{ 'LOGIN_USERNAME_LABEL' | translate }}" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
+            <input class="md-input" type="text" ng-model="data.username" controller="LoginCtrl">
+            <span class="input-label" ng-show="!data.username.length" translate="LOGIN_USERNAME_LABEL">{{ 'LOGIN_USERNAME_LABEL' | translate }}</span>
+            <div class="hightlight hightlight-calm">              
+            </div>
+        </label>
+        <br>
+        <span style="color:#fff; padding-top:0px;"><strong>{{ 'LOGIN_TEMPORAL_PASS_DESC_2' | translate }}</strong></span>
+        <label placeholder="{{ 'LOGIN_TEMPORAL_PASS_DESC_2' | translate }}" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
+            <input class="md-input" type="text" ng-model="data.temporaryPassword" controller="LoginCtrl">
+        </label>
+        <br><br>
+        <div style="width:100%;margin-left:12px">
+          <button class="button button-small ink" controller="LoginCtrl" ng-click="cancelRestore()" translate="NFC_CANCEL" style="background-color:red;color:#fff"></button>
+          <button class="button button-small button-assertive ink" controller="LoginCtrl" ng-click="comprobarTemporaryPass()" translate="LOGIN_NEXT"></button>
+        </div>
+    </center>
+
+
+    <!--INGRESA NUEVA CONTRASEÑA -->
+    <center ng-show="enterNewPassword" style="padding-top:150px;">
+    <img ng-src="img/logo.png" style="max-width: 250px; height: auto;margin: 0 auto;;border:none;rgba(255,255,255,.5);" class="img-round animate-enter previous-image">
+        <br><br>
+        <h4 style="color:#fff;text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);">{{ 'LOGIN_ENTER_NEW_PASSWORD' | translate }}</h4> 
+        <label placeholder="{{ 'LOGIN_USERNAME_LABEL' | translate }}" highlight-color="balanced" type="text" class="item item-input item-md-label" style="border:none;">
+          <input class="md-input" type="text" ng-model="data.newPassword" controller="LoginCtrl">
+        </label>
+        <br>
+        <div style="width:100%;margin-left:12px">
+          <button class="button button-small ink" controller="LoginCtrl" ng-click="cancelRestore()" translate="NFC_CANCEL" style="background-color:red;color:#fff"></button>
+          <button class="button button-small button-assertive ink" controller="LoginCtrl" ng-click="setNewPassword()" translate="LOGIN_FINALIZAR"></button>
+        </div>
+    </center>
+
+
   </ion-content>
 </ion-view>

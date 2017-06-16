@@ -1,7 +1,12 @@
 angular.module('login', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])  
-	    .controller('LoginCtrl', function($ionicPlatform, $scope, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $localStorage, $translate, $ionicLoading, Data, $ionicPopup, $ionicHistory, $state, $rootScope, $timeout, Check) {        
+        .controller('LoginCtrl', function($ionicPlatform, $scope, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $localStorage, $translate, $ionicLoading, Data, $ionicPopup, $ionicHistory, $state, $rootScope, $timeout, Check) {        
         $scope.data = {};
         $scope.username = {};
+        $scope.loginForm = true;
+        $scope.restorePass = false;
+        $scope.enterCode = false;
+        $scope.enterNewPassword = false;
+        $scope.data.typeUser = 'CLIENTE'
 
         $scope.$on('$ionicView.enter', function() {
             $ionicSideMenuDelegate.canDragContent(false);
@@ -23,9 +28,129 @@ angular.module('login', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
         $scope.isValid = function(value) {
             return !value
+        }       
+
+        $scope.restorePassword = function(){
+            $scope.loginForm = false;
+            $scope.restorePass = true;
+            $scope.enterCode = false;
+            $scope.enterNewPassword = false;
+        }
+
+        $scope.comprobarEmail = function(){
+            var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+                template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                content: loading,
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+            console.log($scope.data.typeUser)
+            var DataPromise = Data.sendTemporaryPassword($rootScope.url, $localStorage.languague, $scope.data.username, $scope.data.typeUser)
+
+            DataPromise.then(function(result) {
+                $ionicLoading.hide();
+                if(result['exists'] == 'NO'){
+                    if(result['result'] == 'EMAIL NOT FOUND'){
+                        //Ocurre cuando el email enviado no se encuentra dentro del listado
+                        $scope.showErrorMessage($translate.instant("LOGIN_EMAIL_NOT_FOUND"));
+                    } else if(result['result'] == 'EMAIL NOT RECEIVED'){
+                        //Ocurre cuando el email no es enviado
+                        $scope.showErrorMessage($translate.instant("LOGIN_ERROR_SENDING_EMAIL"));
+                    }
+                } else if(result['exists'] == 'YES'){
+                    if(result['result'] == 'ERROR ON UPDATE PASSWORD'){
+                        //Ocurre cuando por error del sistema no se puede actualizar la contraseña
+                        $scope.showErrorMessage($translate.instant("LOGIN_ERROR_UPDATE_PASSWORD"));
+                    } else if(result['result'] == 'ERROR SENDING EMAIL'){
+                        //Ocurre cuando por error del sistema no se puede enviar el email
+                        //sin embargo se puede actualizar directamente el password aqui
+                        $scope.loginForm = false;
+                        $scope.restorePass = false;
+                        $scope.enterNewPassword = true;
+                        $scope.enterCode = false;
+                    } else if(result['result'] == 'OK'){
+                        console.log("TODO OK")
+                        //TODO OK
+                        $scope.loginForm = false;
+                        $scope.restorePass = false;
+                        $scope.enterNewPassword = false;
+                        $scope.enterCode = true;
+                        $localStorage.temporaryPass = result['data'];
+                    }
+                }
+                
+
+            }, function(reason) {
+                $scope.showErrorMessage('<center><p>' + $translate.instant('MSG_ERROR_CONEXION') + '<br/><b>' + $translate.instant('MSG_TRY_AGAIN') + '</b></p></center>');
+            });            
+        }
+
+        $scope.setNewPassword = function(){
+            var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+                template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                content: loading,
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+            console.log($scope.data.typeUser)
+            var DataPromise = Data.setNewPassword($rootScope.url, $localStorage.languague, $scope.data.username, $scope.data.typeUser, $scope.data.newPassword)
+
+            DataPromise.then(function(result) {
+                $ionicLoading.hide();
+                    if(result['result'] == 'EMAIL NOT FOUND'){
+                        //Ocurre cuando el email enviado no se encuentra dentro del listado
+                        $scope.showErrorMessage($translate.instant("LOGIN_EMAIL_NOT_FOUND"));
+                    } else if(result['result'] == 'EMAIL NOT RECEIVED'){
+                        //Ocurre cuando el email no es enviado
+                        $scope.showErrorMessage($translate.instant("LOGIN_ERROR_SENDING_EMAIL"));
+                    } else if(result['result'] == 'ERROR ON UPDATE PASSWORD'){
+                        //Ocurre cuando por error del sistema no se puede actualizar la contraseña
+                        $scope.showErrorMessage($translate.instant("LOGIN_ERROR_UPDATE_PASSWORD"));
+                    } else if(result['result'] == 'SUCCESS'){
+                        //TODO OK
+                        $scope.data.password = $scope.data.newPassword;
+                        $scope.login();
+                    }
+                
+
+            }, function(reason) {
+                $scope.showErrorMessage('<center><p>' + $translate.instant('MSG_ERROR_CONEXION') + '<br/><b>' + $translate.instant('MSG_TRY_AGAIN') + '</b></p></center>');
+            });            
         }        
 
-        $scope.init = function() {
+        $scope.comprobarTemporaryPass = function(){
+            console.log("TEMPORAL: " + $localStorage.temporaryPass)
+            console.log("Escrita: " + $scope.data.temporaryPassword)
+            if($localStorage.temporaryPass == $scope.data.temporaryPassword){
+                $scope.loginForm = false;
+                $scope.restorePass = false;
+                $scope.enterCode = false;
+                $scope.enterNewPassword = true;
+            } else {
+                $scope.showErrorMessage($translate.instant("LOGIN_TEMPORARY_PASS_DOESNT_MATCH"))
+            }
+        }
+
+        $scope.writeNewPassword = function(){
+            $scope.loginForm = false;
+            $scope.restorePass = false;
+            $scope.enterNewPassword = true;
+            $scope.enterCode = false;
+        }
+
+        $scope.cancelRestore = function(){
+            $scope.loginForm = true;
+            $scope.restorePass = false;
+            $scope.enterNewPassword = false;
+        }
+
+        $scope.init = function() {            
             $scope.data.languague = $localStorage.languague;
             if (angular.isNumber($localStorage.userId)) {
                 $ionicHistory.clearCache().then(function() {
@@ -87,7 +212,7 @@ angular.module('login', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
             DataPromise.then(function(result) {
                 var json_data = result;
-                if (json_data['exists'].toString() == '1') {                	
+                if (json_data['exists'].toString() == '1') {                    
                     $localStorage.rol = json_data['role']
                     $localStorage.userId = json_data['userId']
                     $localStorage.company = json_data['company']
@@ -116,21 +241,21 @@ angular.module('login', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
                     $ionicLoading.hide();
                     $ionicHistory.clearCache().then(function() {
-                        $state.go('app.dashboard', {
+                        $state.go('app.slider', {
                             animation: 'slide-in-down'
                         });
                     });
-                } else if (json_data['exists'].toString() == '0') {                 	
-                	if(json_data['status'].toString() == 'TRIAL continue'){
-                		$ionicLoading.hide();
-                		console.log("PRUEBA CONTINÚA")
-                	} else if(json_data['status'].toString() == 'TRIAL is finished'){
-						$ionicLoading.hide();
-                		$scope.showErrorMessage($translate.instant("LOGIN_TRIAL_HAS_FINISHED"));
-                	} else if(json_data['status'].toString() == 'unknown user'){
-						$ionicLoading.hide();
-                		$scope.showErrorMessage($translate.instant("LOGIN_USER_NOT_REGISTRED") + "<br>" + $translate.instant("MSG_ERROR_PASSWORD"));
-                	} 
+                } else if (json_data['exists'].toString() == '0') {                     
+                    if(json_data['status'].toString() == 'TRIAL continue'){
+                        $ionicLoading.hide();
+                        console.log("PRUEBA CONTINÚA")
+                    } else if(json_data['status'].toString() == 'TRIAL is finished'){
+                        $ionicLoading.hide();
+                        $scope.showErrorMessage($translate.instant("LOGIN_TRIAL_HAS_FINISHED"));
+                    } else if(json_data['status'].toString() == 'unknown user'){
+                        $ionicLoading.hide();
+                        $scope.showErrorMessage($translate.instant("LOGIN_USER_NOT_REGISTRED") + "<br>" + $translate.instant("MSG_ERROR_PASSWORD"));
+                    } 
 
 
                 } else {
