@@ -293,7 +293,7 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
         $scope.toggleTires = function(){
             $scope.showFlotas = false;
             $scope.showTrucks = false;
-            $scope.showTires = !scope.showTires;
+            $scope.showTires = !$scope.showTires;
             $scope.showCustomers = false;
             $scope.showInspectionTrucks = false;
             $scope.showInspectionRend = false;

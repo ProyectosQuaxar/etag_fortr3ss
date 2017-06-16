@@ -35,7 +35,7 @@
                     </center>
                 </div>
                 <div class="col col-33">
-                    <center>
+                    <center ng-click="toggleTires()">
                         <img src="img/icon_tire_2.png" style="width:40px;height:40px;" />
                         <br>
                         <strong>{{totalTiresToSubmit}} <span ng-if="totalTiresToSubmit > 1 || totalTiresToSubmit == 0">{{'DASHBOARD_LLANTAS'|translate}}</span><span ng-if="totalTiresToSubmit == 1">{{'DASHBOARD_LLANTA'|translate}}</span></strong>
@@ -98,7 +98,37 @@
                 <br><br>
                 <hr>                        
             </span>        
-
+             <!------LLANTAS-->
+            <span ng-show="showTires" class="fadein fadeout">
+                <h4>
+                    <span class="capitalize">
+                        {{totalTiresToSubmit}} <span ng-if="totalTiresToSubmit > 1">{{'DASHBOARD_LLANTAS'|translate}}</span><span ng-if="totalTiresToSubmit == 1 || totalTiresToSubmit == 0">{{'DASHBOARD_LLANTA'|translate}}</span>:
+                        <span>                
+                            <i class="ion-icon ion-close pull-right" ng-click="showTires = !showTires"></i>
+                        </span> 
+                    </span>                   
+                </h4>             
+                <span style="float:right; font-size:20px;">
+                    <button class="button button-small button-clear button-positive" style="padding: 0 5px;margin-top: -7px;" ng-click="uploadTires()">
+                        <strong>
+                            <i class="icon ion-arrow-up-c"></i> {{ 'UPLOAD_UPLOAD' | translate }}
+                        </strong>
+                    </button>            
+                </span>                      
+               <ion-list show-delete="false" can-swipe="true">
+                    <ion-item ng-repeat="t in storageTires">
+                        <strong>{{'TIRES_POSITION'|translate}}: {{t.position}}</strong><br>
+                        <strong>{{'TIRES_TIRE_BRAND'|translate}}: {{t.tireBrand}}</strong><br>
+                        <strong>{{'TIRES_TIRE_SIZE'|translate}}: {{t.tireSize}}</strong><br>
+                        <strong>{{'TIRES_DESIGN_NAME'|translate}}: {{t.tireModel}}</strong><br>
+                        <strong>{{'TIRES_PRICE'|translate}}: {{t.price}}</strong><br>
+                        <strong>{{'TIRES_DOT'|translate}}: {{t.year}}</strong><br>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteTire('{{t.tag}}')"></ion-option-button>
+                    </ion-item>
+                </ion-list>
+                <br><br>
+                <hr>                        
+            </span>  
 
 
 
