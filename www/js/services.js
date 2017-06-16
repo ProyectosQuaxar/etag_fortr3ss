@@ -57,8 +57,8 @@ angular.module('starter.services', [])
         });
     }
 
-    function insertTireHistorial(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado){        
-        return $http({method:"GET", url:url+ 'submitTireInspection?userId=' + userId + '&tagId=' + tagId + '&historyId=' + historyId + '&brand=' + brand + '&tireSize=' + tireSize + '&model=' + model + '&position=' + position + '&tagInstalado=' + tagInstalado + '&kilometraje=' + kilometraje + '&truckTag=' + truckTag + '&remanente=' + remanente + '&psi=' + psi + '&comments=' + comments + '&condiciones=' + condiciones + '&tagDetectado=' + tagDetectado}).then(function(result){
+    function insertTireHistorial(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado, tireType){        
+        return $http({method:"GET", url:url+ 'submitTireInspection?userId=' + userId + '&tagId=' + tagId + '&historyId=' + historyId + '&brand=' + brand + '&tireSize=' + tireSize + '&model=' + model + '&position=' + position + '&tagInstalado=' + tagInstalado + '&kilometraje=' + kilometraje + '&truckTag=' + truckTag + '&remanente=' + remanente + '&psi=' + psi + '&comments=' + comments + '&condiciones=' + condiciones + '&tagDetectado=' + tagDetectado + '&tireType=' + tireType}).then(function(result){
             return result.data;
         });
     }
@@ -270,8 +270,8 @@ angular.module('starter.services', [])
         insertTruckHistorial:function(url, userId, tag, marca, modelo, unidad, kilometros, placas, tagInstalado, kmZero, tipoInspeccion){
             return insertTruckHistorial(url, userId, tag, marca, modelo, unidad, kilometros, placas, tagInstalado, kmZero, tipoInspeccion);
         },
-        insertTireHistorial:function(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado){
-            return insertTireHistorial(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado);
+        insertTireHistorial:function(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado, tireType){
+            return insertTireHistorial(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado, tireType);
         },
         insertTireHistorialRend:function(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4){
             return insertTireHistorialRend(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4);

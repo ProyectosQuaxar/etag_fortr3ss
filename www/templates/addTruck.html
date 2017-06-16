@@ -1,6 +1,14 @@
-<ion-view view-title="{{'MENU_ADD_TRUCK_LABEL'|translate}}" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="TruckCtrl">
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()" ng-controller="TruckCtrl">
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>             
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
+        </button>
+    </ion-nav-buttons>
   <ion-content>
-    <!--<center><h3 class="marginTop">{{'MENU_ADD_TRUCK_LABEL'|translate}}</h3></center>-->
+    <center><h3 class="marginTop">{{'MENU_ADD_TRUCK_LABEL'|translate}}</h3></center>    
       <div class="spaceOn-PaddingRight">
         <div class="list">
           <label class="item item-input item-stacked-label">
