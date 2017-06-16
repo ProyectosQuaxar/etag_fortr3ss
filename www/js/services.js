@@ -36,8 +36,8 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
-    function insertTruck(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
-        return $http({method:"GET", url:url+ 'insertTruck?lang=' + lang + '&idFlota=' + idFlota + '&idModelo=' + idModelo + '&placas=' + placas + '&anio=' + anio + '&tag=' + tag + '&unidad=' + unidad + '&pressureType=' + pressureType + '&tagInstalado=' + tagInstalado + '&nombreOperador=' + nombreOperador+ '&tipo=' + tipo }).then(function(result){
+    function insertTruck(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
+        return $http({method:"GET", url:url+ 'insertTruck?lang=' + lang + '&idFlota=' + idFlota + '&idModelo=' + idModelo + '&placas=' + placas + '&tag=' + tag + '&unidad=' + unidad + '&pressureType=' + pressureType + '&tagInstalado=' + tagInstalado + '&nombreOperador=' + nombreOperador+ '&tipo=' + tipo }).then(function(result){
             return result.data;
         });
     }
@@ -163,8 +163,8 @@ angular.module('starter.services', [])
             return result.data;
         });
     }   
-    function getRendByFleet(url,i,y,m,s){
-        return $http({method:"GET", url:url+ 'getRendByFleet?idFlota='+i+ '&year='+y+ '&month='+m+ '&idsSemaforos='+s}).then(function(result){
+    function getRendByFleet(url,s){
+        return $http({method:"GET", url:url+ 'getRendByFleet?idSemaforos='+s}).then(function(result){
             return result.data;
         });
     } 
@@ -271,8 +271,8 @@ angular.module('starter.services', [])
         getPressureTypeByTruckType:function(url,id){
             return getPressureTypeByTruckType(url,id);
         },
-        insertTruck:function(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
-            return insertTruck(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo);
+        insertTruck:function(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
+            return insertTruck(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo);
         },
         getTruckData:function(url,tag){
             return getTruckData(url,tag);
@@ -343,8 +343,8 @@ angular.module('starter.services', [])
         getCustomerData:function(url, id){
             return getCustomerData(url, id);
         },
-        getRendByFleet:function(url,i,y,m,s){
-            return getRendByFleet(url,i,y,m,s);
+        getRendByFleet:function(url,s){
+            return getRendByFleet(url,s);
         },
         getTiresByTruck:function(url,id){
             return getTiresByTruck(url,id);
@@ -393,7 +393,7 @@ angular.module('starter.services', [])
         },
         setNewPassword:function(url, lang, email, userType, newPassword){
             return setNewPassword(url, lang, email, userType, newPassword);
-        }                  
+        }
     }
 })
 

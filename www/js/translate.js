@@ -47,10 +47,12 @@ LOGIN_TEMPORARY_PASS_DOESNT_MATCH: 'No coincide con la contraseña temporal',
 LOGIN_EMAIL_NOT_FOUND: '¡Correo electrónico no encontrado!',
 LOGIN_EMAIL_NOT_RECEIVED: '¡Ingrese correo electrónico!',
 LOGIN_ERROR_UPDATE_PASSWORD: 'Error al actualizar su contraseña',
-LOGIN_ERROR_SENDING_EMAIL: 'Error enviando email'
+LOGIN_ERROR_SENDING_EMAIL: 'Error enviando email',
+LOGIN_RENDIMIENTOS_LABEL: 'Rendimientos',
 		});
 
         $translateProvider.translations('en', {
+        	LOGIN_RENDIMIENTOS_LABEL: 'Performance',
         CONFIG_IDIOMA: 'Languague',
 CONFIG_LANG_DE: 'German',
 CONFIG_LANG_EN: 'English',

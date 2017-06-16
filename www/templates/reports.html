@@ -1,8 +1,9 @@
 <ion-view view-title="{{'REPORTS_REPORTS'|translate}}" hide-back-button="true" controller="ReportsCtrl" ng-init="init()">
+    
     <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
     </ion-nav-buttons>
+    
     <ion-nav-buttons side="right" ng-click='chooseOption()'>
         <span ng-show="showButtons">
             <span>          
@@ -12,8 +13,8 @@
             </span>
             <span>
                 <button class="button button-royal button-fab"  ng-click="screenShot()" style="margin-left: 10dp;">
-                    <i class="icon ion-camera"></i>
-                </button>           
+                <i class="icon ion-camera"></i>
+            </button>           
             </span>
         </span>         
         <div style="padding-left: 5px;">
@@ -22,259 +23,143 @@
                 <i class="icon ion-close" ng-show="showButtons == true"></i>
             </button>
         </div>        
-        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
-        </button>
-    </ion-nav-buttons>        
-  <ion-content>
-    <ion-refresher pulling-text="{{ 'MSG_UPDATE' | translate }}" refreshing-text="{{ 'MSG_UPDATING' | translate }}" on-refresh="init()" controller="ReportsCtrl"></ion-refresher>
-    <br>
-    <center><h4>{{customerName}}</h4></center>
-    <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right" ng-hide="indexSelectedNow == 4 || indexSelectedNow == 5" ng-show="indexSelectedNow == 0 || indexSelectedNow == 1 || indexSelectedNow == 2 || indexSelectedNow == 3">
-      {{'REPORTS_DATEINSPECTION'|translate}}:
-        <select ng-change="cambiarReporte(date_select)" ng-model="date_select">    
-        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas" ng-selected="f.mes == inspeccionMes && f.anio == inspeccionAnio">
-        {{meses[(f.mes)]}} {{f.anio}}</option>
-        </select>
-    </div>
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'></button>
+    </ion-nav-buttons>  
 
-<tab-slide-box class="tabbed-slidebox" tab="0"> <!-- ng-show="{{ generalInfo.llantas !== undefined}}" -->
-    <div class="tsb-icons">
-        <div class="tsb-ic-wrp">
-            <a href="javascript:;" ng-click="loadAnalisis()">{{'REPORTS_ANALYSIS'|translate}}</a>
-            <a href="javascript:;" ng-click="loadUnidadesStatus()">{{'REPORTS_UNITS'|translate}}</a>    
-            <a href="javascript:;" ng-click="loadSemaforos()">{{'REPORTS_SEMAPHORE'|translate}}</a>                
-            <a href="javascript:;" ng-click="loadCondiciones()">{{'REPORTS_CONDITIONS'|translate}}</a>
-            <a href="javascript:;" ng-click="loadPresiones()">{{'REPORTS_PRESSURES'|translate}}</a>
-            <a href="javascript:;" ng-click="loadDinero()">{{'REPORTS_ESTIMATED_LOSSES'|translate}}</a>
-        </div>
-    </div>    
-    <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index);slideIndexChanged($index,'REPORTS');">  
-    <ion-slide>
-            <h4>{{'REPORTS_FLEET_ANALYSIS'|translate}}</h4>                                       
-            <div class="list">
-            <div class="item">
-            <center>  
-            <li class="item">
-            <center>{{'REPORTS_INSPECTION_LABEL'|translate}} <strong>{{meses[(inspeccionMes)]}} {{inspeccionAnio}}</strong></center>    
-            </li>
-            </center>
-            </div>
-            <div class="item">
-            <center><strong>{{generalInfo.llantas}} {{'REPORTS_TIRES'|translate}} {{ 'REPORTS_DE' | translate }} {{generalInfo.unidades}}</strong> {{'REPORTS_UNITS'|translate}}</center>
-            </div>
-            <div class="item">
-            <center>
-                {{ 'REPORTS_GENERAL_REND_FLEET' | translate }}<br>
-                <strong>{{ data.rendByFleet | number : 2 }} km / mm</strong>
-            </center>
-            </div>
-            </div>
-            <br><br>
-            
-
-
-        </ion-scroll>
-    </ion-slide>
-
-        <ion-slide>
-            <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >               
-                <div class="im-wrapper">
-                    <button class="button button-positive button-fab pull-right" ng-click="generateReportUnidades()" style="margin-top:-10px!important;">
-                        <i class="icon ion-document"></i>
-                    </button>
-                    <h4 class="no-border no-padding-bottom">{{'REPORTS_UNITS'|translate}}</h4>                    
-                    <strong>{{'REPORTS_UNITS_DESC'|translate}}</strong>
-                </div>
-
-
-              <ion-list class="animate-blinds disable-user-behavior">
-                <div class="list">                        
-                    <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-icon-left item-avatar item in in done done" ng-click="findTruckDetails('{{u.id}}')" ng-repeat="u in unidades">                                           
-                            <i class="icon ion-ios-checkmark" style="color:#388e3c;" ng-if="u.inspeccion" item-right></i>                        
-                            <h2>{{u.unidad}}</h2>                                                
-                            <p ng-if="u.tipo">{{u.tipo}}</p><p ng-if="!u.tipo">{{'REPORTS_UNITS'|translate}}</p>                        
-                            <i class="icon ion-pricetag" style="color:#388e3c;" item-right ng-if="u.tag_instalado == 'SI'"></i>                        
-                    </ion-item>                                        
-                </div>        
-              </ion-list>                            
-              <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1> 
-            </ion-scroll> 
-        </ion-slide>
-
-        <ion-slide>
-            <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" > 
-                <div class="im-wrapper">
-                    <h4 class="no-border no-padding-bottom">{{'REPORTS_SEMAFORO'|translate}}</h4>
-                    <strong>{{'REPORTS_SEMAFORO_DESC'|translate}}.</strong>
-                </div>
-                <ion-list class=" animate-blinds disable-user-behavior">
-                    <div class="list">
-                        <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Rojo');">
-                            <img src="img/rojo.jpg" style="border:1px solid black;">
-                            <h2>{{ 'REPORTS_ROJO' | translate }}</h2>
-                            <p>{{semaforo.rojo}} {{'REPORTS_TIRES'|translate}}</p>
-                        </ion-item>
-                        <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Amarillo');">
-                            <img src="img/amarillo.jpg" style="border:1px solid black;">
-                            <h2>{{ 'REPORTS_AMARILLO' | translate }}</h2>
-                            <p>{{semaforo.amarillo}} {{'REPORTS_TIRES'|translate}}</p>
-                        </ion-item>
-                        <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Verde');">
-                            <img src="img/verde.jpg" style="border:1px solid black;">
-                            <h2>{{ 'REPORTS_VERDE' | translate }}</h2>
-                            <p>{{semaforo.verde}} {{'REPORTS_TIRES'|translate}}</p>
-                        </ion-item>              
-                        <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Blanco');">
-                            <img src="img/blanco.jpg" style="border:1px solid black;">
-                            <h2>{{ 'REPORTS_BLANCO' | translate }}</h2>
-                            <p>{{semaforo.blanco}} {{'REPORTS_TIRES'|translate}}</p>
-                        </ion-item>                         
-                    </div>
-                </ion-list>
-                <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>
-            </ion-scroll>
-        </ion-slide>
-    <ion-slide>
-    <h4>{{'REPORTS_CONDITIONS_FOUNDS'|translate}}</h4>
-
-    <ion-list class=" animate-blinds disable-user-behavior">
-        <div class="list">
-            <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item in in done done" ng-click="loadDetallesCondiciones('{{c.observacion}}');" ng-repeat="c in condiciones" >
-                <h2>{{c.observacion}}</h2>
-                <p>{{c.total}} Llantas</p>
-            </ion-item>            
-        </div>
-    </ion-list>
-
-<button class = "button button-fab button-fab-top-right button-balanced pane" ng-controller="ReportsCtrl" ng-click="openModal(1)"><i class="icon ion-information"></i></button>
-
-        </ion-slide>
-        <ion-slide>
-            <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" > 
-                <h4>Presiones</h4>   
-                <div  style="margin: 0 auto; max-width:600px">
-                    <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right ">
-            <div class="list">                                            
-                <label class="item item-input item-select" style="width:50%; float:left;">
-                <div class="input-label">
-                        {{'REPORTS_DE'|translate}}:
-                    </div>
-                    <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
-                        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                    </select>
-                </label>
-                <label class="item item-input item-select" style="width:50%; float:left;">
-                    <div class="input-label">
-                        {{'REPORTS_HASTA'|translate}}:
-                    </div>  
-                    <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
-                        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                    </select>                                                       
-                </label>
-                </div>      
-                <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
-                <label class="item" style="border:none;width:25%; float:left;">
-                    <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphDineroPr(initDate,endDate,mesesDiv,price);graphPresiones(initDate,endDate);"></button>              
-                </label>                 
-                    </div>            
-                    <br>
-                    <canvas id="line" class="chart chart-bar" chart-data="dataPresiones" chart-labels="labelsPresiones" chart-series="seriesPresiones" chart-options="optionsPresiones" chart-dataset-override="datasetOverridePresiones" chart-click="onClickPresiones" style="max-width:100%; height:40px; padding:10px;" chart-legend="true"></canvas>
-                        </div>
-                    <br><br>        
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>&nbsp;</th>
-                                    <th>{{'REPORTS_PRES_ALTA'|translate}}</th>
-                                    <th>{{'REPORTS_PRES_NORMAL'|translate}}</th>
-                                    <th>{{'REPORTS_PRES_BAJA'|translate}}</th>                        
-                                </tr>                                
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="l in labelsPresiones track by $index">
-                                    <td>{{l}}</td>
-                                    <td>{{dataPresiones[0][$index]}} %</td>
-                                    <td>{{dataPresiones[1][$index]}} %</td>
-                                    <td>{{dataPresiones[2][$index]}} %</td>
-                                </tr>                                             
-                            </tbody>
-                        </table>                    
-                    <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
-                    <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>
-            </ion-scroll>
-        </ion-slide>
-
-        <ion-slide>
-            <ion-scroll zooming="true" style="height:110%" delegate-handle="slide3Scroll" > 
-            <h4>{{'REPORTS_ESTIMATED_LOSSES'|translate}}</h4>
-
-            <div class="list">                                            
-                <label class="item item-input item-select" style="width:50%; float:left;">
-                    <div class="input-label">
-                        {{'REPORTS_DE'|translate}}:
-                    </div>
-                    <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
-                        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                    </select>
-                </label>
-                <label class="item item-input item-select" style="width:50%; float:left;">
-                    <div class="input-label">
-                        {{'REPORTS_HASTA'|translate}}:
-                    </div>  
-                    <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
-                        <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                    </select>        
-
-                </label>
-            </div>      
-
-            <span id="lbCost2">{{'REPORTS_COSTO_LLANTA'|translate}}:</span>
-            <label class="item item-input" style="border:none;">
-                <span class="input-label" id="lbCost">{{'REPORTS_COSTO_LLANTA_PROM'|translate}}: </span>
-                <input type="number" style="border-bottom:1px solid #b2b2b2;" ng-model='price'>
-            </label>
-            <br>
-            
-            <span id="lbChange2">{{'REPORTS_CAMB_LLANTA'|translate}}:</span>
-            <label class="item item-input item-select" style="border:none;width:75%; float:left;">
-                <span class="input-label" id="lbChange">{{'REPORTS_CAMB_LLANTA_CADA'|translate}}:</span>
-                <span class="input-label" id="lbSupport">&nbsp;</span>
-                    <select ng-model="mesesDiv" style="border-bottom:1px solid #b2b2b2;"> 
-                        <option value="{{i}}" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] track by $index">{{i}} {{'REPORTS_MESES'|translate}}</option>
-                    </select>                  
-            </label>     
-            <label class="item" style="border:none;width:25%; float:left;">
-                <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphDineroPr(initDate,endDate,mesesDiv,price);graphPresiones(initDate,endDate);"></button>              
-            </label>                            
+    <ion-content>
+        <ion-refresher pulling-text="{{ 'MSG_UPDATE' | translate }}" refreshing-text="{{ 'MSG_UPDATING' | translate }}" on-refresh="init()" controller="ReportsCtrl"></ion-refresher>
         <br>
-        <canvas id="line" class="chart chart-bar" chart-data="dataDineroPr" chart-labels="labelsDineroPr" chart-series="seriesDineroPr" chart-options="optionsDineroPr" chart-dataset-override="datasetOverrideDineroPr" chart-click="onClickDineroPr" style="max-width:100%; height:40px; padding:10px;">
-        </canvas>
-        <br><br>
-        <center ng-if="mesesDiv" style="padding-left:20px;padding-right:20px;">
-        "{{'REPORTS_MONTO_CALCULADO_DESC1'|translate}} {{price | currency}} {{'REPORTS_MONTO_CALCULADO_DESC2'|translate}} {{mesesDiv}} <span ng-if=" mesesDiv > 1 ">{{'REPORTS_MESES'|translate}}</span><span ng-if=" mesesDiv == 1 ">{{'REPORTS_MES'|translate}}</span>, {{'REPORTS_MONTO_CALCULADO_DESC3'|translate}}".</center>
-            <br>
-            <table>
-                <thead>
-                    <tr>
-                        <th>{{'REPORTS_MES'|translate}}</th>
-                        <th>{{'REPORTS_PORCENTAJE'|translate}}</th>
-                        <th>{{'REPORTS_PERDIDAS_ESTIMADAS'|translate}}</th>                    
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="l in labelsDineroPr track by $index">
-                        <td>{{l}}</td>
-                        <td>{{dataDineroPr[1][$index]}} %</td>
-                        <td>{{dataDineroPr[0][$index] | currency}}</td>                        
-                    </tr>                                             
-                </tbody>
-            </table>      
-        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
-        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
-        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
-        </ion-scroll> 
-        </ion-slide>
-    </ion-slide-box>
-    </tab-slide-box>
-  </ion-content>
+        <center>
+            <h4>{{customerName}}</h4>
+        </center>
+        <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right" ng-hide="indexSelectedNow == 4 || indexSelectedNow == 5" ng-show="indexSelectedNow == 0 || indexSelectedNow == 1 || indexSelectedNow == 2 || indexSelectedNow == 3">
+        {{'REPORTS_DATEINSPECTION'|translate}}:
+            <select ng-change="cambiarReporte(date_select)" ng-model="date_select">    
+                <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas" ng-selected="f.mes == inspeccionMes && f.anio == inspeccionAnio">
+            {{meses[(f.mes)]}} {{f.anio}}</option>
+            </select>
+        </div>
+
+        <tab-slide-box class="tabbed-slidebox" tab="0">
+            <div class="tsb-icons">
+                <div class="tsb-ic-wrp">
+                    <a href="javascript:;">{{'REPORTS_ANALYSIS'|translate}}</a>
+                    <a href="javascript:;">{{'REPORTS_UNITS'|translate}}</a>
+                    <a href="javascript:;">{{'LOGIN_RENDIMIENTOS_LABEL'|translate}}</a>
+                    <a href="javascript:;">{{'REPORTS_SEMAPHORE'|translate}}</a>                
+                    <a href="javascript:;">{{'REPORTS_CONDITIONS'|translate}}</a>                                      
+                </div>
+            </div>    
+            <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index);slideIndexChanged($index,'REPORTS');">                  
+                <!-- ANALISIS -->
+                <ion-slide>
+                    <h4>{{'REPORTS_FLEET_ANALYSIS'|translate}}</h4>                                       
+                    <div class="list">
+                        <div class="item">
+                        <center>  
+                            <li class="item">
+                                <center>{{'REPORTS_INSPECTION_LABEL'|translate}} <strong>{{meses[(inspeccionMes)]}} {{inspeccionAnio}}</strong></center>    
+                            </li>
+                        </center>
+                        </div>
+                        <div class="item">
+                            <center><strong>{{generalInfo.llantas}} {{'REPORTS_TIRES'|translate}} {{ 'REPORTS_DE' | translate }} {{generalInfo.unidades}}</strong> {{'REPORTS_UNITS'|translate}}</center>
+                        </div>
+                        <div class="item">
+                            <center>
+                                {{ 'REPORTS_GENERAL_REND_FLEET' | translate }}<br>
+                                <strong>{{ data.rendByFleet | number : 2 }} km / mm</strong>
+                            </center>
+                        </div>
+                    </div>
+                    <br><br>
+                </ion-slide>
+
+                <!-- UNIDADES -->
+                <ion-slide>
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >               
+                        <div class="im-wrapper">
+                            <button class="button button-positive button-fab pull-right" ng-click="generateReportUnidades()" style="margin-top:-10px!important;">
+                                <i class="icon ion-document"></i>
+                            </button>
+                            <h4 class="no-border no-padding-bottom">{{'REPORTS_UNITS'|translate}}</h4>                    
+                            <strong>{{'REPORTS_UNITS_DESC'|translate}}</strong>
+                        </div>
+
+
+                        <ion-list class="animate-blinds disable-user-behavior">
+                            <div class="list">                        
+                                <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-icon-left item-avatar item in in done done" ng-click="findTruckDetails('{{u.id}}')" ng-repeat="u in unidades">                                           
+                                    <i class="icon ion-ios-checkmark" style="color:#388e3c;" ng-if="u.inspeccion" item-right></i>                        
+                                    <h2>{{u.unidad}}</h2>                                                
+                                    <p ng-if="u.tipo">{{u.tipo}}</p><p ng-if="!u.tipo">{{'REPORTS_UNITS'|translate}}</p>                        
+                                    <i class="icon ion-pricetag" style="color:#388e3c;" item-right ng-if="u.tag_instalado == 'SI'"></i>                        
+                                </ion-item>                                        
+                            </div>        
+                        </ion-list>                            
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1> 
+                    </ion-scroll> 
+                </ion-slide>
+
+                <!-- RENDIMIENTOS -->
+                <ion-slide>
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
+                        <center>
+                            <h4>{{'LOGIN_RENDIMIENTOS_LABEL'|translate}}</h4>
+                        </center>
+                    </ion-scroll>
+                </ion-slide> 
+
+                <!-- SEMAFOROS -->
+                <ion-slide>
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" > 
+                        <div class="im-wrapper">
+                            <h4 class="no-border no-padding-bottom">{{'REPORTS_SEMAFORO'|translate}}</h4>
+                            <strong>{{'REPORTS_SEMAFORO_DESC'|translate}}.</strong>
+                        </div>
+                        <ion-list class=" animate-blinds disable-user-behavior">
+                            <div class="list">
+                                <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Rojo');">
+                                    <img src="img/rojo.jpg" style="border:1px solid black;">
+                                    <h2>{{ 'REPORTS_ROJO' | translate }}</h2>
+                                    <p>{{semaforo.rojo}} {{'REPORTS_TIRES'|translate}}</p>
+                                </ion-item>
+                                <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Amarillo');">
+                                    <img src="img/amarillo.jpg" style="border:1px solid black;">
+                                    <h2>{{ 'REPORTS_AMARILLO' | translate }}</h2>
+                                    <p>{{semaforo.amarillo}} {{'REPORTS_TIRES'|translate}}</p>
+                                </ion-item>
+                                <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Verde');">
+                                    <img src="img/verde.jpg" style="border:1px solid black;">
+                                    <h2>{{ 'REPORTS_VERDE' | translate }}</h2>
+                                    <p>{{semaforo.verde}} {{'REPORTS_TIRES'|translate}}</p>
+                                </ion-item>              
+                                <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Blanco');">
+                                    <img src="img/blanco.jpg" style="border:1px solid black;">
+                                    <h2>{{ 'REPORTS_BLANCO' | translate }}</h2>
+                                    <p>{{semaforo.blanco}} {{'REPORTS_TIRES'|translate}}</p>
+                                </ion-item>                         
+                            </div>
+                        </ion-list>
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>
+                    </ion-scroll>
+                </ion-slide>
+                
+                <!-- CONDICIONES ENCONTRADAS -->
+                <ion-slide>
+                    <h4>{{'REPORTS_CONDITIONS_FOUNDS'|translate}}</h4>
+                    <ion-list class=" animate-blinds disable-user-behavior">
+                        <div class="list">
+                            <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item in in done done" ng-click="loadDetallesCondiciones('{{c.observacion}}');" ng-repeat="c in condiciones" >
+                                <h2>{{c.observacion}}</h2>
+                                <p>{{c.total}} Llantas</p>
+                            </ion-item>            
+                        </div>
+                    </ion-list>
+                    <button class = "button button-fab button-fab-top-right button-balanced pane" ng-controller="ReportsCtrl" ng-click="openModal(1)"><i class="icon ion-information"></i></button>
+                </ion-slide>
+
+            </ion-slide-box>
+        </tab-slide-box>
+    </ion-content>
 </ion-view>

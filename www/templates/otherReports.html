@@ -1,124 +1,228 @@
 <ion-view view-title="{{ 'REPORTS_OTHER_REPORTS' | translate }}" hide-back-button="true" ng-init="init()">
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-  <ion-content>
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
+    <ion-content>
         <center><h4>{{customerName}}</h4>
-        <br>
-        {{ 'REPORTS_CHOOSE_DATA_RANGE' | translate }}.
+            <br>
+            {{ 'REPORTS_CHOOSE_DATA_RANGE' | translate }}.
         </center>  
-        <center>    
-
         <div style="text-align:right; padding:5px 0px;" class="button-fab-bottom-right ">
             <div class="list">                                            
                 <label class="item item-input item-select" style="width:50%; float:left;">
-                <div class="input-label">
-                        {{ 'REPORTS_DE' | translate }}:
-                    </div>
+                    <div class="input-label">{{ 'REPORTS_DE' | translate }}:</div>
                     <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
                         <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
                     </select>
                 </label>
                 <label class="item item-input item-select" style="width:50%; float:left;">
-                    <div class="input-label">
-                        {{ 'REPORTS_HASTA' | translate }}:
-                    </div>  
+                    <div class="input-label">{{ 'REPORTS_HASTA' | translate }}:</div>  
                     <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
                         <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
                     </select>                                                       
                 </label>
-                </div>      
-                <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
-                <label class="item" style="border:none;width:25%; float:left;margin-top:-25px;">
-                    <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphAnalisis(initDate,endDate);graphSemaforos(initDate,endDate);"></button>              
-                </label>                 
-                    </div>  
+            </div>      
+            <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
+            <label class="item" style="border:none;width:25%; float:left;margin-top:-25px;">
+                <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphAnalisis(initDate,endDate);graphSemaforos(initDate,endDate);"></button>              
+            </label>                 
+        </div>  
 
-<tab-slide-box class="tabbed-slidebox" tab="0"> <!-- ng-show="{{ generalInfo.llantas !== undefined}}" -->    
-    <div class="tsb-icons">
-        <div class="tsb-ic-wrp">
-            <a href="javascript:;">{{ 'REPORTS_ANALYSIS' | translate }}</a>
-            <a href="javascript:;">{{ 'REPORTS_SEMAPHORE' | translate }}</a>
-            <a href="javascript:;">{{ 'CUSTOMER_LLANTAS' | translate }}</a>
-        </div>
-    </div>
-    
-    <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index);slideIndexChangedReports($index,'reportes');">  
-    <ion-slide>
-        <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
-
-        <div  style="margin: 0 auto; max-width:600px">
-        <h4 class="no-border no-padding-bottom">{{ 'REPORTS_ANALYSIS' | translate }}</h4>
-
-            <div  style="margin: 0 auto; max-width:600px">            
-        <br><br><br>
-
-        <canvas id="line" class="chart chart-bar" chart-data="dataAnalisis" chart-labels="labelsAnalisis" chart-series="seriesAnalisis" chart-options="optionsAnalisis" chart-dataset-override="datasetOverrideAnalisis" chart-click="onClickAnalisis" style="max-width:100%; height:40px; padding:10px;" chart-legend="true">
+        <tab-slide-box class="tabbed-slidebox" tab="0"> <!-- ng-show="{{ generalInfo.llantas !== undefined}}" -->    
+            <div class="tsb-icons">
+                <div class="tsb-ic-wrp">
+                    <a href="javascript:;">{{ 'REPORTS_ANALYSIS' | translate }}</a>
+                    <a href="javascript:;">{{ 'REPORTS_SEMAPHORE' | translate }}</a>
+                    <a href="javascript:;">{{ 'CUSTOMER_LLANTAS' | translate }}</a>
+                    <a href="javascript:;">{{'REPORTS_PRESSURES'|translate}}</a>
+                    <a href="javascript:;">{{'REPORTS_ESTIMATED_LOSSES'|translate}}</a>  
+                </div>
             </div>
-        <br><br>
-            <table>
-                <thead>
-                    <tr>
-                        <th>{{ 'REPORTS_MES' | translate }}</th>
-                        <th style="text-transform: uppercase;">{{ 'DASHBOARD_CAMIONES' | translate }}</th>
-                        <th>{{ 'CUSTOMER_LLANTAS' | translate }}</th>                    
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="l in labelsAnalisis track by $index">
+
+            <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index);slideIndexChangedReports($index,'reportes');">  
+                <!-- ANALISIS -->
+                <ion-slide>
+                    <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
+                        <div  style="margin: 0 auto; max-width:600px">
+                            <h4 class="no-border no-padding-bottom">{{ 'REPORTS_ANALYSIS' | translate }}</h4>
+                            <div  style="margin: 0 auto; max-width:600px">            
+                                <br><br><br>
+                                <canvas id="line" class="chart chart-bar" chart-data="dataAnalisis" chart-labels="labelsAnalisis" chart-series="seriesAnalisis" chart-options="optionsAnalisis" chart-dataset-override="datasetOverrideAnalisis" chart-click="onClickAnalisis" style="max-width:100%; height:40px; padding:10px;" chart-legend="true">
+                            </div>
+                            <br><br>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'REPORTS_MES' | translate }}</th>
+                                        <th style="text-transform: uppercase;">{{ 'DASHBOARD_CAMIONES' | translate }}</th>
+                                        <th>{{ 'CUSTOMER_LLANTAS' | translate }}</th>                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="l in labelsAnalisis track by $index">
+                                        <td>{{l}}</td>
+                                        <td>{{dataAnalisis[0][$index]}}</td>
+                                        <td>{{dataAnalisis[1][$index]}}</td>
+                                    </tr>                                             
+                                </tbody>
+                            </table>      
+                            <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>    
+                        </div>
+                    </ion-scroll>
+                </ion-slide> 
+
+                <!-- SEMAFORO -->
+                <ion-slide>
+                    <h4 class="no-border no-padding-bottom">{{ 'REPORTS_SEMAFORO' | translate }}</h4>
+                    <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
+                        <div  style="margin: 0 auto; max-width:600px">          
+                        <br>
+                        <canvas id="line" class="chart chart-bar" chart-data="dataSemaforos" chart-labels="labelsSemaforos" chart-series="seriesSemaforos" chart-options="optionsSemaforos" chart-dataset-override="datasetOverrideSemaforos" chart-click="onClickSemaforos" style="max-width:100%; height:40px; padding:10px;" chart-legend="true" chart-colors="coloursSemaforos"></canvas>   
+                        </div>
+                        <br><br>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{{ 'REPORTS_MES' | translate }}</th>
+                                    <th style="text-transform: uppercase;">{{ 'REPORTS_ROJO' | translate }}</th>
+                                    <th style="text-transform: uppercase;">{{ 'REPORTS_AMARILLO' | translate }}</th>                    
+                                    <th style="text-transform: uppercase;">{{ 'REPORTS_VERDE' | translate }}</th>                    
+                                    <th style="text-transform: uppercase;">{{ 'REPORTS_BLANCO' | translate }}</th>                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="l in labelsAnalisis track by $index">
+                                    <td>{{l}}</td>
+                                    <td>{{dataSemaforos[0][$index]}} %</td>
+                                    <td>{{dataSemaforos[1][$index]}} %</td>
+                                    <td>{{dataSemaforos[2][$index]}} %</td>
+                                    <td>{{dataSemaforos[3][$index]}} %</td>
+                                </tr>                                             
+                            </tbody>
+                        </table>      
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>
+                    </ion-scroll>   
+                </ion-slide>
+
+                <!-- PRESIONES -->
+                <ion-slide>
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" > 
+                        <h4>Presiones</h4>   
+                        <div  style="margin: 0 auto; max-width:600px">
+                            <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right ">
+                                <div class="list">                                            
+                                    <label class="item item-input item-select" style="width:50%; float:left;">
+                                        <div class="input-label">{{'REPORTS_DE'|translate}}:</div>
+                                        <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
+                                            <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
+                                        </select>
+                                    </label>
+                                    <label class="item item-input item-select" style="width:50%; float:left;">
+                                        <div class="input-label">{{'REPORTS_HASTA'|translate}}:</div>  
+                                        <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
+                                            <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
+                                        </select>                                                       
+                                    </label>
+                                </div>      
+                                <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
+                                <label class="item" style="border:none;width:25%; float:left;">
+                                    <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphDineroPr(initDate,endDate,mesesDiv,price);graphPresiones(initDate,endDate);"></button>              
+                                </label>                 
+                            </div>            
+                            <br>
+                            <canvas id="line" class="chart chart-bar" chart-data="dataPresiones" chart-labels="labelsPresiones" chart-series="seriesPresiones" chart-options="optionsPresiones" chart-dataset-override="datasetOverridePresiones" chart-click="onClickPresiones" style="max-width:100%; height:40px; padding:10px;" chart-legend="true"></canvas>
+                        </div>
+                        <br><br>        
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>{{'REPORTS_PRES_ALTA'|translate}}</th>
+                                <th>{{'REPORTS_PRES_NORMAL'|translate}}</th>
+                                <th>{{'REPORTS_PRES_BAJA'|translate}}</th>                        
+                            </tr>                                
+                            </thead>
+                        <tbody>
+                        <tr ng-repeat="l in labelsPresiones track by $index">
                         <td>{{l}}</td>
-                        <td>{{dataAnalisis[0][$index]}}</td>
-                        <td>{{dataAnalisis[1][$index]}}</td>
-                    </tr>                                             
-                </tbody>
-            </table>      
-        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>    
-        </div>
-        </ion-scroll>
-    </ion-slide>       
-        <ion-slide>
-        <h4 class="no-border no-padding-bottom">{{ 'REPORTS_SEMAFORO' | translate }}</h4>
+                        <td>{{dataPresiones[0][$index]}} %</td>
+                        <td>{{dataPresiones[1][$index]}} %</td>
+                        <td>{{dataPresiones[2][$index]}} %</td>
+                        </tr>                                             
+                        </tbody>
+                        </table>                    
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>
+                    </ion-scroll>
+                </ion-slide>
 
+                <!-- PERDIDAS ESTIMADAS -->
+                <ion-slide>
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide3Scroll" > 
+                        <h4>{{'REPORTS_ESTIMATED_LOSSES'|translate}}</h4>
+                        <div class="list">                                            
+                            <label class="item item-input item-select" style="width:50%; float:left;">
+                                <div class="input-label">{{'REPORTS_DE'|translate}}:</div>
+                                <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
+                                    <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
+                                </select>
+                            </label>
+                            <label class="item item-input item-select" style="width:50%; float:left;">
+                                <div class="input-label">{{'REPORTS_HASTA'|translate}}:</div>  
+                                <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
+                                    <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
+                                </select>        
+                            </label>
+                        </div>      
 
-        <ion-scroll style="height:100%" delegate-handle="slide1Scroll" >
+                        <span id="lbCost2">{{'REPORTS_COSTO_LLANTA'|translate}}:</span>
+                        <label class="item item-input" style="border:none;">
+                            <span class="input-label" id="lbCost">{{'REPORTS_COSTO_LLANTA_PROM'|translate}}: </span>
+                            <input type="number" style="border-bottom:1px solid #b2b2b2;" ng-model='price'>
+                        </label>
+                        <br>
 
-            <div  style="margin: 0 auto; max-width:600px">          
-        <br>
-        <canvas id="line" class="chart chart-bar" chart-data="dataSemaforos" chart-labels="labelsSemaforos" chart-series="seriesSemaforos" chart-options="optionsSemaforos" chart-dataset-override="datasetOverrideSemaforos" chart-click="onClickSemaforos" style="max-width:100%; height:40px; padding:10px;" chart-legend="true" chart-colors="coloursSemaforos"></canvas>   
-            </div>
-            <br><br>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>{{ 'REPORTS_MES' | translate }}</th>
-                        <th style="text-transform: uppercase;">{{ 'REPORTS_ROJO' | translate }}</th>
-                        <th style="text-transform: uppercase;">{{ 'REPORTS_AMARILLO' | translate }}</th>                    
-                        <th style="text-transform: uppercase;">{{ 'REPORTS_VERDE' | translate }}</th>                    
-                        <th style="text-transform: uppercase;">{{ 'REPORTS_BLANCO' | translate }}</th>                    
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="l in labelsAnalisis track by $index">
-                        <td>{{l}}</td>
-                        <td>{{dataSemaforos[0][$index]}} %</td>
-                        <td>{{dataSemaforos[1][$index]}} %</td>
-                        <td>{{dataSemaforos[2][$index]}} %</td>
-                        <td>{{dataSemaforos[3][$index]}} %</td>
-                    </tr>                                             
-                </tbody>
-            </table>      
-                
-        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
-
-        </ion-scroll>
-
-      </ion-list>
-        </ion-slide>   
-        </ion-slide>
-    </ion-slide-box>
-    </tab-slide-box>
-  </ion-content>
+                        <span id="lbChange2">{{'REPORTS_CAMB_LLANTA'|translate}}:</span>
+                        <label class="item item-input item-select" style="border:none;width:75%; float:left;">
+                            <span class="input-label" id="lbChange">{{'REPORTS_CAMB_LLANTA_CADA'|translate}}:</span>
+                            <span class="input-label" id="lbSupport">&nbsp;</span>
+                            <select ng-model="mesesDiv" style="border-bottom:1px solid #b2b2b2;"> 
+                                <option value="{{i}}" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] track by $index">{{i}} {{'REPORTS_MESES'|translate}}</option>
+                            </select>                  
+                        </label>     
+                        <label class="item" style="border:none;width:25%; float:left;">
+                            <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphDineroPr(initDate,endDate,mesesDiv,price);graphPresiones(initDate,endDate);"></button>              
+                        </label>                            
+                        <br>
+                        <canvas id="line" class="chart chart-bar" chart-data="dataDineroPr" chart-labels="labelsDineroPr" chart-series="seriesDineroPr" chart-options="optionsDineroPr" chart-dataset-override="datasetOverrideDineroPr" chart-click="onClickDineroPr" style="max-width:100%; height:40px; padding:10px;">
+                        </canvas>
+                        <br><br>
+                        <center ng-if="mesesDiv" style="padding-left:20px;padding-right:20px;">
+                        "{{'REPORTS_MONTO_CALCULADO_DESC1'|translate}} {{price | currency}} {{'REPORTS_MONTO_CALCULADO_DESC2'|translate}} {{mesesDiv}} <span ng-if=" mesesDiv > 1 ">{{'REPORTS_MESES'|translate}}</span><span ng-if=" mesesDiv == 1 ">{{'REPORTS_MES'|translate}}</span>, {{'REPORTS_MONTO_CALCULADO_DESC3'|translate}}".</center>
+                        <br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{{'REPORTS_MES'|translate}}</th>
+                                    <th>{{'REPORTS_PORCENTAJE'|translate}}</th>
+                                    <th>{{'REPORTS_PERDIDAS_ESTIMADAS'|translate}}</th>                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="l in labelsDineroPr track by $index">
+                                    <td>{{l}}</td>
+                                    <td>{{dataDineroPr[1][$index]}} %</td>
+                                    <td>{{dataDineroPr[0][$index] | currency}}</td>                        
+                                </tr>                                             
+                            </tbody>
+                        </table>      
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>    
+                    </ion-scroll> 
+                </ion-slide>                
+            </ion-slide-box>
+        </tab-slide-box>
+    </ion-content>
 </ion-view>
-

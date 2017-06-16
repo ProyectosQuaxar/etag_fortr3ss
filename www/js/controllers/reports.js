@@ -22,6 +22,10 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
     $scope.rendimientoRevision = "";
     $scope.showButtons = false;
 
+    $scope.loadRendimiento = function(){
+        console.log("entro a carga de rendimientos")
+    }
+
 
    
      //reset the iframe to show the empty html page from app start
@@ -50,9 +54,10 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
 
     $scope.slideIndexChanged = function(index) {
         $localStorage.indexReport = index;
-        switch (index) {
+        switch (index) {            
             case 0:
                 $scope.indexSelectedNow = 0;
+                $scope.loadAnalisis();
                 break;
             case 1:
                 $scope.indexSelectedNow = 1;
@@ -61,12 +66,17 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 break;
             case 2:
                 $scope.indexSelectedNow = 2;
-                $scope.loadSemaforos();
+                $scope.loadRendimiento();
                 break;
             case 3:
                 $scope.indexSelectedNow = 3;
-                $scope.loadCondiciones();
+                $scope.loadSemaforos();
                 break;
+            case 4:
+                $scope.indexSelectedNow = 4;
+                $scope.loadCondiciones();
+                break;                
+            /*
             case 4:
                 $scope.indexSelectedNow = 4;
                 break;
@@ -75,6 +85,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 $scope.mesesDiv = $localStorage.roldeCambio;
                 $scope.price = 5000;
                 break;
+                */
         }
     };
 
@@ -417,7 +428,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                         $scope.unidadesRevision = $scope.generalInfo.unidades;
                         
 
-                        var DataPromise = Data.getRendByFleet($rootScope.urlCustomer, $localStorage.idFlota, $localStorage.inspeccionAnio, $localStorage.inspeccionMes, $localStorage.idSemaforos)
+                        var DataPromise = Data.getRendByFleet($rootScope.urlCustomer, $localStorage.idSemaforos)
                         DataPromise.then(function(result) {
                             
                             $scope.data.rendByFleet = 
