@@ -20,6 +20,7 @@ angular.module('login', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
         $ionicPlatform.registerBackButtonAction(function(event) {
         }, 100);
 
+
         $scope.ChangeLanguage = function(lang) {
             $localStorage.languague = lang;
             $translate.use(lang);
@@ -241,9 +242,17 @@ angular.module('login', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
                     $ionicLoading.hide();
                     $ionicHistory.clearCache().then(function() {
-                        $state.go('app.slider', {
-                            animation: 'slide-in-down'
-                        });
+                        
+                        if($localStorage.sliderStatus == "VISTO"){                
+                                $state.go('app.dashboard', {
+                                animation: 'slide-in-down'
+                                });
+                            } else { 
+                                $state.go('app.slider', {
+                                animation: 'slide-in-down'
+                                }); 
+                            }
+                        
                     });
                 } else if (json_data['exists'].toString() == '0') {                     
                     if(json_data['status'].toString() == 'TRIAL continue'){

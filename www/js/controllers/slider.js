@@ -1,6 +1,15 @@
 angular.module('slider', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
     .controller('SliderCtrl', function($ionicPlatform, $scope, $ionicSideMenuDelegate, ionicMaterialInk, $localStorage, $ionicHistory, $state, $timeout) {
 
+         $scope.$on('$ionicView.enter', function() {
+            // code to run each time view is entered
+            console.log("Entramos aqui!")
+            if($localStorage.sliderStatus == "VISTO"){                
+                $state.go('app.dashboard', {
+                animation: 'slide-in-down'
+                });
+            }
+        });
 
         $scope.options = {
             loop: false,
@@ -51,6 +60,7 @@ angular.module('slider', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         $scope.exit = function() {
             $localStorage.navBarVisible = 'block'
             $scope.data.display = $localStorage.navBarVisible;
+            $localStorage.sliderStatus = "VISTO";
             $state.go('app.dashboard', {
                 animation: 'slide-in-down'
             });
