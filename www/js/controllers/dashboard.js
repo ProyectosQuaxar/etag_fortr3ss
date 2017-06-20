@@ -572,11 +572,124 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                         }
 
                     }, function(reason) {
+<<<<<<< HEAD
                          $timeout(function() {
                             console.log("En caso de error")
                                  $ionicLoading.hide();
                               }, 2000);
                         //$ionicLoading.hide();
+=======
+                        $scope.selectClienteTimeout(company)
+                    })
+                    $scope.$broadcast('scroll.refreshComplete');
+                }
+            }
+        }
+
+        $scope.selectClienteTimeout = function(company) {
+            var DataPromise = Data.allTrucksTiresByFleetTimeout($rootScope.url, company)
+                    DataPromise.then(function(result) {
+                        if (result) {
+                            console.log("tipo: " + $localStorage.usertype)
+                            if($localStorage.usertype == 'auditor'){
+                                angular.extend($scope.customers, result['clientes']);
+                            }                        
+                            $localStorage.trucks = result['trucks'];
+                            $localStorage.fleets = result['fleets'];
+                            $localStorage.tires = result['tires'];
+                            $localStorage.truckBrands = result['truckBrands'];
+                            $localStorage.truckModels = result['truckModels'];
+                            $localStorage.truckTypes = result['truckTypes'];
+                            $localStorage.pressureTypes = result['pressureTypes'];
+                            $localStorage.companyIdAccount = result['companyIdAccount'];
+                            $scope.flotas = $localStorage.fleets;
+                            $scope.totalReceive = 0;
+                            
+                            var countTrucks;
+
+                            if ($localStorage.trucks !== undefined) {
+                                countTrucks = $localStorage.trucks;
+                                var totalTrucks = Object.keys(countTrucks).length;
+                                $localStorage.totalTrucks = totalTrucks;
+                                $scope.totalReceive += totalTrucks;
+                            }
+                            $scope.totalTrucks = $localStorage.totalTrucks;
+
+                            var countFleets
+                            if ($localStorage.fleets !== undefined) {
+                                countFleets = $localStorage.fleets;
+                                var totalFleets = Object.keys(countFleets).length;
+                                $localStorage.totalFleets = totalFleets;
+                                $scope.totalFleets = totalFleets;
+                                $scope.totalReceive += totalFleets;
+                            }
+
+                            var countTires
+                            if ($localStorage.tires !== undefined) {
+                                countTires = $localStorage.tires;
+                                var totalTires = Object.keys(countTires).length;
+                                $localStorage.totalTires = totalTires;
+                                $scope.totalTires = totalTires;
+                                $scope.totalReceive += totalTires;
+                            }
+
+                            var countTruckBrands;
+                            if ($localStorage.truckBrands !== undefined) {
+                                countTruckBrands = $localStorage.truckBrands;
+                                var totalTruckBrands = Object.keys(countTruckBrands).length;
+                                $localStorage.totalTruckBrands = totalTruckBrands;
+                                $scope.totalTruckBrands = totalTruckBrands;
+                            }
+
+                            var countTruckModels
+                            if ($localStorage.truckModels !== undefined) {
+                                countTruckModels = $localStorage.truckModels;
+                                var totalTruckModels = Object.keys(countTruckModels).length;
+                                $localStorage.totalModels = totalTruckModels;
+                                $scope.totalTruckModels = totalTruckModels;
+                            }
+
+                            var countTruckTypes
+                            if ($localStorage.truckTypes !== undefined) {
+                                countTruckTypes = $localStorage.truckTypes;
+                                var totalTruckTypes = Object.keys(countTruckTypes).length;
+                                $localStorage.totalTruckTypes = totalTruckTypes;
+                                $scope.totalTruckTypes = totalTruckTypes;
+                            }
+
+                            var countPressureTypes
+                            if ($localStorage.pressureTypes !== undefined) {
+                                countPressureTypes = $localStorage.pressureTypes;
+                                var totalPressureTypes = Object.keys(countPressureTypes).length;
+                                $localStorage.totalPressureTypes = totalPressureTypes;
+                                $scope.totalPressureTypes = totalPressureTypes;
+                            }
+                            
+                            if($localStorage.companyName !== undefined){
+                                $scope.totalReceive += 1;
+                            }
+
+                            $ionicLoading.hide();
+                            $scope.data.search = "";
+                            $scope.changeCompany = false;
+                            $state.go('app.dashboard', {
+                                animation: 'slide-in-down'
+                            });
+
+                        } else {
+                            $ionicLoading.hide();
+                            var msgError = $translate.instant('DASHBOARD_ERROR_DOWNLOADING_DATA');
+                            $ionicPopup.alert({
+                                title: error,
+                                template: '<center><p><b>' + msgError + '</b></p></center>',
+                                okText: aceptar,
+                                okType: 'button-assertive'
+                            });
+                        }
+
+                    }, function(reason) {
+                        $ionicLoading.hide();
+>>>>>>> 98e2e630ab9fbc94755c02b51871403d890cf2a4
                         var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
                         var tryAgain = $translate.instant('MSG_TRY_AGAIN');
                         $ionicLoading.hide();
@@ -587,8 +700,5 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                             okType: 'button-assertive'
                         });
                     })
-                    $scope.$broadcast('scroll.refreshComplete');
-                }
-            }
         }
     })
