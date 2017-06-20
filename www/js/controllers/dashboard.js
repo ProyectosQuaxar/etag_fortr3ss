@@ -452,15 +452,28 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                         animation: 'fade-in',
                         showBackdrop: true,
                         maxWidth: 200,
-                        showDelay: 0
+                        showDelay: 0    
                     });
+                    console.log("Comienza el loading...")
+                    
+
                     var DataPromise = Data.allTrucksTiresByFleet($rootScope.url, company)
+                    console.log("Entramos al data promise...")
+                     $timeout(function() {
+                            console.log("pasamos por acá y hacemos tiempo");                                
+                              }, 4000);
                     DataPromise.then(function(result) {
+
+                        console.log("Despues del data promise, aquí ya se realizo la petición...")
+                        
+
                         if (result) {
                             console.log("tipo: " + $localStorage.usertype)
                             if($localStorage.usertype == 'auditor'){
                                 angular.extend($scope.customers, result['clientes']);
-                            }                        
+                            }   
+
+
                             $localStorage.trucks = result['trucks'];
                             $localStorage.fleets = result['fleets'];
                             $localStorage.tires = result['tires'];
@@ -470,10 +483,9 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                             $localStorage.pressureTypes = result['pressureTypes'];
                             $localStorage.companyIdAccount = result['companyIdAccount'];
                             $scope.flotas = $localStorage.fleets;
-                            $scope.totalReceive = 0;
-                            
+                            $scope.totalReceive = 0;     
+                                                   
                             var countTrucks;
-
                             if ($localStorage.trucks !== undefined) {
                                 countTrucks = $localStorage.trucks;
                                 var totalTrucks = Object.keys(countTrucks).length;
@@ -481,7 +493,6 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                                 $scope.totalReceive += totalTrucks;
                             }
                             $scope.totalTrucks = $localStorage.totalTrucks;
-
                             var countFleets
                             if ($localStorage.fleets !== undefined) {
                                 countFleets = $localStorage.fleets;
@@ -536,7 +547,12 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                                 $scope.totalReceive += 1;
                             }
 
-                            $ionicLoading.hide();
+                             $timeout(function() {
+                                console.log("hacemos tiempo... por segunda ocasión");
+                                $ionicLoading.hide();
+                              }, 4000);
+                             
+                            //$ionicLoading.hide();
                             $scope.data.search = "";
                             $scope.changeCompany = false;
                             $state.go('app.dashboard', {
@@ -544,7 +560,8 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                             });
 
                         } else {
-                            $ionicLoading.hide();
+                            console.log("Algo fallo al cargar datos...")
+                            $ionicLoading.hide();                            
                             var msgError = $translate.instant('DASHBOARD_ERROR_DOWNLOADING_DATA');
                             $ionicPopup.alert({
                                 title: error,
@@ -555,7 +572,11 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                         }
 
                     }, function(reason) {
-                        $ionicLoading.hide();
+                         $timeout(function() {
+                            console.log("En caso de error")
+                                 $ionicLoading.hide();
+                              }, 2000);
+                        //$ionicLoading.hide();
                         var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
                         var tryAgain = $translate.instant('MSG_TRY_AGAIN');
                         $ionicLoading.hide();
