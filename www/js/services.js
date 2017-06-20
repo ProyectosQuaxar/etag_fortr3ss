@@ -16,6 +16,11 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
+    function allTrucksTiresByFleetTimeout(url,id){
+        return $http({timeout:11000, method:"GET", url:url+ 'allTrucksTiresByFleet/'+id}).then(function(result){
+            return result.data;
+        });
+    }
     function getFlotasbyCliente(url, id){
         return $http({method:"GET", url:url+ 'getFlotasbyCliente/' + id }).then(function(result){
             return result.data;
@@ -258,6 +263,9 @@ angular.module('starter.services', [])
         },
         allTrucksTiresByFleet:function(url,id){
             return allTrucksTiresByFleet(url,id);
+        },
+        allTrucksTiresByFleetTimeout:function(url,id){
+            return allTrucksTiresByFleetTimeout(url,id);
         },
         getFlotasbyCliente:function(url,id){
             return getFlotasbyCliente(url,id);
