@@ -17,7 +17,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
     }, 100);
 
     $scope.init = function() {
-        $scope.company = $localStorage.company;
+        //$scope.company = $localStorage.company;
         $scope.customers = $localStorage.customers;
         $scope.fleets = $localStorage.fleets;
         console.log("Local: " + $localStorage.fleets);

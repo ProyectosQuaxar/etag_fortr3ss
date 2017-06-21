@@ -15,7 +15,7 @@
             <span class="input-label">{{'TRUCK_CLIENTE_LABEL'|translate}} </span>            
           </label>
           <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
-              <select ng-model="company" style="max-width:100%;" ng-change="getFlotas(company)" required  class="inputNumber">
+              <select ng-model="company" style="max-width:100%;" ng-change="getFlotas(company)" required  class="inputNumber">                  
                   <option ng-repeat="c in customers" value="{{c.id}}" ng-selected="{{c.id == company}}">{{c.nameCompany}}</option>
               </select>
           </label>
