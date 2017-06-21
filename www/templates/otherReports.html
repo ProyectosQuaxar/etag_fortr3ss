@@ -24,7 +24,7 @@
             </div>      
             <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
             <label class="item" style="border:none;width:25%; float:left;margin-top:-25px;">
-                <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphAnalisis(initDate,endDate);graphSemaforos(initDate,endDate);"></button>              
+                <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphAnalisis(initDate,endDate);graphSemaforos(initDate,endDate);graphDineroPr(initDate,endDate,mesesDiv,price);graphPresiones(initDate,endDate);"></button>              
             </label>                 
         </div>  
 
@@ -33,7 +33,6 @@
                 <div class="tsb-ic-wrp">
                     <a href="javascript:;">{{ 'REPORTS_ANALYSIS' | translate }}</a>
                     <a href="javascript:;">{{ 'REPORTS_SEMAPHORE' | translate }}</a>
-                    <a href="javascript:;">{{ 'CUSTOMER_LLANTAS' | translate }}</a>
                     <a href="javascript:;">{{'REPORTS_PRESSURES'|translate}}</a>
                     <a href="javascript:;">{{'REPORTS_ESTIMATED_LOSSES'|translate}}</a>  
                 </div>
@@ -108,29 +107,8 @@
                 <!-- PRESIONES -->
                 <ion-slide>
                     <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" > 
-                        <h4>Presiones</h4>   
+                        <h4>{{'REPORTS_PRESSURES'|translate}}</h4>   
                         <div  style="margin: 0 auto; max-width:600px">
-                            <div style="text-align:right; padding:5px 10px;" class="button-fab-bottom-right ">
-                                <div class="list">                                            
-                                    <label class="item item-input item-select" style="width:50%; float:left;">
-                                        <div class="input-label">{{'REPORTS_DE'|translate}}:</div>
-                                        <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
-                                            <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                                        </select>
-                                    </label>
-                                    <label class="item item-input item-select" style="width:50%; float:left;">
-                                        <div class="input-label">{{'REPORTS_HASTA'|translate}}:</div>  
-                                        <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
-                                            <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                                        </select>                                                       
-                                    </label>
-                                </div>      
-                                <label class="item item-input" style="border:none;width:75%; float:left;">&nbsp;</label>
-                                <label class="item" style="border:none;width:25%; float:left;">
-                                    <button class="button button-fab button-assertive icon ion-android-send" ng-click="graphDineroPr(initDate,endDate,mesesDiv,price);graphPresiones(initDate,endDate);"></button>              
-                                </label>                 
-                            </div>            
-                            <br>
                             <canvas id="line" class="chart chart-bar" chart-data="dataPresiones" chart-labels="labelsPresiones" chart-series="seriesPresiones" chart-options="optionsPresiones" chart-dataset-override="datasetOverridePresiones" chart-click="onClickPresiones" style="max-width:100%; height:40px; padding:10px;" chart-legend="true"></canvas>
                         </div>
                         <br><br>        
@@ -160,22 +138,7 @@
                 <!-- PERDIDAS ESTIMADAS -->
                 <ion-slide>
                     <ion-scroll zooming="true" style="height:110%" delegate-handle="slide3Scroll" > 
-                        <h4>{{'REPORTS_ESTIMATED_LOSSES'|translate}}</h4>
-                        <div class="list">                                            
-                            <label class="item item-input item-select" style="width:50%; float:left;">
-                                <div class="input-label">{{'REPORTS_DE'|translate}}:</div>
-                                <select ng-model="initDate" style="border-bottom:1px solid #b2b2b2;">                
-                                    <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                                </select>
-                            </label>
-                            <label class="item item-input item-select" style="width:50%; float:left;">
-                                <div class="input-label">{{'REPORTS_HASTA'|translate}}:</div>  
-                                <select ng-model="endDate" style="border-bottom:1px solid #b2b2b2;">  
-                                    <option value="{{f.mes}}-{{f.anio}}" ng-repeat="f in fechas">{{meses[(f.mes)]}} {{f.anio}}</option>
-                                </select>        
-                            </label>
-                        </div>      
-
+                        <h4>{{'REPORTS_ESTIMATED_LOSSES'|translate}}</h4>   
                         <span id="lbCost2">{{'REPORTS_COSTO_LLANTA'|translate}}:</span>
                         <label class="item item-input" style="border:none;">
                             <span class="input-label" id="lbCost">{{'REPORTS_COSTO_LLANTA_PROM'|translate}}: </span>

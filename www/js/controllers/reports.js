@@ -170,7 +170,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 position: 'left',
                 scaleLabel: {
                     display: true,
-                    labelString: 'Pérdidas'
+                    labelString: $translate.instant('REPORTS_PERDIDAS')
                 },
                 ticks: {
                     beginAtZero: true,
@@ -191,7 +191,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                     var tooltipLabel = data.labels[tooltipItem.index];
                     var tooltipData = allData[tooltipItem.index];
                     var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-                    if (datasetLabel == 'Perdidas') {
+                    if (datasetLabel == $translate.instant('REPORTS_PERDIDAS')) {
                         if (parseInt(tooltipData) > 1000) {
                             tooltipData = tooltipData.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         } else {
@@ -490,7 +490,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
         }
     }
 
-
+    
     $scope.graphPresiones = function(initDate, endDate, price) {
         if (initDate !== undefined) {
             if (endDate !== undefined) {
@@ -506,9 +506,30 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 var DataPromise = Data.graphPresiones($rootScope.urlCustomer,  $localStorage.languague, initDate, endDate, $localStorage.idFlota, price)
                 DataPromise.then(function(result) {
                         if (result) {
-                            $scope.labelsPresiones = result['meses'];
+                                $scope.labelsPresiones = [];
+                                $scope.meses = [
+                                '',
+                                $translate.instant('REPORTS_ENERO'),
+                                $translate.instant('REPORTS_FEBRERO'),
+                                $translate.instant('REPORTS_MARZO'),
+                                $translate.instant('REPORTS_ABRIL'),
+                                $translate.instant('REPORTS_MAYO'),
+                                $translate.instant('REPORTS_JUNIO'),
+                                $translate.instant('REPORTS_JULIO'),
+                                $translate.instant('REPORTS_AGOSTO'),
+                                $translate.instant('REPORTS_SEPTIEMBRE'),
+                                $translate.instant('REPORTS_OCTUBRE'),
+                                $translate.instant('REPORTS_NOVIEMBRE'),
+                                $translate.instant('REPORTS_DICIEMBRE')
+                            ];
+
+                            angular.forEach(result['meses'], function(value, key) {                                
+                                $scope.labelsPresiones.push($scope.meses[value]);
+                                console.log(value)                          
+                            }) 
+
                             console.log($scope.labelsPresiones);
-                            $scope.seriesPresiones = ['Alta', 'Normal', 'Baja'];
+                            $scope.seriesPresiones = [$translate.instant('REPORTS_PRES_ALTA'),$translate.instant('REPORTS_PRES_NORMAL'), $translate.instant('REPORTS_PRES_BAJA')];
                             $scope.dataPresiones = [result['sobre'], result['normal'], result['baja']];
                             $scope.dataPresionesAlta = [result['sobre']];
                             $scope.dataPresionesMedia = [result['normal']];
@@ -572,11 +593,35 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                     maxWidth: 200,
                     showDelay: 0
                 });
-
+                $scope.price = price;
+                $scope.mesesDiv = mesesDiv;
                 var DataPromise = Data.graphDineroPr($rootScope.urlCustomer,  $localStorage.languague, initDate, endDate, mesesDiv, $localStorage.idFlota, price)
                 DataPromise.then(function(result) {
-                        if (result) {
-                            $scope.labelsDineroPr = result['meses'];                            
+                        if (result) {  
+                            $scope.labelsDineroPr = [];
+                                $scope.meses = [
+                                '',
+                                $translate.instant('REPORTS_ENERO'),
+                                $translate.instant('REPORTS_FEBRERO'),
+                                $translate.instant('REPORTS_MARZO'),
+                                $translate.instant('REPORTS_ABRIL'),
+                                $translate.instant('REPORTS_MAYO'),
+                                $translate.instant('REPORTS_JUNIO'),
+                                $translate.instant('REPORTS_JULIO'),
+                                $translate.instant('REPORTS_AGOSTO'),
+                                $translate.instant('REPORTS_SEPTIEMBRE'),
+                                $translate.instant('REPORTS_OCTUBRE'),
+                                $translate.instant('REPORTS_NOVIEMBRE'),
+                                $translate.instant('REPORTS_DICIEMBRE')
+                            ];
+
+                            angular.forEach(result['meses'], function(value, key) {                                
+                                $scope.labelsDineroPr.push($scope.meses[value]);
+                                console.log(value)                          
+                            }) 
+
+
+
                             $scope.seriesDineroPr = [$translate.instant("REPORTS_PERDIDAS"), $translate.instant("REPORTS_PERCENT")];
                             $scope.dataDineroPr = [result['perdida'], result['porcentajes']];
                             $ionicLoading.hide();
@@ -929,7 +974,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
         });
     }
 
-        $scope.graphAnalisis = function(initDate, endDate) {
+    $scope.graphAnalisis = function(initDate, endDate) {
         if (initDate !== undefined || initDate.length == 6) {
             if (endDate !== undefined || initDate.length == 6) {
 
@@ -945,8 +990,26 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 var DataPromise = Data.graphAnalisis($rootScope.urlCustomer, $localStorage.languague, initDate, endDate, $localStorage.idFlota)
                 DataPromise.then(function(result) {
                         if (result) {
-                            $scope.labelsAnalisis = result['meses'];
-                            $scope.seriesAnalisis = ['Camiones', 'Llantas'];
+                            $scope.labelsAnalisis = [];
+                            $scope.meses = [
+                                '',
+                                $translate.instant('REPORTS_ENERO'),
+                                $translate.instant('REPORTS_FEBRERO'),
+                                $translate.instant('REPORTS_MARZO'),
+                                $translate.instant('REPORTS_ABRIL'),
+                                $translate.instant('REPORTS_MAYO'),
+                                $translate.instant('REPORTS_JUNIO'),
+                                $translate.instant('REPORTS_JULIO'),
+                                $translate.instant('REPORTS_AGOSTO'),
+                                $translate.instant('REPORTS_SEPTIEMBRE'),
+                                $translate.instant('REPORTS_OCTUBRE'),
+                                $translate.instant('REPORTS_NOVIEMBRE'),
+                                $translate.instant('REPORTS_DICIEMBRE')
+                            ];
+                            angular.forEach(result['meses'], function(value, key) {                                
+                                $scope.labelsAnalisis.push($scope.meses[value]);                                                
+                            })
+                            $scope.seriesAnalisis = [$translate.instant('DASHBOARD_CAMIONES'), $translate.instant('DASHBOARD_LLANTAS')];
                             $scope.dataAnalisis = [result['camiones'], result['llantas']];
                             $ionicLoading.hide();
                         } else {
@@ -1007,8 +1070,26 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                 var DataPromise = Data.graphSemaforos($rootScope.urlCustomer, initDate, endDate, $localStorage.idFlota)
                 DataPromise.then(function(result) {
                         if (result) {
-                            $scope.labelsSemaforos = result['meses'];
-                            $scope.seriesSemaforos = ['Rojo', 'Amarillo', 'Verde', 'Blanco'];
+                            $scope.meses = [
+                                '',
+                                $translate.instant('REPORTS_ENERO'),
+                                $translate.instant('REPORTS_FEBRERO'),
+                                $translate.instant('REPORTS_MARZO'),
+                                $translate.instant('REPORTS_ABRIL'),
+                                $translate.instant('REPORTS_MAYO'),
+                                $translate.instant('REPORTS_JUNIO'),
+                                $translate.instant('REPORTS_JULIO'),
+                                $translate.instant('REPORTS_AGOSTO'),
+                                $translate.instant('REPORTS_SEPTIEMBRE'),
+                                $translate.instant('REPORTS_OCTUBRE'),
+                                $translate.instant('REPORTS_NOVIEMBRE'),
+                                $translate.instant('REPORTS_DICIEMBRE')
+                            ];
+                            $scope.labelsSemaforos = [];
+                            angular.forEach(result['meses'], function(value, key) {                                
+                                $scope.labelsSemaforos.push($scope.meses[value]);                                                         
+                            }) 
+                            $scope.seriesSemaforos = [$translate.instant('REPORTS_ROJO'), $translate.instant('REPORTS_AMARILLO'), $translate.instant('REPORTS_VERDE'), $translate.instant('REPORTS_ROJO')];
                             $scope.dataSemaforos = [result['rojo'], result['amarillo'], result['verde'], result['blanco']];
                             $ionicLoading.hide();
                         } else {
