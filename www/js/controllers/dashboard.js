@@ -572,13 +572,6 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                         }
 
                     }, function(reason) {
-<<<<<<< HEAD
-                         $timeout(function() {
-                            console.log("En caso de error")
-                                 $ionicLoading.hide();
-                              }, 2000);
-                        //$ionicLoading.hide();
-=======
                         $scope.selectClienteTimeout(company)
                     })
                     $scope.$broadcast('scroll.refreshComplete');
@@ -689,7 +682,6 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
 
                     }, function(reason) {
                         $ionicLoading.hide();
->>>>>>> 98e2e630ab9fbc94755c02b51871403d890cf2a4
                         var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
                         var tryAgain = $translate.instant('MSG_TRY_AGAIN');
                         $ionicLoading.hide();
