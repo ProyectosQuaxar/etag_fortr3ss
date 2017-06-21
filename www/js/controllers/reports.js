@@ -21,6 +21,9 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
     $scope.unidadesRevision = "";
     $scope.rendimientoRevision = "";
     $scope.showButtons = false;
+    $scope.rendMarcas = [];
+    $scope.reportUnits = true;
+    $scope.reportBrands = false;
 
     $scope.loadRendimiento = function(){
         console.log("entro a carga de rendimientos")
@@ -357,6 +360,15 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
         }
     }
 
+    $scope.rendUnits = function(){
+        $scope.reportUnits = true;
+        $scope.reportBrands = false;
+    }
+
+    $scope.rendBrands = function(){
+        $scope.reportUnits = false;
+        $scope.reportBrands = true;
+    }
 
     $scope.init = function() {
         $scope.customerName = $localStorage.companyName;
@@ -431,10 +443,22 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                         var DataPromise = Data.getRendByFleet($rootScope.urlCustomer, $localStorage.idSemaforos)
                         DataPromise.then(function(result) {
                             
-                            $scope.data.rendByFleet = 
-                            result['fleetRend'];
+                            $scope.data.rendByFleet = result['fleetRend'];
                             console.log("Rendimiento por flota: " + $scope.data.rendByFleet);
                             $scope.rendimientoRevision = $scope.data.rendByFleet;                          
+                            $scope.rendByFleet = result['fleetRend'];    
+                            $scope.rendTruck = result['camiones'];
+                            angular.forEach(result['marcas'], function(value, key) {
+                                var rendMark = {
+                                    id: value.id,
+                                    marca: value.marca,
+                                    prom: value.suma / value.cantidad
+                                } 
+                                $scope.rendMarcas.push(rendMark)                           
+                            }) 
+
+                            console.log("los rendimientos son: ")
+                            console.log($scope.rendMarcas)
                         }, function(reason) {
                             $scope.data.rendByFleet = 0;
                         })

@@ -103,18 +103,98 @@
 
                 <!-- RENDIMIENTOS -->
                 <ion-slide>
-                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
-                        <center>
-                            <h4>{{'LOGIN_RENDIMIENTOS_LABEL'|translate}}</h4>
+                    <h4 style="text-transform:uppercase;">{{'LOGIN_RENDIMIENTOS_LABEL'|translate}}</h4>
+                    <table class="shadowTable">
+                        <tr>
+                            <td style="padding:0px;">
+                                <h4 ng-show="reportUnits" style="font-size:14px;text-transform: uppercase;">{{ 'REPORTS_UNITS_UNITS' | translate }}</h4>
+                                <span ng-show="!reportUnits" ng-click="rendUnits()" style="text-transform: uppercase;">{{ 'REPORTS_UNITS_UNITS' | translate }}</span>
+                            </td>
+                            <td style="padding:0px;">
+                                <h4 ng-show="reportBrands" style="font-size:14px;">{{ 'REPORTS_UNITS_DET_MARCA' | translate }}</h4>
+                                <span ng-show="!reportBrands" ng-click="rendBrands()">{{ 'REPORTS_UNITS_DET_MARCA' | translate }}</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" ng-show="reportUnits">
+                        <br><br>
+                        <center>                            
+                            {{ 'REPORTS_GENERAL_REND_FLEET' | translate }}<br>
+                            <strong>{{ rendByFleet | number : 2 }} km / mm</strong>
                         </center>
-                        <div class="item">
-                            <center>
-                                {{ 'REPORTS_GENERAL_REND_FLEET' | translate }}<br>
-                                <strong>{{ data.rendByFleet | number : 2 }} km / mm</strong>
-                            </center>
+                        <br>
+                        <div ng-repeat="r in rendTruck">
+                            <a class="item item-avatar" ng-click="showRend = !showRend" style="padding-left:75px;">
+                                <img src="img/icon_truck.png"/>
+                                <h2 style="overflow:visible!important;">
+                                    <center>
+                                        <strong>
+                                            {{r.unidad}} - {{r.placas}}  &nbsp;&nbsp;&nbsp;&nbsp;
+                                        </strong>
+                                    </center>                   
+                                </h2>
+                                <p style="text-align:center;">
+                                    {{ 'REPORTS_RENDIMIENTO' | translate }} {{ r.rendTruck | number : 2 }} km / mm
+                                </p>
+                            </a>
+                            <div ng-show="showRend" ng-repeat="l in r.llantas">
+                                <a class="item item-avatar" style="padding-left:75px;">
+                                    <img src="img/icon_tire.png"/>
+                                    <h2 style="overflow:visible!important;">
+                                        <center>
+                                            <strong>
+                                                {{l.posicion}}) {{l.marca}} {{l.medida}} &nbsp;&nbsp;&nbsp;&nbsp;
+                                            </strong>
+                                        </center>                   
+                                    </h2>
+                                    <p style="text-align:center;">
+                                        {{ 'REPORTS_RENDIMIENTO' | translate }} {{ l.promRendTruck | number : 2 }} km / mm
+                                    </p>
+                                </a>                             
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>{{'TIRES_DATE_INSP_LAB'|translate}}</th>
+                                            <th>{{'REPORTS_KM'|translate}}</th>
+                                            <th>{{'REPORTS_REM'|translate}}</th>
+                                           <th>{{'REPORTS_PROM'|translate}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="rend in l.rendimiento">
+                                            <td>{{meses[rend.mes]}} {{rend.anio}}</td>
+                                            <td>{{rend.kilometros}} kms</td>
+                                            <td>{{rend.remanente}} mm</td>
+                                            <td>{{rend.rendKilometro}} kms x mm</td>                                    
+                                        </tr>                                             
+                                    </tbody>
+                                </table>         
+                                <br><br>                                                
+                            </div>                            
                         </div>
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>
                     </ion-scroll>
-                </ion-slide> 
+                    <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" ng-show="reportBrands">
+                        <br>
+                        <!-- INSERTAR EL REPEAT LLANTAS -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{{ 'REPORTS_UNITS_DET_MARCA' | translate }}</th>
+                                    <th>{{ 'REPORTS_RENDIMIENTO' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="rm in rendMarcas | orderBy : 'rm.prom'">
+                                    <td>{{rm.marca}}</td>
+                                    <td>{{ rm.prom | number : 2 }} km / mm</td>
+                                </tr>                                             
+                            </tbody>
+                        </table>
+                        <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>                         
+                    </ion-scroll>
+                </ion-slide>  
 
                 <!-- SEMAFOROS -->
                 <ion-slide>

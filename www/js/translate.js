@@ -50,7 +50,7 @@ LOGIN_ERROR_UPDATE_PASSWORD: 'Error al actualizar su contraseña',
 LOGIN_ERROR_SENDING_EMAIL: 'Error enviando email',
 LOGIN_RENDIMIENTOS_LABEL: 'Rendimientos',
 TIRES_SEND_WAREHOUSE: 'Enviar a almacén',
-
+TIRES_DATE_INSP_LAB: 'FECHA'
 		});
 
         $translateProvider.translations('en', {
@@ -518,7 +518,7 @@ LOGIN_EMAIL_NOT_RECEIVED: 'Enter Email!',
 LOGIN_ERROR_UPDATE_PASSWORD: 'Error updating password',
 LOGIN_ERROR_SENDING_EMAIL: 'Error sending email',
 TIRES_SEND_WAREHOUSE: 'Send to warehouse',
-
+TIRES_DATE_INSP_LAB: 'DATE'
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',
