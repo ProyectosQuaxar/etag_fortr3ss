@@ -72,7 +72,25 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                 })
             }
         }
-
+        $scope.stateChanged = function(){
+            var condFounds = ""; 
+            angular.forEach($scope.selection.ids, function(value, key) {
+                condFounds = key + ": " +value;                    
+                if(key == "OTRA"){
+                    if (value) {
+                        console.log("Activada") 
+                        $scope.disableArea = false;                                     
+                        condFounds = "";                                                   
+                    } else {
+                        console.log("Desactivada")                
+                        $scope.disableArea = true;
+                        $scope.data.others = "";                        
+                        condFounds = "";                                                                          
+                    } 
+                }
+            });                    
+        } 
+        /*
         $scope.stateChanged = function(){
             angular.forEach($scope.selection.ids, function(value, key) {                
                 if(key == "OTRA"){
@@ -87,7 +105,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                 }
             });                    
         }
-
+        */
         $scope.showBluetoothOptions = function(){
             $scope.oModal1.show();
             $scope.showButtons = false;

@@ -286,6 +286,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 }
             });                    
         } 
+
         $scope.generateTires = function (){
             console.log("****************** \n en Generate Tires")
             console.log("company :" + $scope.data.company)
@@ -504,6 +505,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             if($scope.isValid(semaphore)){
                 nullValues++;
             }
+
             console.log("Marca: " + tirebrand)
             console.log("Medida: " + size)
             console.log("Diseño: " + design)
@@ -573,10 +575,9 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                             $ionicScrollDelegate.scrollTop();
                         } else {
                             console.log("modo online activado")
-
                             //Procedemos a insertar llantas
                             var loading = $translate.instant('MSG_LOADING');
-                            var DataPromise = Data.insertTire($rootScope.url, $localStorage.languague, submitDataTruck.company, submitDataTruck.fleet, submitDataTruck.truckId, tirebrand, size, design, price, dot, tag, truckPos, semaphore, wear, submitDataTruck.kms, pressure, tagInstalado, condFounds, $localStorage.inspectionId);
+                            var DataPromise = Data.insertTire($rootScope.url, $localStorage.languague, submitDataTruck.company, submitDataTruck.fleet, submitDataTruck.truckId, tirebrand, tireType, size, design, price, dot, tag, truckPos, semaphore, wear, submitDataTruck.kms, pressure, tagInstalado, condFounds, $localStorage.inspectionId);
                             DataPromise.then(function(result) {
                                 console.log("entonces despues de subir las condiciones son? " + condFounds)
                                 console.log(result['result'])
@@ -628,26 +629,28 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                         console.log("[truckId]: " + submitDataTruck.truckId)
                         console.log("[kms] : " + submitDataTruck.kms)
 
-                        var tireAdd = {
-                            id: tag,
-                            camionId: submitDataTruck.truckId,
+                        var tireAdd = {                            
                             customerId: submitDataTruck.company,
-                            desgaste: wear,
                             flotaId: submitDataTruck.fleet ,
-                            kilometraje: submitDataTruck.kms,
-                            position: truckPos,
-                            pr: pressure,
-                            price: price,
-                            registerDate: null,
-                            semaforo: semaphore,
-                            tagId: tag,
-                            tagInstalado: tagInstalado,
+                            camionId: submitDataTruck.truckId,
                             tireBrand: tirebrand,
-                            tireModel: design,
-                            tireSize: size,
                             tireType: tireType,
-                            year: dot
+                            tireSize: size,
+                            tireModel: design,
+                            price: price,
+                            year: dot,    
+                            tagId: tag,
+                            position: truckPos,
+                            semaforo: semaphore,                            
+                            desgaste: wear,                            
+                            kilometraje: submitDataTruck.kms,                           
+                            pr: pressure,
+                            tagInstalado: tagInstalado,
+                            condFounds: condFounds
+                            
                         }
+                        
+
 
                         StorageService.addTire(tireAdd);
                         $scope.data.addTire = $localStorage.addTire;

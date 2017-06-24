@@ -486,6 +486,67 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
             $scope.storagePressure = $localStorage.storagePressure;
         }
 
+        $scope.uploadTires = function(){
+            var nullValues = 0;
+            var otherDetected = false;
+             if ($localStorage.appModeStatus){                
+                $scope.showErrorConnectionMsg();
+            } else {
+
+                //Ya estamos en modo ONLINE y vamos a guardar la primera inspección
+                if ($scope.isValid(tagInstalado)) {
+                    tagInstalado = 'NO'
+                } else {
+                    tagInstalado = 'SI'
+                }
+                console.log("entonces tag instalado? " + tagInstalado)
+                angular.forEach($localStorage.tires, function(value, key) {    
+
+                    //INICIA INSPECCION ONLINE
+                    var DataPromise = Data.insertTruckHistorial($rootScope.url, _userId, tag, marca, modelo, unidad, $scope.data.kilometraje, placas, tagInstalado, $scope.data.kmZero, tipoInspeccion)                            
+                    DataPromise.then(function(result) {
+                        if (result['message'] == 'success') {
+                            $localStorage.inspectionId = result['historyId'];                                            
+                        } else if (result['message'] == "Can't insert truck history") {
+                            //DATOS CON ERRORES O INCOMPLETOS
+                            $ionicLoading.hide();
+                            var error = $translate.instant('MSG_ERROR');
+                            var aceptar = $translate.instant('MSG_ACEPTAR');
+                            var msgError = $translate.instant('INSPECTION_CANNOT_INSERT_THISTORY');
+                            $ionicPopup.alert({
+                                title: error,
+                                template: "<center><b>" + msgError + "</b></center>",
+                                okText: aceptar,
+                                okType: 'button-assertive'
+                            });
+
+                        } else if (result['message'] == "Can't update truck information") {
+                            //DATOS CON ERRORES O INCOMPLETOS
+                            $ionicLoading.hide();
+                            $scope.showErrorMessage($translate.instant('INSPECTION_CANNOT_UPDATE_INFORMATION'));
+                        } else if (result['message'] == "Truck tag not exists") {
+                            //DATOS CON ERRORES O INCOMPLETOS
+                            $ionicLoading.hide();
+                            $scope.showErrorMessage($translate.instant('INSPECTION_TRUCK_TAG_NOT_EXIST'));
+                        } else {
+                            //SE RECIBIÓ UNA RESPUESTA INESPERADA
+                            $ionicLoading.hide();
+                            $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
+                        }
+
+                        }, function(reason) {
+                            //ERROR DE CONEXIÓN                                
+                            $ionicLoading.hide();
+                            $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
+                        })
+
+                        //FINALIZA INSPECCIÓN ONLINE
+                        
+                });
+            }
+
+        }
+
         $scope.uploadTrucks = function (){            
             var trucks = $localStorage.storageTrucks;
             if ($localStorage.appModeStatus){                
