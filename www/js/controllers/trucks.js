@@ -233,6 +233,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
         console.log("insertar llantas? " + tiresBefore)
         if(tiresBefore){
             //SI AGREGAREMOS LLANTAS DESPUES
+            console.log($scope.data.kms);
             if ($scope.data.kms === undefined || $scope.data.kms == '') {
                 $scope.showErrorMessage($translate.instant('TIRES_KM_DIFERENT_ZERO'))
             } else {                
@@ -258,7 +259,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         //si el modo offline está activado
                         //comparamos si la compañia seleccionada es la misma que    
                         console.log("Como estamos en modo offline mandaremos estos datos")
-                        console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo);
+                        console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo + " " + $scope.data.kms);
                         var truck = {
                             idFlota: idFlota,
                             idModelo: idModelo,
@@ -272,9 +273,10 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             tipo: tipo
                         }
 
+
                         StorageService.addTruck(truck);   
                         $localStorage.trucks.push({id: tag, idFlota: idFlota, idModelo: idModelo, nombreOperador: nombreOperador, 
-                            placas: placas, pressureType: pressureType, tag: tag, tagInstalado: tagInstalado, tipo: tipo, unidad: unidad, year: anio});          
+                            placas: placas, pressureType: pressureType, tag: tag, tagInstalado: tagInstalado, tipo: tipo, unidad: unidad, year: anio, kilometraje: $scope.data.kms});          
                         console.log("entró e imprimió el siguiente mensaje:")
                         console.log($translate.instant('TRUCK_SAVED_SUCCESSFULY'))
                         $scope.showSuccessMessage($translate.instant('TRUCK_SAVED_SUCCESSFULY'));
@@ -345,7 +347,8 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                                 /************ ACTUALIZAMOS LOS DATOS DE ESTE CLIENTE **********/
                                 $scope.showSuccessMessage($translate.instant('MSG_DATA_SUCCESS'));
 
-                                if ($localStorage.appModeStatus) {                        
+                                if ($localStorage.appModeStatus) { 
+                                console.log("Estamos en offline y guardaremos la inspección...")                       
                                     var storageSemaphoreInspection = {
                                             userId: $localStorage.userId, 
                                             tag:tag,

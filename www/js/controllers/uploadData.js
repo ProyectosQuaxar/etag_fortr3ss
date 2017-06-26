@@ -487,62 +487,59 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
         }
 
         $scope.uploadTires = function(){
-            var nullValues = 0;
-            var otherDetected = false;
-             if ($localStorage.appModeStatus){                
+            var tires = $localStorage.storageTires;
+        if ($localStorage.appModeStatus){                
                 $scope.showErrorConnectionMsg();
+                console.log("En OFFLINE no podemos hacer nada");
             } else {
+                console.log("Estamos en modo ONLINE")
+                angular.forEach(tires, function(value, key) {   
 
-                //Ya estamos en modo ONLINE y vamos a guardar la primera inspección
-                if ($scope.isValid(tagInstalado)) {
-                    tagInstalado = 'NO'
-                } else {
-                    tagInstalado = 'SI'
-                }
-                console.log("entonces tag instalado? " + tagInstalado)
-                angular.forEach($localStorage.tires, function(value, key) {    
+                // falta inspTruckId    
 
-                    //INICIA INSPECCION ONLINE
-                    var DataPromise = Data.insertTruckHistorial($rootScope.url, _userId, tag, marca, modelo, unidad, $scope.data.kilometraje, placas, tagInstalado, $scope.data.kmZero, tipoInspeccion)                            
-                    DataPromise.then(function(result) {
+                var DataPromise = Data.insertTires($rootScope.url, $localStorage.languague, value.customerId, value.flotaId, value.camionId, value.tireBrand, value.tireType, value.tireSize, value.tireModel, value.price, value.year, value.tagId, value.position, value.semaforo, value.desgaste, value.kilometraje, value.pr, value.tagInstalado, value.condFounds)
+                DataPromise.then(function(result) {
                         if (result['message'] == 'success') {
-                            $localStorage.inspectionId = result['historyId'];                                            
-                        } else if (result['message'] == "Can't insert truck history") {
+                            //DATOS CARGADOS
+                            var info = $translate.instant('MSG_INFORMATION');
+                            var aceptar = $translate.instant('MSG_ACEPTAR');
+                            var msgSuccess = $translate.instant('MSG_DATA_SUCCESS');
+                            var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                            StorageService.removeTire(value.tagId);
+                            $scope.$broadcast('scroll.refreshComplete');
+                            $ionicPopup.alert({
+                                title: info,
+                                template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+                                okText: aceptar,
+                                okType: 'button-assertive'
+                            });
+                        } else if (result['message'] == 'error') {
                             //DATOS CON ERRORES O INCOMPLETOS
-                            $ionicLoading.hide();
+
+                            var errors = ""
+                            angular.forEach(result['errors'], function(value, key) {
+                                errors = errors + (key + 1) + ".- " + value + "<br>"
+                            });
+
                             var error = $translate.instant('MSG_ERROR');
                             var aceptar = $translate.instant('MSG_ACEPTAR');
-                            var msgError = $translate.instant('INSPECTION_CANNOT_INSERT_THISTORY');
                             $ionicPopup.alert({
                                 title: error,
-                                template: "<center><b>" + msgError + "</b></center>",
+                                template: '<center>' + errors + '</center>',
                                 okText: aceptar,
                                 okType: 'button-assertive'
                             });
 
-                        } else if (result['message'] == "Can't update truck information") {
-                            //DATOS CON ERRORES O INCOMPLETOS
-                            $ionicLoading.hide();
-                            $scope.showErrorMessage($translate.instant('INSPECTION_CANNOT_UPDATE_INFORMATION'));
-                        } else if (result['message'] == "Truck tag not exists") {
-                            //DATOS CON ERRORES O INCOMPLETOS
-                            $ionicLoading.hide();
-                            $scope.showErrorMessage($translate.instant('INSPECTION_TRUCK_TAG_NOT_EXIST'));
                         } else {
                             //SE RECIBIÓ UNA RESPUESTA INESPERADA
-                            $ionicLoading.hide();
                             $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
                         }
 
-                        }, function(reason) {
-                            //ERROR DE CONEXIÓN                                
-                            $ionicLoading.hide();
-                            $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
-                        })
-
-                        //FINALIZA INSPECCIÓN ONLINE
-                        
-                });
+                    }, function(reason) {
+                        //ERROR DE CONEXIÓN
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
+                    })
+            });   
             }
 
         }
@@ -552,7 +549,8 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
             if ($localStorage.appModeStatus){                
                 $scope.showErrorConnectionMsg();
             } else {
-                angular.forEach(trucks, function(value, key) {                
+
+                angular.forEach(trucks, function(value, key) {   
                 var DataPromise = Data.insertTruck($rootScope.url, $localStorage.languague, value.idFlota, value.idModelo, value.placas, value.tag, value.unidad, value.pressureType, value.tagInstalado, value.nombreOperador, value.tipo)
                 DataPromise.then(function(result) {
                         if (result['message'] == 'success') {

@@ -631,7 +631,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
 
                         var tireAdd = {                            
                             customerId: submitDataTruck.company,
-                            flotaId: submitDataTruck.fleet ,
+                            flotaId: submitDataTruck.fleet,
                             camionId: submitDataTruck.truckId,
                             tireBrand: tirebrand,
                             tireType: tireType,
@@ -647,11 +647,8 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                             pr: pressure,
                             tagInstalado: tagInstalado,
                             condFounds: condFounds
-                            
                         }
                         
-
-
                         StorageService.addTire(tireAdd);
                         $scope.data.addTire = $localStorage.addTire;
                         $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
@@ -841,6 +838,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 $scope.$broadcast('scroll.refreshComplete');
             }
         }
+        
         $scope.startInsertTires = function(){
             $localStorage.submitDataTruck = {"company":$scope.data.company,"fleet":$scope.data.fleet,"truckId":$scope.data.truckId,"kms":$scope.data.kms};
             console.log("datos del camión a subir: ")
@@ -852,7 +850,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                     $scope.showErrorMessage($translate.instant('TIRES_KM_DIFERENT_ZERO'))
                 } else {
                     var truck = $scope.data.truckInspectionated;
-
+                    console.log("----- Ingresamos a agregar un semaforo de inspección si estamos offline -----");
                     if ($localStorage.appModeStatus) {                        
                         var storageSemaphoreInspection = {
                                 userId: $localStorage.userId, 
