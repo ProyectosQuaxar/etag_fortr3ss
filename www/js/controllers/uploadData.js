@@ -866,6 +866,13 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
             StorageService.removeTruck(tag);
             $scope.init();
         }
+
+         $scope.deleteTire = function(tag){
+            console.log("Borraremos " + tag)
+            StorageService.removeTire(tag);
+            $scope.init();            
+        }
+
         $scope.deleteFleet = function(nombre) {            
             StorageService.removeFleet(nombre);
             $scope.init();

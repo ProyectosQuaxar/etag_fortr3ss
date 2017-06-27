@@ -117,13 +117,14 @@
                 </span>                      
                <ion-list show-delete="false" can-swipe="true">
                     <ion-item ng-repeat="t in storageTires">
-                        <strong>{{'TIRES_POSITION'|translate}}: {{t.position}}</strong><br>
+                        <strong>{{'TIRES_POSITION'|translate}}: {{t.position}}</strong><br>                        
+                        <strong>{{'TIRES_TAGNUMBER'|translate}}: {{t.tagId}}</strong><br>                        
                         <strong>{{'TIRES_TIRE_BRAND'|translate}}: {{t.tireBrand}}</strong><br>
                         <strong>{{'TIRES_TIRE_SIZE'|translate}}: {{t.tireSize}}</strong><br>
                         <strong>{{'TIRES_DESIGN_NAME'|translate}}: {{t.tireModel}}</strong><br>
                         <strong>{{'TIRES_PRICE'|translate}}: {{t.price}}</strong><br>
                         <strong>{{'TIRES_DOT'|translate}}: {{t.year}}</strong><br>
-                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteTire('{{t.tag}}')"></ion-option-button>
+                        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteTire('{{t.tagId}}')"></ion-option-button>
                     </ion-item>
                 </ion-list>
                 <br><br>
