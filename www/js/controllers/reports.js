@@ -24,6 +24,8 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
     $scope.rendMarcas = [];
     $scope.reportUnits = true;
     $scope.reportBrands = false;
+    $scope.mesesDiv = 6;
+    $scope.price = 5000;
 
     $scope.loadRendimiento = function(){
         console.log("entro a carga de rendimientos")
@@ -438,7 +440,7 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                         $scope.anoRevision = $localStorage.inspeccionAnio;
                         $scope.llantasRevision = $scope.generalInfo.llantas;
                         $scope.unidadesRevision = $scope.generalInfo.unidades;
-                        
+                        $scope.rendMarcas = []
 
                         var DataPromise = Data.getRendByFleet($rootScope.urlCustomer, $localStorage.idSemaforos)
                         DataPromise.then(function(result) {

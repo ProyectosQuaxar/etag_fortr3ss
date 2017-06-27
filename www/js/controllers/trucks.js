@@ -331,7 +331,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             showDelay: 0
                         });
                         console.log("Mandaremos estos datos...")
-                        console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo);
+                        console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo);                                                            
                         var DataPromise = Data.insertTruck($rootScope.url, $localStorage.languague, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo)
                         DataPromise.then(function(result) {
                             if (result['message'] == 'success') {

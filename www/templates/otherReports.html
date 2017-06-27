@@ -145,13 +145,35 @@
                             <input type="number" style="border-bottom:1px solid #b2b2b2;" ng-model='price'>
                         </label>
                         <br>
-
                         <span id="lbChange2">{{'REPORTS_CAMB_LLANTA'|translate}}:</span>
                         <label class="item item-input item-select" style="border:none;width:75%; float:left;">
                             <span class="input-label" id="lbChange">{{'REPORTS_CAMB_LLANTA_CADA'|translate}}:</span>
                             <span class="input-label" id="lbSupport">&nbsp;</span>
-                            <select ng-model="mesesDiv" style="border-bottom:1px solid #b2b2b2;"> 
-                                <option value="{{i}}" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24] track by $index">{{i}} {{'REPORTS_MESES'|translate}}</option>
+                            <select ng-model="mesesDiv" style="border-bottom:1px solid #b2b2b2;">                                 
+                                <option value="1" ng-selected="mesesDiv == 1">1 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="2" ng-selected="mesesDiv == 2">2 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="3" ng-selected="mesesDiv == 3">3 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="4" ng-selected="mesesDiv == 4">4 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="5" ng-selected="mesesDiv == 5">5 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="6" ng-selected="mesesDiv == 6">6 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="7" ng-selected="mesesDiv == 7">7 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="8" ng-selected="mesesDiv == 8">8 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="9" ng-selected="mesesDiv == 9">9 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="10" ng-selected="mesesDiv == 10">10 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="11" ng-selected="mesesDiv == 11">11 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="12" ng-selected="mesesDiv == 12">12 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="13" ng-selected="mesesDiv == 13">13 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="14" ng-selected="mesesDiv == 14">14 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="15" ng-selected="mesesDiv == 15">15 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="16" ng-selected="mesesDiv == 16">16 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="17" ng-selected="mesesDiv == 17">17 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="18" ng-selected="mesesDiv == 18">18 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="19" ng-selected="mesesDiv == 19">19 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="20" ng-selected="mesesDiv == 20">20 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="21" ng-selected="mesesDiv == 21">21 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="22" ng-selected="mesesDiv == 22">22 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="23" ng-selected="mesesDiv == 23">23 {{'REPORTS_MESES'|translate}}</option>
+                                <option value="24" ng-selected="mesesDiv == 24">24 {{'REPORTS_MESES'|translate}}</option>
                             </select>                  
                         </label>     
                         <label class="item" style="border:none;width:25%; float:left;">
@@ -162,7 +184,7 @@
                         </canvas>
                         <br><br>
                         <center ng-if="mesesDiv" style="padding-left:20px;padding-right:20px;">
-                        "{{'REPORTS_MONTO_CALCULADO_DESC1'|translate}} {{price | currency}} {{'REPORTS_MONTO_CALCULADO_DESC2'|translate}} {{mesesDiv}} <span ng-if=" mesesDiv > 1 ">{{'REPORTS_MESES'|translate}}</span><span ng-if=" mesesDiv == 1 ">{{'REPORTS_MES'|translate}}</span>, {{'REPORTS_MONTO_CALCULADO_DESC3'|translate}}".</center>
+                        "{{'REPORTS_MONTO_CALCULADO_DESC1'|translate}} {{price | currency}} {{'REPORTS_MONTO_CALCULADO_DESC2'|translate}} {{mesesDiv}} <span ng-if=" mesesDiv > 1 ">{{'REPORTS_MESES'|translate}}</span><span ng-if="mesesDiv == 1">{{'REPORTS_MES'|translate}}</span>, {{'REPORTS_MONTO_CALCULADO_DESC3'|translate}}".</center>
                         <br>
                         <table>
                             <thead>

@@ -41,13 +41,13 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
-    function insertTruck(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
-        return $http({method:"GET", url:url+ 'insertTruck?lang=' + lang + '&idFlota=' + idFlota + '&idModelo=' + idModelo + '&placas=' + placas + '&tag=' + tag + '&unidad=' + unidad + '&pressureType=' + pressureType + '&tagInstalado=' + tagInstalado + '&nombreOperador=' + nombreOperador+ '&tipo=' + tipo }).then(function(result){
+    function insertTruck(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
+        return $http({method:"GET", url:url+ 'insertTruck?lang=' + lang + '&idFlota=' + idFlota + '&idModelo=' + idModelo + '&placas=' + placas + '&anio=' + anio + '&tag=' + tag + '&unidad=' + unidad + '&pressureType=' + pressureType + '&tagInstalado=' + tagInstalado + '&nombreOperador=' + nombreOperador+ '&tipo=' + tipo }).then(function(result){
             return result.data;
         });
     }
-    function insertCustomer(url, lang, company, email, password, address, phone, contact, job, status, type, companyAssigned){
-        return $http({method:"GET", url:url+ 'insertCustomer?lang=' + lang + '&company=' + company + '&email=' + email + '&password=' + password + '&address=' + address + '&phone=' + phone + '&contact=' + contact + '&job=' + job + '&status=' + status+ '&type=' + type + '&companyAssigned=' + companyAssigned}).then(function(result){
+    function insertCustomer(url, lang, company, email, password, address, phone, contact, job, status, type, companyAssigned, customerAccount){
+        return $http({method:"GET", url:url+ 'insertCustomer?lang=' + lang + '&company=' + company + '&email=' + email + '&password=' + password + '&address=' + address + '&phone=' + phone + '&contact=' + contact + '&job=' + job + '&status=' + status+ '&type=' + type + '&companyAssigned=' + companyAssigned + '&customerAccount=' + customerAccount}).then(function(result){
             return result.data;
         });
     }
@@ -279,8 +279,8 @@ angular.module('starter.services', [])
         getPressureTypeByTruckType:function(url,id){
             return getPressureTypeByTruckType(url,id);
         },
-        insertTruck:function(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
-            return insertTruck(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo);
+        insertTruck:function(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
+            return insertTruck(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo);
         },
         getTruckData:function(url,tag){
             return getTruckData(url,tag);
@@ -327,8 +327,8 @@ angular.module('starter.services', [])
         trucksDetailsCond:function(url,ids,cond){
             return trucksDetailsCond(url,ids,cond);
         },
-        insertCustomer:function(url, lang, company, email, password, address, phone, contact, job, status, type, companyAssigned){
-            return insertCustomer(url, lang, company, email, password, address, phone, contact, job, status, type, companyAssigned)
+        insertCustomer:function(url, lang, company, email, password, address, phone, contact, job, status, type, companyAssigned, customerAccount){
+            return insertCustomer(url, lang, company, email, password, address, phone, contact, job, status, type, companyAssigned, customerAccount)
         },
         getCountriesAll:function(url){
             return getCountriesAll(url);
