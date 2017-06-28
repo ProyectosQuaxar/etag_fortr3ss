@@ -186,10 +186,10 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
         $localStorage.storageTires.push(tires);
     }
 
-    var _removeTire = function(tag) {
+    var _removeTire = function(tagId) {
         var tires = $localStorage.storageTires;
         for (i = 0; i < tires.length; i++) {
-            if (tires[i].tag == tag) {
+            if (tires[i].tagId == tagId) {
                 $localStorage.storageTires.splice(i, 1);
             }
         }

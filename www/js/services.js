@@ -41,8 +41,8 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
-    function insertTruck(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
-        return $http({method:"GET", url:url+ 'insertTruck?lang=' + lang + '&idFlota=' + idFlota + '&idModelo=' + idModelo + '&placas=' + placas + '&tag=' + tag + '&unidad=' + unidad + '&pressureType=' + pressureType + '&tagInstalado=' + tagInstalado + '&nombreOperador=' + nombreOperador+ '&tipo=' + tipo }).then(function(result){
+    function insertTruck(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
+        return $http({method:"GET", url:url+ 'insertTruck?lang=' + lang + '&idFlota=' + idFlota + '&idModelo=' + idModelo + '&placas=' + placas + '&anio=' + anio + '&tag=' + tag + '&unidad=' + unidad + '&pressureType=' + pressureType + '&tagInstalado=' + tagInstalado + '&nombreOperador=' + nombreOperador+ '&tipo=' + tipo }).then(function(result){
             return result.data;
         });
     }
@@ -279,8 +279,8 @@ angular.module('starter.services', [])
         getPressureTypeByTruckType:function(url,id){
             return getPressureTypeByTruckType(url,id);
         },
-        insertTruck:function(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
-            return insertTruck(url, lang, idFlota, idModelo, placas, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo);
+        insertTruck:function(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo){
+            return insertTruck(url, lang, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo);
         },
         getTruckData:function(url,tag){
             return getTruckData(url,tag);

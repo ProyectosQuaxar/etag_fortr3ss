@@ -182,17 +182,48 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 }
 
                 StorageService.addFleet(fleet);
+
+                var info = $translate.instant('MSG_INFORMATION')
                 var aceptar = $translate.instant('MSG_ACEPTAR')
+                var msgSuccess = $translate.instant('FLEET_SAVED_SUCCESSFULY');
                 var msgOk = $translate.instant('TIRES_FLEET') + " " + $translate.instant('MSG_SAVED_SUCCESSFULY');
+
                 $ionicLoading.hide();
                 $ionicPopup.alert({
                     template: '<center><p><b>' +  msgOk + '</p></center>',
                     okText: aceptar,
                     okType: 'button-balanced'
                 });
+
+                if ($scope.data.truckAfter == true){                             
+                    $ionicPopup.alert({
+                        title: info,
+                        template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+                        okText: aceptar,
+                        okType: 'button-balanced'
+                    });
+                                
+                    $state.go("app.addTruck", {
+                        animation: 'slide-in-down'
+                    });
+                } else if ($scope.data.truckAfter == false) {
+                    $ionicPopup.alert({
+                    title: info,
+                    template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
+                    okText: aceptar,
+                    okType: 'button-balanced'
+                    });
+                    
+                    $state.go("app.dashboard", {
+                        animation: 'slide-in-down'
+                    });
+                }          
+                /*
                 $state.go("app.dashboard", {
                     animation: 'slide-in-down'
-                });
+                }); */
+
+
             } else {
                 
                 var loading = $translate.instant('MSG_LOADING');
@@ -204,6 +235,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                     maxWidth: 200,
                     showDelay: 0
                 });
+
 
                 var DataPromise = Data.insertFleet($rootScope.url, $localStorage.languague, company, fleet, street, suburb, fleetCity, fleetState, fleetCountry, phone, email, password, $localStorage.userId, manager, rol)
                 console.log(company + " " + fleet  + " " + street  + " " + suburb  + " " + fleetCity  + " " + fleetState  + " " + fleetCountry  + " " + phone  + " " + email  + " " + password  + " " + $localStorage.userId  + " " + manager  + " " + rol);

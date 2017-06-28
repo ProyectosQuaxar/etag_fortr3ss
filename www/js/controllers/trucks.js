@@ -229,8 +229,9 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
 
         }
     }
-    $scope.insertTruck = function(company, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo, tiresBefore) {                
+    $scope.insertTruck = function(company, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo, tiresBefore, truckBrandTag, truckKms) {                
         console.log("insertar llantas? " + tiresBefore)
+        console.log("Compañia: " + company + "Flota: " + idFlota + " Modelo: " + idModelo + "Placas: " + placas + "Año: " + anio + "Tag: " + tag + "Unidad: " + unidad + "Presión: " + pressureType + "E. Tag: " + tagInstalado + "Operador: " + nombreOperador + "Tipo: " + tipo + "Llantas despues: " + tiresBefore + "Marca: " + truckBrandTag + "Kms: " + truckKms);
         if(tiresBefore){
             //SI AGREGAREMOS LLANTAS DESPUES
             console.log($scope.data.kms);
@@ -273,7 +274,6 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             tipo: tipo
                         }
 
-
                         StorageService.addTruck(truck);   
                         $localStorage.trucks.push({id: tag, idFlota: idFlota, idModelo: idModelo, nombreOperador: nombreOperador, 
                             placas: placas, pressureType: pressureType, tag: tag, tagInstalado: tagInstalado, tipo: tipo, unidad: unidad, year: anio, kilometraje: $scope.data.kms});          
@@ -314,6 +314,21 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         $scope.data.addTire = $localStorage.addTire;
                         $scope.truckTypes = $localStorage.truckTypes;
 
+                        /** En este punto tenemos que considerar que sera la primera inspección por tanto guardaremos el primer semaforo **/
+
+                        var storageSemaphoreInspection = {
+                                userId: $localStorage.userId, 
+                                tag:truck.tag,
+                                marca:"", 
+                                modelo:"", 
+                                unidad:truck.unidad,
+                                kilometros:$scope.data.kms, 
+                                placas:truck.placas, 
+                                tagInstalado:truck.tagInstalado, 
+                                kmZero:"", 
+                                tipoInspeccion:"Manual"
+                            }
+                            StorageService.addSemaphoreInspection(storageSemaphoreInspection);
 
                         /** Y aqui despues del desmadre pasamos a insertar las llantas**/
                         $state.go("app.addMultiTires", {
@@ -332,6 +347,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         });
                         console.log("Mandaremos estos datos...")
                         console.log(idFlota + " " + idModelo + " " + placas + " " + anio + " " + tag + " " + unidad + " " + pressureType + " " + tagInstalado + " " + nombreOperador + " " + tipo);
+
                         var DataPromise = Data.insertTruck($rootScope.url, $localStorage.languague, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo)
                         DataPromise.then(function(result) {
                             if (result['message'] == 'success') {
@@ -352,8 +368,8 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                                     var storageSemaphoreInspection = {
                                             userId: $localStorage.userId, 
                                             tag:tag,
-                                            marca:"", 
-                                            modelo:"", 
+                                            marca:truckBrandTag, 
+                                            modelo:idModelo, 
                                             unidad:unidad,
                                             kilometros:$scope.data.kms, 
                                             placas:placas, 

@@ -497,7 +497,7 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
 
                 // falta inspTruckId    
 
-                var DataPromise = Data.insertTires($rootScope.url, $localStorage.languague, value.customerId, value.flotaId, value.camionId, value.tireBrand, value.tireType, value.tireSize, value.tireModel, value.price, value.year, value.tagId, value.position, value.semaforo, value.desgaste, value.kilometraje, value.pr, value.tagInstalado, value.condFounds)
+                var DataPromise = Data.insertTire($rootScope.url, $localStorage.languague, value.customerId, value.flotaId, value.camionId, value.tireBrand, value.tireType, value.tireSize, value.tireModel, value.price, value.year, value.tagId, value.position, value.semaforo, value.desgaste, value.kilometraje, value.pr, value.tagInstalado, value.condFounds)
                 DataPromise.then(function(result) {
                         if (result['message'] == 'success') {
                             //DATOS CARGADOS
