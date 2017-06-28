@@ -89,7 +89,7 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
             
         }
 
-        $scope.insertCustomer = function(company, email, password, address, phone, contact, job, status, type, companyAssigned) {
+        $scope.insertCustomer = function(company, email, password, address, phone, contact, job, status, type, companyAssigned, customerAccount) {
 			var aceptar = $translate.instant('MSG_ACEPTAR')
 			var error = $translate.instant('MSG_ERROR');
 
@@ -105,6 +105,7 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
         	status = Check.isNull(status)
         	type = Check.isNull(type)
         	customerNumber = Check.isNull(customerNumber)
+        	customerAccount = Check.isNull(customerAccount)
 
         	if(company == ""){
         		var details = $translate.instant('MSG_WRITE')  + " " + $translate.instant('CUSTOMER_COMPANY');
@@ -201,7 +202,8 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 	                    job: job,
 	                    status: status,
 	                    type: type,
-	                    customerNumber: customerNumber
+	                    customerNumber: customerNumber,
+	                    customerAccount: customerAccount
 	                }
 	                console.log(customer)
 	                StorageService.addCustomer(customer);
@@ -228,7 +230,7 @@ angular.module('customer', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate'
 	                    showDelay: 0
 	                });
 
-	                var DataPromise = Data.insertCustomer($rootScope.url, $localStorage.languague, company, email, password, address, phone, contact, job, status, type, companyAssigned)                  
+	                var DataPromise = Data.insertCustomer($rootScope.url, $localStorage.languague, company, email, password, address, phone, contact, job, status, type, companyAssigned, customerAccount)                  
 	                DataPromise.then(function(result) {
 	                    if (result['message'] == 'success') {
 	                        //DATOS CARGADOS

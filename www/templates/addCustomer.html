@@ -100,6 +100,23 @@
             </center>            
           </label>
 
+
+
+
+
+        <label class="item item-input item-stacked-label form-border-bottom">
+            <span class="input-label">{{'LOGIN_USER_TYPE'|translate}} <span class="assertive">*</span></span>
+          </label>
+          <label class="item item-input item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+            <select ng-model="platform" style="max-width:100%;">
+              <option value='eTag'>eTag</option>
+              <option value='Mi Llanta RFID'>Mi Llanta RFID</option>             
+            </select>
+          </label> 
+
+
+
+
           <label class="item item-input">
             <span class="input-label" style="font-weight:bold;">{{ 'CUSTOMER_INSERT_FLEET_AFTER' | translate }}</span>                    
           </label>
@@ -107,7 +124,7 @@
             </ion-toggle>              
         </div>     
             <center>
-              <button class="button button-small button-assertive" ng-click="insertCustomer(company, email, password, address, phone, contact, job, status, type, data.customerNumber)" ng-disabled="phone.length < 10">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
+              <button class="button button-small button-assertive" ng-click="insertCustomer(company, email, password, address, phone, contact, job, status, type, data.customerNumber, platform)" ng-disabled="phone.length < 10">{{'TRUCK_SUBMIT_LABEL'|translate}}</button>
             </center>
     </div>
   </ion-content>
