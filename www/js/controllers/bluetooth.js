@@ -1,6 +1,6 @@
 angular.module('bluetooth', [])
 
-.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup) {
+.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading) {
 
 $scope.showDevices = false;
 $scope.data.batteryPercent = -1;
@@ -8,7 +8,6 @@ $scope.data.btnDisc = false;
 $scope.data.btnFindDevs = true;
 $scope.data.translogikOptions = false;
 $scope.data.imgConBluetooth = false;
-
 
   ///////// FUNCIÓN DE INICIALIZACIÓN
   $scope.init = function(){	 
@@ -245,8 +244,89 @@ $scope.data.imgConBluetooth = false;
     });
   }
 
+  $scope.writeRFID = function(tag){
+    console.log("el tag a escribir es: " +  tag)
+    
+    var encodedData = encodeDataRFID(1, 0, 1, 1, 1, tag); //Toma los datos guardados en un scope "tag_data" y genera una cadena en 64b
 
 
+    bluetooth.writeRFID(encodedData, function(data) {
+      var loading = $translate.instant('MSG_LOADING');
+      $ionicLoading.show({
+          template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+          content: loading,
+          animation: 'fade-in',
+          showBackdrop: true,
+          maxWidth: 200,
+          showDelay: 0
+      });
+      $timeout(function() {
+        console.log("_______________________________________________")
+        console.log(data);
+        alert('Escrito')
+        bluetooth.rfidOff(function(){}); 
+        $ionicLoading.hide();               
+        }, 3000); 
+
+    });       
+  };
+
+  $scope.cancelWriteRFID = function () {
+    console.log("entro a cancelar");
+    bluetooth.rfidOff();
+    $scope.showOkMessage($translate.instant('NFC_ESCRITURA_CANCELADA'));        
+  };
+
+  $scope.readTag = function(){   
+    console.log("entró a leer tag")
+    $scope.formFindTag = false;
+    $scope.dataResult = false; 
+    $scope.readingTag = true;
+    $scope.notResults = false;
+
+    bluetooth.callBackOnrfidNoTagFoundResponse = onNoTagsFound;
+    if (rfid_timeout_var !== "off") {
+        console.log('set timout frid' + rfid_timeout_var)
+        rfid_timeout_id = window.setTimeout(function() {
+            onNoTagsFound();
+            bluetooth.rfidOff(function() {
+            })
+        }, rfid_timeout_var);
+    }
+
+    bluetooth.readRFID(function(data) {
+      console.log('clear timeout frid')
+      window.clearTimeout(rfid_timeout_id);
+      var epc_header = data.EPCheader;
+      var cai = data.cai;
+      var company_prefix = data.companyPrefix;
+      var partition = data.partition;
+      var serial_number = data.sn;
+      var filter = data.filter;
+      var matricule = "";//data.michelin;
+      var encodingData = data.encodedData;
+      console.log("rfid : cai = "+cai);
+      console.log("rfid : company_prefix = "+company_prefix);
+      console.log("rfid : partition = "+partition);
+      console.log("rfid : filter = "+filter);
+      console.log("rfid : epc_header = "+epc_header);
+      console.log("rfid : matricule = "+matricule);
+      console.log("rfid : serial_number = "+serial_number);
+      console.log("rfid : encodingData = "+encodingData);
+      $scope.findTag(String(serial_number));
+    });
+
+  }
+
+  $scope.cancelReadTag = function(){
+      $scope.formFindTag = true;
+      $scope.dataResult = false; 
+      $scope.readingTag = false;
+      $scope.notResults = false;
+
+      bluetooth.rfidOff();
+      $scope.showOkMessage()   
+  }
   function onNoTagsFound() {
       scan_rfid = false;
       //$('#read_rfid_Button_Scan_rfid span span span').text(data_localize.scan_rfid);
@@ -264,4 +344,25 @@ $scope.data.imgConBluetooth = false;
       );
   }
         //////////////////////BLUETOOTH MODULE/////////////////////
+  $scope.formFindTag = true;
+  $scope.dataResult = false;
+  $scope.readingTag = false;
+  $scope.notResults = false;
+
+  $scope.readOtherTag = function(){
+
+      $scope.formFindTag = true;
+      $scope.dataResult = false; 
+      $scope.readingTag = false;
+      $scope.notResults = false;                                   
+  }
+  
+  $scope.manualWrite = function(){
+      $scope.data.tagCamion = $scope.data.tagValue;
+  }
+
+  $scope.findTag = function(tag){
+    console.log("el tag a buscar es...." + tag)
+    alert("el tag a buscar es...." + tag)
+  }
 });

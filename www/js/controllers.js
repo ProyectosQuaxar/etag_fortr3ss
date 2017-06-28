@@ -67,6 +67,9 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
     if ($localStorage.storageTruckModel == '' || $localStorage.storageTruckModel === undefined)
         $localStorage = $localStorage.$default({storageTruckModel: []});
 
+    if ($localStorage.tagReadNow == '' || $localStorage.tagReadNow === undefined)
+        $localStorage = $localStorage.$default({tagReadNow: []});
+
     if ($localStorage.languague == '') {
         $localStorage.languague = 'es';
         $translate.use('es');

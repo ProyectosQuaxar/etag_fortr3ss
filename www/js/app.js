@@ -105,12 +105,14 @@ angular.module('starter', ['starter.controllers','starter.services','ionic', 'io
         bluetooth.callBack = callback;
     },
     rfidOff: function(callback){
+        console.log("entro a rfidOff")
         bluetooth.sendCommand('GO');
         bluetooth.callBack = callback;
     },
-    writeRFID: function(data, callback){
-        bluetooth.sendCommand('GW1002'+data);
-        bluetooth.callBack = callback;
+    writeRFID: function(data, success, error){
+      var comand = 'GW1002'+data;
+      console.log('APP_DEBUG: sending comand: ' + comand);
+      bluetoothSerial.write(comand + "\r", success, error);
     },
             
     writeRFIDMatricule: function(data, callback){
@@ -565,6 +567,15 @@ zeroToEnd = function(_string, _length) {
     views: {
       'menuContent': {
         templateUrl: 'templates/writeTAGS.html',
+        controller: 'NFCCtrl'
+      }
+    }
+  })
+  .state('app.readTAGS', {
+    url: '/readTAGS',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/readTAGS.html',
         controller: 'NFCCtrl'
       }
     }

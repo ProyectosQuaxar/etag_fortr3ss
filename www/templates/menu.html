@@ -31,10 +31,24 @@
             <ion-list>
                 <ion-item nav-clear menu-close href="#/app/dashboard">
                     <img src="img/icon_gear.png" style="width:16px;height:16px;" /> {{'MENU_DASHBOARD_LABEL'|translate}}
-                </ion-item>             
-                <ion-item nav-clear menu-close href="#/app/writeTAGS">
-                    <img src="img/icon_nfc_tag.png" style="width:16px;height:16px;" /> {{'MENU_WRITE_TAGS_LABEL'|translate}}
+                </ion-item>          
+
+                <ion-item nav-clear ng-click="data.showMenuTags = !data.showMenuTags">
+                    <img src="img/icon_nfc_tag.png" style="width:16px;height:16px;" />
+                    {{'NFC_TAGS_LAB'|translate}}  
+                    <i class="ion-icon ion-chevron-right pull-right" ng-show="data.showMenuTags == false || data.showMenuTags === undefined" class="fadein fadeout"></i>
+                    <i class="ion-icon ion-chevron-down pull-right" ng-show="data.showMenuTags == true" class="fadein fadeout"></i>
                 </ion-item>
+                <span ng-show="data.showMenuTags == true" class="fadein fadeout">
+                    <ion-item nav-clear menu-close href="#/app/writeTAGS" class="secondLevel">
+                        <img src="img/icon_nfc_tag.png" style="width:16px;height:16px;" /> {{'MENU_WRITE_TAGS_LABEL'|translate}}
+                    </ion-item>
+                    <ion-item nav-clear menu-close href="#/app/readTAGS" class="secondLevel">
+                        <img src="img/icon_nfc_tag.png" style="width:16px;height:16px;" /> {{'NFC_READING_TAGS'|translate}}
+                    </ion-item>
+
+                </span>
+
                 <ion-item nav-clear menu-close href="#/app/inspectionMode">
                     <img src="img/icon_inspection_method.png" style="width:16px;height:16px;" />
                     <strong>{{ 'MENU_MODE_INSPECTION' | translate }}</strong>
