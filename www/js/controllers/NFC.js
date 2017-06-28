@@ -5,6 +5,9 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
                 $scope.truckTiresNumber = "";
                 $scope.truckType = "";
                 $scope.data.pos = 1;
+                $scope.tagLlanta = "";
+                $scope.showButtons = false;
+                
 
                 function reset() {
                     $timeout(function () {
@@ -99,9 +102,8 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
 
                 }
 
-                $scope.manualWrite = function(){
-                    $scope.data.tagCamion = $scope.data.tagValue;
-                }
+                
+
 
                 $scope.init = function(){
                     console.log("Entramos a init")

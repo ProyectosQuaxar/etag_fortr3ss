@@ -1,5 +1,5 @@
 angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
-.controller('InspectionCtrl', function(/*nfcService,*/ $ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, Check, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate) {
+.controller('InspectionCtrl', function(nfcService, $ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, Check, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate) {
 
         $scope.camionExiste = false;
         $scope.camionEncontrado = true;
@@ -20,7 +20,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         console.log($scope.data.tireBrands);
 
         
-        /*$scope.tag = nfcService.tag;*/
+        $scope.tag = nfcService.tag;
         
         
         $scope.data.dr = bluetooth.milimetraje_;

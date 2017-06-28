@@ -50,12 +50,22 @@ LOGIN_ERROR_UPDATE_PASSWORD: 'Error al actualizar su contraseña',
 LOGIN_ERROR_SENDING_EMAIL: 'Error enviando email',
 LOGIN_RENDIMIENTOS_LABEL: 'Rendimientos',
 TIRES_SEND_WAREHOUSE: 'Enviar a almacén',
-TIRES_DATE_INSP_LAB: 'FECHA'
+TIRES_DATE_INSP_LAB: 'FECHA',
+NFC_READING_TAGS: 'Lectura de Tags',
+NFC_TAGS_LAB: 'TAGS',
+NFC_LEYENDO_TAG: 'Leyendo tag…',
+NFC_ACERQUE_DISPOSITIVO: 'Acerca la sonda en la posición del tag.',
+NFC_TAG_NO_RESULTS: 'No se encontraron resultados con el tag: ',
+NFC_LECTURA_CANCELADA: '¡Lectura de tag cancelada!',
+NFC_ESCRITURA_CANCELADA: '¡Escritura de tag cancelada!'
 		});
 
         $translateProvider.translations('en', {
-        	LOGIN_RENDIMIENTOS_LABEL: 'Performance',
-        CONFIG_IDIOMA: 'Languague',
+NFC_LECTURA_CANCELADA: 'Tag read canceled!',
+NFC_ESCRITURA_CANCELADA: 'Tag write cancelled!',
+NFC_TAG_NO_RESULTS: 'Not results for Tag Id: ',
+LOGIN_RENDIMIENTOS_LABEL: 'Performance',
+CONFIG_IDIOMA: 'Languague',
 CONFIG_LANG_DE: 'German',
 CONFIG_LANG_EN: 'English',
 CONFIG_LANG_ES: 'Spanish',
@@ -518,7 +528,11 @@ LOGIN_EMAIL_NOT_RECEIVED: 'Enter Email!',
 LOGIN_ERROR_UPDATE_PASSWORD: 'Error updating password',
 LOGIN_ERROR_SENDING_EMAIL: 'Error sending email',
 TIRES_SEND_WAREHOUSE: 'Send to warehouse',
-TIRES_DATE_INSP_LAB: 'DATE'
+TIRES_DATE_INSP_LAB: 'DATE',
+NFC_READING_TAGS: 'Reading Tire TAGS',
+NFC_TAGS_LAB: 'TAGS',
+NFC_LEYENDO_TAG: 'Reading Tire TAGS',
+NFC_ACERQUE_DISPOSITIVO: 'Approach the probe at the tag position'
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',

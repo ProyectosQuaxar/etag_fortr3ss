@@ -544,14 +544,8 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                             });
 
                         } else {
-                            $ionicLoading.hide();
-                            var msgError = $translate.instant('DASHBOARD_ERROR_DOWNLOADING_DATA');
-                            $ionicPopup.alert({
-                                title: error,
-                                template: '<center><p><b>' + msgError + '</b></p></center>',
-                                okText: aceptar,
-                                okType: 'button-assertive'
-                            });
+                            $ionicLoading.hide();                            
+                            $scope.showErrorMessage($translate.instant('DASHBOARD_ERROR_DOWNLOADING_DATA'));
                         }
 
                     }, function(reason) {
@@ -563,6 +557,7 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
         }
 
         $scope.selectClienteTimeout = function(company) {
+            var error = $translate.instant('MSG_ERROR');
             var DataPromise = Data.allTrucksTiresByFleetTimeout($rootScope.url, company)
                     DataPromise.then(function(result) {
                         if (result) {
@@ -652,28 +647,14 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                                 animation: 'slide-in-down'
                             });
 
-                        } else {
-                            $ionicLoading.hide();
-                            var msgError = $translate.instant('DASHBOARD_ERROR_DOWNLOADING_DATA');
-                            $ionicPopup.alert({
-                                title: error,
-                                template: '<center><p><b>' + msgError + '</b></p></center>',
-                                okText: aceptar,
-                                okType: 'button-assertive'
-                            });
+                        } else {                            
+                            $ionicLoading.hide();                        
+                            $scope.showErrorMessage($translate.instant('DASHBOARD_ERROR_DOWNLOADING_DATA'));
                         }
 
                     }, function(reason) {
                         $ionicLoading.hide();
-                        var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
-                        var tryAgain = $translate.instant('MSG_TRY_AGAIN');
-                        $ionicLoading.hide();
-                        $ionicPopup.alert({
-                            title: error,
-                            template: '<center><p>' + errorConexion + '<br/><b>' + tryAgain + '</b></p></center>',
-                            okText: aceptar,
-                            okType: 'button-assertive'
-                        });
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + "<br>" + $translate.instant('MSG_TRY_AGAIN'));
                     })
         }
     })

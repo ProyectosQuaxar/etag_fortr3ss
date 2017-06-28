@@ -5,6 +5,43 @@
    <br>
     <ion-slides  options="options" slider="data.slider" style="height:100%!important;width:auto;">
     <br>
+            <ion-slide-page>
+        <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
+            <div class="content">
+                <center>
+                  <h4>{{ 'MENU_WRITE_TAGS_LABEL' | translate }} Bluetooth</h4>                
+                  <img src="img/bluetooth_write_tag.png" style="max-width:200px;height:auto;"/>
+                  <label class="item item-input item-stacked-label form-border-bottom leftZero" style="border:1px solid #fff;">
+                  <span class="input-label">{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</span>
+                  </label>          
+                  <br><br>
+                </center>
+                  <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
+                      <select ng-model="data.tagCamionN" style="max-width:100%;" ng-change="getNumberTag(data.tagCamionN)">   
+                        <option ng-repeat="truck in trucks" value="{{truck.tag}}">{{ 'DASHBOARD_TAG' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
+                      </select> 
+                  </label>    
+                  <br>  
+                  write {{data.btnWrite}} - cancel {{data.btnCancel}}
+                  <center>
+                    <strong>{{ 'NFC_WRITE_TAG' | translate }}</strong>
+                  </center>
+                  <input type="hidden" ng-model="data.tagCamion">
+                  <input type="hidden" ng-model="data.pos">
+                <label class="item item-input item-stacked-label form-border-bottom" style="width:70%; float:left;">        
+                  <input type="text" ng-model="data.tagValue" placeholder="{{'NFC_WRITE_TAG'|translate}}" style="text-align:center; font-size: 18px; font-weight: bold;" ng-change="manualWrite()"/>                
+                </label>
+                    <button class="button button-small button-positive icon ion-minus padding5px" ng-click="dec()"></button>
+                    <button class="button button-small button-positive icon ion-plus padding5px" ng-click="inc()"></button> 
+              <center>                
+                <div style="width:100%; padding-top:20px;">
+                  <button class="button button-small button-balanced" ng-click="writeRFID(data.tagValue)" ng-controller="bluetoothCtrl" ng-disabled="data.btnWrite"><i class="icon ion-edit"></i> {{ 'NFC_WRITE' | translate }}</button>
+                  <button class="button button-small button-assertive" ng-click="cancelWriteRFID()"  ng-controller="bluetoothCtrl" ng-disabled="data.btnCancel"><i class="icon ion-close-circled"></i> {{ 'NFC_CANCEL' | translate }}</button>          
+                </div>
+              </center>    
+              </div>        
+          </ion-scroll>            
+        </ion-slide-page>
         <ion-slide-page>
           <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
             <div class="content">
@@ -42,43 +79,6 @@
               </center>    
               </div>        
           </ion-scroll>        
-        </ion-slide-page>
-        <ion-slide-page>
-        <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
-            <div class="content">
-                <center>
-                  <h4>{{ 'MENU_WRITE_TAGS_LABEL' | translate }} Bluetooth</h4>                
-                  <img src="img/bluetooth_write_tag.png" style="max-width:200px;height:auto;"/>
-                  <label class="item item-input item-stacked-label form-border-bottom leftZero" style="border:1px solid #fff;">
-                  <span class="input-label">{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</span>
-                  </label>          
-                  <br><br>
-                </center>
-                  <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
-                      <select ng-model="data.tagCamionN" style="max-width:100%;" ng-change="getNumberTag(data.tagCamionN)">   
-                        <option ng-repeat="truck in trucks" value="{{truck.tag}}">{{ 'DASHBOARD_TAG' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
-                      </select> 
-                  </label>    
-                  <br>  
-                  <center>
-                    <strong>{{ 'NFC_WRITE_TAG' | translate }}</strong>
-                  </center>
-                  <input type="hidden" ng-model="data.tagCamion">
-                  <input type="hidden" ng-model="data.pos">
-                <label class="item item-input item-stacked-label form-border-bottom" style="width:70%; float:left;">        
-                  <input type="text" ng-model="data.tagValue" placeholder="{{'NFC_WRITE_TAG'|translate}}" style="text-align:center; font-size: 18px; font-weight: bold;" ng-change="manualWrite()"/>                
-                </label>
-                    <button class="button button-small button-positive icon ion-minus padding5px" ng-click="dec()"></button>
-                    <button class="button button-small button-positive icon ion-plus padding5px" ng-click="inc()"></button> 
-              <center>
-                <div style="width:100%; padding-top:20px;">
-                  <button class="button button-small button-balanced" ng-click="writer()" ng-disabled="erase || write"><i class="icon ion-edit"></i> {{ 'NFC_WRITE' | translate }}</button>
-                  <button class="button button-small button-assertive" ng-click="clearer()" ng-disabled="erase || write"><i class="icon ion-trash-b"></i> {{ 'NFC_ERASE' | translate }}</button>
-                  <button class="button button-small button-assertive" ng-click="canceler()" ng-disabled="!erase && !write" style="margin-top:10px;"><i class="icon ion-close-circled"></i> {{ 'NFC_CANCEL' | translate }}</button>          
-                </div>
-              </center>    
-              </div>        
-          </ion-scroll>            
         </ion-slide-page>
     </ion-slides>
   </ion-content>
