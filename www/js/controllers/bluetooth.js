@@ -23,6 +23,7 @@ $scope.data.imgConBluetooth = false;
       $scope.$broadcast('scroll.refreshComplete');
   }
 
+
   $scope.showOkMessage = function(error){
       var popTitle = $translate.instant('MSG_ERROR')
       var aceptar = $translate.instant('MSG_ACEPTAR')                
@@ -313,7 +314,7 @@ $scope.data.imgConBluetooth = false;
       console.log("rfid : matricule = "+matricule);
       console.log("rfid : serial_number = "+serial_number);
       console.log("rfid : encodingData = "+encodingData);
-      $scope.findTag(String(serial_number));
+      $scope.findTag(String(serial_number));      
     });
 
   }
@@ -362,7 +363,10 @@ $scope.data.imgConBluetooth = false;
   }
 
   $scope.findTag = function(tag){
-    console.log("el tag a buscar es...." + tag)
-    alert("el tag a buscar es...." + tag)
+    var numberPattern = /[^0-9]/g;;
+    var newTag = tag.replace( numberPattern, "");
+    console.log("el nuevo tag es " + newTag);
+
+
   }
 });

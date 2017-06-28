@@ -38,13 +38,13 @@
                 <input type="text" ng-model="tagLlanta" required="" class="ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" style="border-bottom:1px solid rgb(0, 58, 93);"/>
                 </label>   
                 <br><br>
-                <button id="fab" class="button button-assertive button-fab" ng-click="readRFID('{{it.tagId}}')" ng-controller="bluetoothCtrl" >
+                <button id="fab" class="button button-assertive button-fab" ng-click="findTag(tagLlanta)" ng-controller="bluetoothCtrl" ng-disabled="tagLlanta.length == 0" style="color:#FFFFFF;background-color:#FF0000;">
                     <i class="icon ion-paper-airplane"></i>                    
                 </button>
             </div>
             <br><br>
             <button id="fab" class="button button-calm button-fab" ng-click="readTag()">
-                <i class="icon ion-search"></i>
+                <i class="icon ion-bluetooth"></i>
             </button>
         </center>
         <center ng-show="readingTag">

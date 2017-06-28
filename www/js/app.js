@@ -578,7 +578,8 @@ zeroToEnd = function(_string, _length) {
         templateUrl: 'templates/readTAGS.html',
         controller: 'NFCCtrl'
       }
-    }
+    },
+    cache:false
   })
   .state('app.slider', {
     url: '/slider',

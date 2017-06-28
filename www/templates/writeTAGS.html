@@ -5,7 +5,7 @@
    <br>
     <ion-slides  options="options" slider="data.slider" style="height:100%!important;width:auto;">
     <br>
-            <ion-slide-page>
+      <ion-slide-page>
         <ion-scroll zooming="true" style="height:110%" delegate-handle="slide2Scroll" >
             <div class="content">
                 <center>
@@ -14,7 +14,7 @@
                   <label class="item item-input item-stacked-label form-border-bottom leftZero" style="border:1px solid #fff;">
                   <span class="input-label">{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</span>
                   </label>          
-                  <br><br>
+                  <br>
                 </center>
                   <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
                       <select ng-model="data.tagCamionN" style="max-width:100%;" ng-change="getNumberTag(data.tagCamionN)">   
@@ -22,7 +22,6 @@
                       </select> 
                   </label>    
                   <br>  
-                  write {{data.btnWrite}} - cancel {{data.btnCancel}}
                   <center>
                     <strong>{{ 'NFC_WRITE_TAG' | translate }}</strong>
                   </center>
@@ -51,7 +50,7 @@
                   <label class="item item-input item-stacked-label form-border-bottom leftZero" style="border:1px solid #fff;">
                   <span class="input-label">{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</span>
                   </label>          
-                  <br><br>
+                  <br>
                 </center>
                   <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
                       <select ng-model="data.tagCamion" style="max-width:100%;" ng-change="getTag(data.tagCamion)">   
