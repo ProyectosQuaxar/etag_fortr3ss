@@ -1,6 +1,6 @@
 angular.module('bluetooth', [])
 
-.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading) {
+.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading, Data, $rootScope) {
 
 $scope.showDevices = false;
 $scope.data.batteryPercent = -1;
@@ -10,16 +10,29 @@ $scope.data.translogikOptions = false;
 $scope.data.imgConBluetooth = false;
 
   ///////// FUNCIÓN DE INICIALIZACIÓN
-  $scope.init = function(){	 
-    
-      bluetoothSerial.isEnabled(function() {
-          $localStorage.bluetooth = true;
-      }, function(reason) {
-          $localStorage.bluetooth = false;
-      });
-      $scope.data.bluetooth = $localStorage.bluetooth;  
-      
-      $scope.data.btnFindDevs = true;
+  $scope.init = function(){
+      var bluetoothName = $localStorage.dataBluetooth;
+
+      if(bluetoothName.length > 0){
+        console.log(bluetoothName.length)
+        console.log("ya hay un bluetooth conectado llamado: " + $localStorage.dataBluetooth);
+        console.log("so... mostrar sus opciones");
+        $scope.data.translogikOptions = true;
+        $scope.data.deviceActivated = true; 
+        $scope.data.deviceName = bluetoothName;
+        $scope.data.btnDisc = true;
+      } else {
+        console.log("No hay bluetooth entonces ir a pedir lista");
+        bluetoothSerial.isEnabled(function() {
+            $localStorage.bluetooth = true;
+        }, function(reason) {
+            $localStorage.bluetooth = false;
+        });
+        $scope.data.bluetooth = $localStorage.bluetooth;  
+        
+        $scope.data.btnFindDevs = true;
+
+      }        
       $scope.$broadcast('scroll.refreshComplete');
   }
 
@@ -66,10 +79,11 @@ $scope.data.imgConBluetooth = false;
     console.log("escaneo de dispositivos")
   }
   ///////// CONECTAR DISPOSITIVO
-  $scope.connectDevice = function(dev) {   
+  $scope.connectDevice = function(dev) {       
       var device = JSON.parse(dev);
       if(device.address){
           $scope.data.deviceName = device.name;
+          $localStorage.dataBluetooth = device.name;
           $scope.data.imgConBluetooth = true;
           $scope.data.deviceActivated = true;
           $scope.data.btnFindDevs = false;          
@@ -80,7 +94,8 @@ $scope.data.imgConBluetooth = false;
   $scope.desconect = function(){
     console.log('send disconnect');
     $scope.data.deviceActivated = false;
-    $scope.data.btnFindDevs = true;
+    $scope.data.btnFindDevs = true;    
+    $scope.data.translogikOptions = false;
     bluetooth.disconnect(onDisconnectFromDevice, onConnectionError);
   }
 
@@ -125,6 +140,7 @@ $scope.data.imgConBluetooth = false;
       $scope.data.btnFindDevs = true;
       $scope.data.btnDisc = false;
       $scope.showDevices = true; 
+      $localStorage.dataBluetooth = "";
       $scope.showErrorMessage($translate.instant("MSG_BLUETOOTH_ERROR_CONECTED"))
   }
 
@@ -132,6 +148,8 @@ $scope.data.imgConBluetooth = false;
   function onDisconnectFromDevice(){
     console.log("Desconected");
     $scope.devs = [];
+    $localStorage.dataBluetooth = "";
+    console.log("se apago el dispositivo... ahora localStorage tiene? " + $localStorage.dataBluetooth)
   }
 /*----------------------BLUETOOTH FUNCIONES DE CONEXIÓN--------------------------*/
 
@@ -150,6 +168,7 @@ $scope.data.imgConBluetooth = false;
       $scope.data.btnFindDevs = true;
       $scope.data.btnDisc = false;
       $scope.showDevices = true; 
+      $localStorage.dataBluetooth = "";
   }
 
 
@@ -280,10 +299,10 @@ $scope.data.imgConBluetooth = false;
 
   $scope.readTag = function(){   
     console.log("entró a leer tag")
-    $scope.formFindTag = false;
-    $scope.dataResult = false; 
-    $scope.readingTag = true;
-    $scope.notResults = false;
+    $scope.data.formFindTag = false;
+    $scope.data.dataResult = false; 
+    $scope.data.readingTag = true;
+    $scope.data.notResults = false;
 
     bluetooth.callBackOnrfidNoTagFoundResponse = onNoTagsFound;
     if (rfid_timeout_var !== "off") {
@@ -320,10 +339,10 @@ $scope.data.imgConBluetooth = false;
   }
 
   $scope.cancelReadTag = function(){
-      $scope.formFindTag = true;
-      $scope.dataResult = false; 
-      $scope.readingTag = false;
-      $scope.notResults = false;
+      $scope.data.formFindTag = true;
+      $scope.data.dataResult = false; 
+      $scope.data.readingTag = false;
+      $scope.data.notResults = false;
 
       bluetooth.rfidOff();
       $scope.showOkMessage()   
@@ -345,17 +364,17 @@ $scope.data.imgConBluetooth = false;
       );
   }
         //////////////////////BLUETOOTH MODULE/////////////////////
-  $scope.formFindTag = true;
-  $scope.dataResult = false;
-  $scope.readingTag = false;
-  $scope.notResults = false;
+  $scope.data.formFindTag = true;
+  $scope.data.dataResult = false;
+  $scope.data.readingTag = false;
+  $scope.data.notResults = false;
 
   $scope.readOtherTag = function(){
 
-      $scope.formFindTag = true;
-      $scope.dataResult = false; 
-      $scope.readingTag = false;
-      $scope.notResults = false;                                   
+      $scope.data.formFindTag = true;
+      $scope.data.dataResult = false; 
+      $scope.data.readingTag = false;
+      $scope.data.notResults = false;                                   
   }
   
   $scope.manualWrite = function(){
@@ -363,10 +382,41 @@ $scope.data.imgConBluetooth = false;
   }
 
   $scope.findTag = function(tag){
-    var numberPattern = /[^0-9]/g;;
-    var newTag = tag.replace( numberPattern, "");
-    console.log("el nuevo tag es " + newTag);
+    //var numberPattern = /[^0-9]/g;;
+    //var newTag = tag.replace( numberPattern, "");
+    //console.log("el nuevo tag es " + newTag);
 
+    var loading = $translate.instant('MSG_LOADING');
+    $ionicLoading.show({
+        template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+        content: loading,
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    }); 
+
+    //BUSCAMOS NUESTRO TAG
+    var DataPromise = Data.getHistoryByTag($rootScope.url, tag)
+    DataPromise.then(function(result) {
+        if (result['exist'] == 'YES') {               
+            $scope.data.formFindTag = false;
+            $scope.data.dataResult = true;
+            $scope.data.readingTag = false;
+            $scope.data.notResults = false;
+            $ionicLoading.hide();
+        } else if (result['exist'] == 'NO') {
+            $scope.data.formFindTag = false;
+            $scope.data.dataResult = false;
+            $scope.data.readingTag = false;
+            $scope.data.notResults = true;
+            $ionicLoading.hide();
+        }
+
+    }, function(reason) {
+        $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + '<br/><b>' + $translate.instant('MSG_TRY_AGAIN'));
+        $ionicLoading.hide();
+    })    
 
   }
 });

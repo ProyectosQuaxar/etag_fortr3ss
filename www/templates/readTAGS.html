@@ -31,7 +31,7 @@
 
     <ion-content scroll="true">
         <br><br>
-        <center ng-show="formFindTag">
+        <center ng-show="data.formFindTag">
             <h4>{{ 'NFC_READING_TAGS' | translate }}</h4>
             <div class="col-67">
                 <label class="item-stacked-label form-border-bottom">               
@@ -47,7 +47,7 @@
                 <i class="icon ion-bluetooth"></i>
             </button>
         </center>
-        <center ng-show="readingTag">
+        <center ng-show="data.readingTag">
             <br>
             <img ng-src="img/tagReading.png" style="min-height: 10px;max-height: 300px; min-width:10px; max-width:150px;"/>            
             <br>
@@ -59,10 +59,14 @@
                 <i class="icon ion-close"></i>
             </button>
         </center>
-        <center ng-show="notResults">
-            NO SE ENCONTRARON RESULTADOS
+        {{notResults}}
+        <br>
+        <center ng-show="data.notResults">
+            <img src="img/tag_not_found.png" style="max-width:200px;height:auto;"/>
+            <br>            
+            {{ 'NFC_TAG_NOT_FOUND' | translate}}
         </center>
-        <center ng-show="dataResult">
+        <center ng-show="data.dataResult">
             DATOS ENCONTRADOS            
         </center>
     </ion-content> 

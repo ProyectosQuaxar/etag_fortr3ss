@@ -253,6 +253,11 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
+    function getHistoryByTag(url, tag){
+        return $http({method:"GET", url:url+ 'getHistoryByTag?tag=' + tag}).then(function(result){
+            return result.data;
+        });
+    }
 
     return { 
         login:function(url, nm, pw){
@@ -401,6 +406,9 @@ angular.module('starter.services', [])
         },
         setNewPassword:function(url, lang, email, userType, newPassword){
             return setNewPassword(url, lang, email, userType, newPassword);
+        },
+        getHistoryByTag:function(url, tag){
+            return getHistoryByTag(url, tag);
         }
     }
 })

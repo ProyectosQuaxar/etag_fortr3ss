@@ -57,10 +57,18 @@ NFC_LEYENDO_TAG: 'Leyendo tag…',
 NFC_ACERQUE_DISPOSITIVO: 'Acerca la sonda en la posición del tag.',
 NFC_TAG_NO_RESULTS: 'No se encontraron resultados con el tag: ',
 NFC_LECTURA_CANCELADA: '¡Lectura de tag cancelada!',
-NFC_ESCRITURA_CANCELADA: '¡Escritura de tag cancelada!'
+NFC_ESCRITURA_CANCELADA: '¡Escritura de tag cancelada!',
+BLUETOOTH_ACTIVADO: 'Bluetooth Activado',
+BLUETOOTH_DESACTIVADO: 'Bluetooth Desactivado',
+BLUETOOTH_DEVICES: 'Dispositivos',
+NFC_TAG_NOT_FOUND: 'Tag no encontrado'
 		});
 
         $translateProvider.translations('en', {
+        	NFC_TAG_NOT_FOUND: 'Tag RFID UHF not found',
+        	BLUETOOTH_ACTIVADO: 'Bluetooth on',
+BLUETOOTH_DESACTIVADO: 'Bluetooth off',
+BLUETOOTH_DEVICES: 'Devices',
 NFC_LECTURA_CANCELADA: 'Tag read canceled!',
 NFC_ESCRITURA_CANCELADA: 'Tag write cancelled!',
 NFC_TAG_NO_RESULTS: 'Not results for Tag Id: ',
