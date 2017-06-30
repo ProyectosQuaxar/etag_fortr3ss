@@ -182,6 +182,9 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 }
 
                 StorageService.addFleet(fleet);
+                /**$localStorage.fleets.push({ 
+                    adminId
+                });**/
 
                 var info = $translate.instant('MSG_INFORMATION')
                 var aceptar = $translate.instant('MSG_ACEPTAR')

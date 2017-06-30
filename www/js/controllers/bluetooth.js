@@ -1,10 +1,7 @@
 angular.module('bluetooth', [])
 
-<<<<<<< HEAD
 .controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading, $ionicModal, Data, $rootScope) {
-=======
-.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading, Data, $rootScope) {
->>>>>>> 90fff90fe967741fa04f92b2916cd9acf38f419a
+
 
 $scope.showDevices = false;
 $scope.data.batteryPercent = -1;
@@ -408,12 +405,14 @@ $scope.data.imgConBluetooth = false;
             $scope.data.dataResult = true;
             $scope.data.readingTag = false;
             $scope.data.notResults = false;
+            console.log("Encontrado");
             $ionicLoading.hide();
         } else if (result['exist'] == 'NO') {
             $scope.data.formFindTag = false;
             $scope.data.dataResult = false;
             $scope.data.readingTag = false;
             $scope.data.notResults = true;
+            console.log("No Encontrado");
             $ionicLoading.hide();
         }
 
