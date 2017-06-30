@@ -127,28 +127,43 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
                         if(value.id == $scope.truckType){
                            console.log(value.id);
                            $scope.truckTiresNumber = value.numLlantas;                            
-                           console.log($scope.truckTiresNumber);
+                           console.log("Se detecta el número de llantas: " + $scope.truckTiresNumber);
                         }
                     }); 
-
-
                     
 
                 }
 
                 $scope.getNumberTag = function(tagValue){
                     var numberTag = tagValue
+                    console.log(numberTag);
                     numberTag = numberTag.replace(/[^0-9]/gi, '');
                     $scope.data.tagValue = numberTag;
                     $scope.data.tagCamion = numberTag;
                     $scope.data.pos = 1;
+
+                    console.log("A buscar..." + tagValue)
+                    angular.forEach($localStorage.trucks, function(value, key) {                            
+                        if(value.tag == tagValue){
+                           console.log(value.tipo);
+                           $scope.truckType = value.tipo;                            
+                        }
+                    }); 
+
+                    angular.forEach($localStorage.truckTypes, function(value, key) {                            
+                        if(value.id == $scope.truckType){
+                           console.log(value.id);
+                           $scope.truckTiresNumber = value.numLlantas;                            
+                           console.log("Se detecta el número de llantas: " + $scope.truckTiresNumber);
+                        }
+                    }); 
                 }
 
                 $scope.inc = function(){
                     var position = parseInt($scope.data.pos);  
                     console.log(position)
-                    console.log($scope.data.pos)
-                    
+                    console.log("Posición: " + $scope.data.pos)
+                    console.log("Número de llantas: " + $scope.truckTiresNumber);
                     if ($scope.data.pos <= $scope.truckTiresNumber ){
                         console.log("Posicion actual ->" + $scope.data.pos)
 
@@ -179,6 +194,10 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
                 }
 
                 $scope.dec = function(){
+                    console.log(position)
+                    console.log("Posición: " + $scope.data.pos)
+                    console.log("Número de llantas: " + $scope.truckTiresNumber);
+                    
                     var position = parseInt($scope.data.pos);
                     if(position > 1){
                         $scope.data.pos = position - 1;
