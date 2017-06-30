@@ -102,7 +102,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
 .factory('nfcService', function($rootScope, $ionicPlatform, $localStorage) {
 
     var tag = {};
-
+    /**
     $ionicPlatform.ready(function() {
         nfc.addNdefListener(function(nfcEvent) {
             $rootScope.$apply(function() {
@@ -116,7 +116,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
             $localStorage.activatedNFC = 'false';                
         });
     });
-
+    **/
     return {
         tag: tag
     };
