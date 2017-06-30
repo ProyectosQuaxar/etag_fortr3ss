@@ -57,7 +57,11 @@ NFC_LEYENDO_TAG: 'Leyendo tag…',
 NFC_ACERQUE_DISPOSITIVO: 'Acerca la sonda en la posición del tag.',
 NFC_TAG_NO_RESULTS: 'No se encontraron resultados con el tag: ',
 NFC_LECTURA_CANCELADA: '¡Lectura de tag cancelada!',
-NFC_ESCRITURA_CANCELADA: '¡Escritura de tag cancelada!'
+NFC_ESCRITURA_CANCELADA: '¡Escritura de tag cancelada!',
+TIRES_HISTORY: 'Histórico de llantas',
+TIRES_REGISTRATION_DATE: 'Fecha de registro',
+TIRES_OBSERVATIONS: 'Observaciones'
+
 		});
 
         $translateProvider.translations('en', {
@@ -532,7 +536,10 @@ TIRES_DATE_INSP_LAB: 'DATE',
 NFC_READING_TAGS: 'Reading Tire TAGS',
 NFC_TAGS_LAB: 'TAGS',
 NFC_LEYENDO_TAG: 'Reading Tire TAGS',
-NFC_ACERQUE_DISPOSITIVO: 'Approach the probe at the tag position'
+NFC_ACERQUE_DISPOSITIVO: 'Approach the probe at the tag position',
+TIRES_HISTORY: 'Tire history',
+TIRES_REGISTRATION_DATE: 'Registration date',
+TIRES_OBSERVATIONS: 'Observations'
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',

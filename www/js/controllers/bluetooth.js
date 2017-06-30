@@ -380,11 +380,8 @@ $scope.data.imgConBluetooth = false;
               });
 
               DataPromise.then(function(result) {
-                if (result['message'] == 'success') {
-                  console.log("SI");
-                } else if (result['message'] == "Can't insert truck history") {
-                  console.log("NO");
-                }
+                console.log(result);
+                $ionicLoading.hide();
                     
                 }, function(reason) {
                     //ERROR DE CONEXIÓN
