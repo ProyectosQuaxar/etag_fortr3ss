@@ -1,6 +1,6 @@
 angular.module('bluetooth', [])
 
-.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading) {
+.controller('bluetoothCtrl', function($scope, $localStorage, $translate, $ionicPopup, $timeout, $ionicLoading, $ionicModal, Data, $rootScope) {
 
 $scope.showDevices = false;
 $scope.data.batteryPercent = -1;
@@ -368,5 +368,61 @@ $scope.data.imgConBluetooth = false;
     console.log("el nuevo tag es " + newTag);
 
 
+    var DataPromise = Data.getHistoryByTag($rootScope.url, tag)
+      var loading = $translate.instant('MSG_LOADING');
+              $ionicLoading.show({
+                      template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                      content: loading,
+                      animation: 'fade-in',
+                      showBackdrop: true,
+                      maxWidth: 200,
+                      showDelay: 0
+              });
+
+              DataPromise.then(function(result) {
+                if (result['message'] == 'success') {
+                  console.log("SI");
+                } else if (result['message'] == "Can't insert truck history") {
+                  console.log("NO");
+                }
+                    
+                }, function(reason) {
+                    //ERROR DE CONEXIÓN
+                    $ionicLoading.hide();
+                    var error = $translate.instant('MSG_ERROR');
+                    var aceptar = $translate.instant('MSG_ACEPTAR');
+                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                    $ionicLoading.hide();
+                    $ionicPopup.alert({
+                        title: error,
+                        template: '<center><p>' + errorConexion + '<br/><b>' + tryAgain + '</b></p></center>',
+                        okText: aceptar,
+                        okType: 'button-assertive'
+                    });
+                })
+
   }
+
+
+   $scope.openModal = function(index) {
+        console.log("Entramos al modal!" + index)
+        if (index == 1) $scope.oModal1.show();
+       
+    };
+
+    $scope.closeModal = function(index) {
+        if (index == 1) $scope.oModal1.hide();
+       
+    };
+
+    $ionicModal.fromTemplateUrl('templates/detallesLlanta.html', {
+        id: '1', // We need to use and ID to identify the modal that is firing the event!
+        scope: $scope,
+        backdropClickToClose: false,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.oModal1 = modal;
+    });
+
 });
