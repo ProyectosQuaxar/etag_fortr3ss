@@ -334,7 +334,8 @@ $scope.data.imgConBluetooth = false;
       console.log("rfid : matricule = "+matricule);
       console.log("rfid : serial_number = "+serial_number);
       console.log("rfid : encodingData = "+encodingData);
-      $scope.findTag(String(serial_number));      
+      $scope.findTag(String(serial_number));   
+      alert(serial_number)   
     });
 
   }
@@ -346,7 +347,7 @@ $scope.data.imgConBluetooth = false;
       $scope.data.notResults = false;
 
       bluetooth.rfidOff();
-      $scope.showOkMessage()   
+      $scope.showOkMessage($translate.instant('NFC_ESCRITURA_CANCELADA')); 
   }
   function onNoTagsFound() {
       scan_rfid = false;

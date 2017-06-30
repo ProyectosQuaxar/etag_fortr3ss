@@ -714,7 +714,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                         tireBrand:value.tireBrand,
                                         tireModel:value.tireModel,
                                         tireSize:value.tireSize,
-                                        year:value.year                                                                                                
+                                        year:value.year,
+                                        tireType:value.tireType
                                     }
                                     $localStorage.inspectionTires.push(tire)
                                 }
@@ -1117,7 +1118,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                         tireBrand:value.tireBrand,
                                         tireModel:value.tireModel,
                                         tireSize:value.tireSize,
-                                        year:value.year                                                                                                
+                                        year:value.year,
+                                        tireType:value.tireType                                                                                             
                                     }
                                     $localStorage.inspectionTires.push(tire)
                                 }
@@ -1311,7 +1313,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 tireBrand:value.tireBrand,
                                 tireModel:value.tireModel,
                                 tireSize:value.tireSize,
-                                year:value.year                                                                                                
+                                year:value.year,
+                                tireType:value.tireType                                                                                            
                             }
                             $localStorage.inspectionTires.push(tire)
                         }
@@ -1547,7 +1550,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                         tireBrand:value.tireBrand,
                                         tireModel:value.tireModel,
                                         tireSize:value.tireSize,
-                                        year:value.year                                                                                                
+                                        year:value.year,
+                                        tireType:value.tireType                                                                                                
                                     }
                                     $localStorage.inspectionTires.push(tire)
                                 }
@@ -1744,7 +1748,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 tireBrand:value.tireBrand,
                                 tireModel:value.tireModel,
                                 tireSize:value.tireSize,
-                                year:value.year                                                                                                
+                                year:value.year,
+                                tireType:value.tireType                                                                                                
                             }
                             $localStorage.inspectionTires.push(tire)
                         }
@@ -1979,7 +1984,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                         tireBrand:value.tireBrand,
                                         tireModel:value.tireModel,
                                         tireSize:value.tireSize,
-                                        year:value.year                                                                                                
+                                        year:value.year,
+                                        tireType:value.tireType                                                                                               
                                     }
                                     $localStorage.inspectionTires.push(tire)
                                 }
@@ -2176,7 +2182,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 tireBrand:value.tireBrand,
                                 tireModel:value.tireModel,
                                 tireSize:value.tireSize,
-                                year:value.year                                                                                                
+                                year:value.year,
+                                tireType:value.tireType                                                                                               
                             }
                             $localStorage.inspectionTires.push(tire)
                         }
