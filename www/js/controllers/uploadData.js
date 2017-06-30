@@ -719,6 +719,41 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
                     DataPromise.then(function(result) {
                         if (result['message'] == 'success') {
                             idSem = result['historyId'];
+                            console.log("fuera del promise el valor es: " + idSem)
+
+                            //---------------------SI SE AGREGO SEMAFORO----------------------                    
+                            //---------------------BUSCAMOS SUS LLANTAS Y LAS INSERTAMOS----------------------
+                            for (var s = $localStorage.storageTireInspections.length - 1; s >= 0; s--) {
+                                var tire = $localStorage.storageTireInspections[s];  
+                                console.log("fuera del promise el valor es: " + idSem)
+                                console.log("antes de insertar el id es: " + tire.tireType)
+                                var DataPromise = Data.insertTireHistorial($rootScope.url, tire.userId, tire.tagId, idSem, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, tire.kilometraje, tire.truckTag, tire.dr, tire.psi, tire.comments, tire.condFounds, tire.tagDetected, tire.tireType);                    
+                                
+                                DataPromise.then(function(result) {
+                                    if (result['message'] == 'success') {
+                                        //DATOS CARGADOS             
+                                        console.log("se insertó la llanta " +  tire.tagId)
+                                        StorageService.removeTireInspection(tire.tagId)
+                                    } else if (result['message'] == 'error') {
+                                        //DATOS CON ERRORES O INCOMPLETOS
+                                        console.log("ERROR al insertar la llanta " +  tire.tagId)
+                                        var errors = ""
+                                        angular.forEach(result['errors'], function(value, key) {
+                                            errors = errors + (key + 1) + ".- " + value + "<br>"
+                                        });                                
+                                    } else {
+                                        //SE RECIBIÓ UNA RESPUESTA INESPERADA
+                                        console.log("SE RECIBIÓ UNA RESPUESTA INESPERADA into")
+                                        $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
+                                    }
+
+                                }, function(reason) {
+                                    //ERROR DE CONEXIÓN
+                                    console.log("ERROR CONEXION")
+                                    $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
+                                })
+                            } //----------END FOR storageTireInspection                    
+                            StorageService.removeSemaphoreInspection(sem.tag);console.log("el id return es: " + idSem)
                             //DATOS CARGADOS                            
                         } else if (result['message'] == 'error') {
                             //DATOS CON ERRORES O INCOMPLETOS
@@ -735,35 +770,6 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
                         //ERROR DE CONEXIÓN
                         $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
                     })
-
-                    //---------------------SI SE AGREGO SEMAFORO----------------------                    
-                    //---------------------BUSCAMOS SUS LLANTAS Y LAS INSERTAMOS----------------------
-                    for (var s = $localStorage.storageTireInspections.length - 1; s >= 0; s--) {
-                        var tire = $localStorage.storageTireInspections[s];  
-                        
-                        var DataPromise = Data.insertTireHistorial($rootScope.url, tire.userId, tire.tagId, tire.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, tire.kilometraje, tire.truckTag, tire.dr, tire.psi, tire.comments, tire.condFounds, tire.tagDetected);                    
-                        
-                        DataPromise.then(function(result) {
-                            if (result['message'] == 'success') {
-                                //DATOS CARGADOS                                
-                                StorageService.removeTireInspection(tire.tagId)
-                            } else if (result['message'] == 'error') {
-                                //DATOS CON ERRORES O INCOMPLETOS
-                                var errors = ""
-                                angular.forEach(result['errors'], function(value, key) {
-                                    errors = errors + (key + 1) + ".- " + value + "<br>"
-                                });                                
-                            } else {
-                                //SE RECIBIÓ UNA RESPUESTA INESPERADA
-                                $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
-                            }
-
-                        }, function(reason) {
-                            //ERROR DE CONEXIÓN
-                            $scope.showErrorMessage($translate.instant('MSG_ERROR_OCURRED') + ' ' + $translate.instant('MSG_TRY_AGAIN'));
-                        })
-                    } //----------END FOR storageTireInspection                    
-                    StorageService.removeSemaphoreInspection(sem.tag);
 
             var countInspectionsToSubmit = 0;
             if ($localStorage.storageSemaphoreInspections !== undefined) {
@@ -816,7 +822,7 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
                     //---------------------BUSCAMOS SUS LLANTAS Y LAS INSERTAMOS----------------------
                     for (var s = $localStorage.storageTireRendInspections.length - 1; s >= 0; s--) {
                         var tire = $localStorage.storageTireRendInspections[s];  
-                        var DataPromise = Data.insertTireHistorialRend($rootScope.url, $localStorage.userId, tire.tagId, tire.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, tire.kilometraje, tire.truckTag, tire.psi, tire.comments, tire.condFounds, tire.tagDetected, tire.pos1_rem1, tire.pos1_rem2, tire.pos1_rem3, tire.pos1_rem4, tire.pos2_rem1, tire.pos2_rem2, tire.pos2_rem3, tire.pos2_rem4, tire.pos3_rem1, tire.pos3_rem2, tire.pos3_rem3, tire.pos3_rem4);                                                                        
+                        var DataPromise = Data.insertTireHistorialRend($rootScope.url, $localStorage.userId, tire.tagId, tire.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, tire.kilometraje, tire.truckTag, tire.psi, tire.comments, tire.condFounds, tire.tagDetected, tire.pos1_rem1, tire.pos1_rem2, tire.pos1_rem3, tire.pos1_rem4, tire.pos2_rem1, tire.pos2_rem2, tire.pos2_rem3, tire.pos2_rem4, tire.pos3_rem1, tire.pos3_rem2, tire.pos3_rem3, tire.pos3_rem4, tire.tireType);                                                                        
                         
                         DataPromise.then(function(result) {
                             if (result['message'] == 'success') {

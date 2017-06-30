@@ -4,26 +4,24 @@
     </ion-refresher>  
     <br>
     <center>
+    <h3 style="font-size:20px;">
+      <span ng-if="data.bluetooth == false">
+        <i class="icon ion-bluetooth assertive"></i> {{ 'BLUETOOTH_DESACTIVADO' | translate }}
+      </span>
+      <span ng-if="data.bluetooth == true">
+        <i class="icon ion-bluetooth balanced"></i> {{ 'BLUETOOTH_ACTIVADO' | translate }}
+      </span>
+    </h3>     
     <button class="button button-fab button-positive pull-right" ng-click="bluetoothOptions()">
         <i class="icon ion-settings"></i>
     </button> 
-    <br><br>    
-    <h3 style="font-size:20px;">
-      <span ng-if="data.bluetooth == false">
-        <i class="icon ion-bluetooth assertive"></i> Bluetooth desactivado
-      </span>
-      <span ng-if="data.bluetooth == true">
-        <i class="icon ion-bluetooth balanced"></i> Bluetooth activado
-      </span>
-    </h3> 
-    </center>    
-    <center>
-      <button ng-click="scanDevices()" ng-show="data.btnFindDevs"  class="fadein fadeout button button-fab button-calm">
+    <button ng-click="scanDevices()" ng-show="data.btnFindDevs"  class="fadein fadeout button button-fab button-calm">
         <i class="icon ion-search" ng-disabled="!data.bluetooth"></i>
       </button> 
-    </center>      
+    <br><br>   
+    </center>        
     <div ng-show="showDevices" class="fadein fadeout">
-        Dispositivos:
+        {{ 'BLUETOOTH_DEVICES' | translate }}:
         <br><br>
         <div class="item item-text-wrap form-border-bottom" style="margin-top:-10px;">
             <label class="item item-input item-select " style="height:40px;">
@@ -79,7 +77,3 @@
     </span>
   </ion-content>
 </ion-view>
-
-
-
-

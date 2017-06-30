@@ -408,7 +408,11 @@ angular.module('starter.services', [])
             return setNewPassword(url, lang, email, userType, newPassword);
         },
         getHistoryByTag:function(url, tag){
+<<<<<<< HEAD
             return setNewPassword(url, tag);
+=======
+            return getHistoryByTag(url, tag);
+>>>>>>> 90fff90fe967741fa04f92b2916cd9acf38f419a
         }
     }
 })

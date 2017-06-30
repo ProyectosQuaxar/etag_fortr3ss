@@ -1,5 +1,5 @@
 angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
-.controller('InspectionCtrl', function(nfcService, $ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, Check, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate) {
+.controller('InspectionCtrl', function(/*nfcService,*/ $ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, Check, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate) {
 
         $scope.camionExiste = false;
         $scope.camionEncontrado = true;
@@ -20,7 +20,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         console.log($scope.data.tireBrands);
 
         
-        $scope.tag = nfcService.tag;
+        /*$scope.tag = nfcService.tag;*/
         
         
         $scope.data.dr = bluetooth.milimetraje_;
@@ -270,6 +270,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
                         angular.forEach($localStorage.tires, function(value, key) {                                                     
                             if(value.camionId == idtruck){
+                                console.log(value)
                                 tireNumber = tireNumber + 1;
                             }
                         });         
@@ -331,15 +332,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 //DATOS CON ERRORES O INCOMPLETOS
                                 $ionicLoading.hide();
 
-                                var error = $translate.instant('MSG_ERROR');
-                                var aceptar = $translate.instant('MSG_ACEPTAR');
-                                var notFound = $translate.instant('DASHBOARD_CAMION') + " <strong>" + tagCamion + "</strong> " + $translate.instant('MSG_NOT_FOUND')
-                                $ionicPopup.alert({
-                                    title: error,
-                                    template: '<center>' + notFound + '</center>',
-                                    okText: aceptar,
-                                    okType: 'button-assertive'
-                                });
+                                $scope.showErrorMessage($translate.instant('DASHBOARD_CAMION') + " <strong>" + tagCamion + "</strong> " + $translate.instant('MSG_NOT_FOUND'));
 
                             } else {
                                 //SE RECIBIÓ UNA RESPUESTA INESPERADA
@@ -885,7 +878,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 tireBrand:value.tireBrand,
                                 tireModel:value.tireModel,
                                 tireSize:value.tireSize,
-                                year:value.year                                                                                                
+                                year:value.year,
+                                tireType:value.tireType                                                                                                
                             }
                             $localStorage.inspectionTires.push(tire)
                         }
@@ -2425,7 +2419,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     psi             : $scope.data.psi, 
                                     comments        : ' ', 
                                     condFounds      : condFounds,
-                                    tagDetected     : $scope.data.tagDetected
+                                    tagDetected     : $scope.data.tagDetected,
+                                    tireType        : $scope.data.tireType
                                     }
                                 }   else {
                                     console.log("Existen comentarios")
@@ -2445,8 +2440,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     psi             : $scope.data.psi, 
                                     comments        : $scope.data.comments, 
                                     condFounds      : condFounds,
-                                    tagDetected     : $scope.data.tagDetected
-                                
+                                    tagDetected     : $scope.data.tagDetected,
+                                    tireType        : $scope.data.tireType
                                     }
                                
                                 }
@@ -2634,7 +2629,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     psi             : $scope.data.psi, 
                                     comments        : ' ', 
                                     condFounds      : condFounds,
-                                    tagDetected     : $scope.data.tagDetected
+                                    tagDetected     : $scope.data.tagDetected,
+                                    tireType        : $scope.data.tireType
                                     }
                                 }   else {
                                     console.log("Existen comentarios")
@@ -2654,13 +2650,14 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     psi             : $scope.data.psi, 
                                     comments        : $scope.data.comments, 
                                     condFounds      : condFounds,
-                                    tagDetected     : $scope.data.tagDetected
-                                
+                                    tagDetected     : $scope.data.tagDetected,
+                                    tireType        : $scope.data.tireType                                
                                     }
                                
                                 }
 
                                 console.log("OFFLINE llanta a insertar: ")
+                                console.log("tipo de llantas es? " + $scope.data.tireType)
                                 console.log(tireInspection)
 
                                 StorageService.addTireToInspection(tireInspection);

@@ -60,10 +60,10 @@
 						</td>
 					</tr> 
 					<tr>
-                        <td tyle="text-align:right;vertical-align:middle;"><strong>{{ 'TIRES_TYPE_TYRE' | translate }}:</strong></td>
+                        <td tyle="text-align:right;vertical-align:middle;"><strong>{{ 'TIRES_TYPE_TYRE' | translate }}: {{data.tireType}}</strong></td>
                         <td>
                         	<label class="item item-select">    
-	                            <select ng-model ="data.tireType" style="max-width:100%;" required>
+	                            <select ng-model="data.tireType" style="max-width:100%;" required> 
 	                                <option value="NUEVA" ng-selected="it.tireType == 'NUEVA'">{{ 'TIRES_NEW' | translate }}</option>
 	                                <option value="RENOVADA" ng-selected="it.tireType == 'RENOVADA'">{{ 'TIRES_RENEWED' | translate }}</option>
 	                            </select>
