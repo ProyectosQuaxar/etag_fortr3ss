@@ -2513,6 +2513,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                         $scope.data.tireSizes = $localStorage.tireSizes;
                                         $scope.data.tireBrands = $localStorage.tireBrands;
                                         $scope.data.historyId = $localStorage.inspectionId;
+                                        $scope.data.dr = "";
+                                        $scope.data.psi = "";
                                         $scope.data.tiresRegistred = Object.keys($scope.data.inspectionTires).length;
                                         console.log("el numero de llantas faltantes: " + $scope.data.tiresRegistred)
                                         if($scope.data.tiresRegistred == 0){

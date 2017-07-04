@@ -529,8 +529,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             console.log("[kms] : " + submitDataTruck.kms)
             console.log("Se removera la posicion #" + truckPos) 
 
-            if(nullValues == 0){
-            
+            if(nullValues == 0){            
                 console.log("procedemos a insertar llanta")
                 var condFounds = "";
                 angular.forEach($scope.selection.ids, function(value, key) {
@@ -600,7 +599,6 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                                 $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
                             })
 
-
                             var tiresToAdd = $localStorage.addTire;
                             for (i = 0; i < tiresToAdd.length; i++) {                                
                                 if (tiresToAdd[i].posicion == truckPos) {                                    
@@ -649,6 +647,8 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                             condFounds: condFounds
                         }
                         
+                        
+
                         StorageService.addTire(tireAdd);
                         $scope.data.addTire = $localStorage.addTire;
                         $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
@@ -838,7 +838,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 $scope.$broadcast('scroll.refreshComplete');
             }
         }
-        
+
         $scope.startInsertTires = function(){
             $localStorage.submitDataTruck = {"company":$scope.data.company,"fleet":$scope.data.fleet,"truckId":$scope.data.truckId,"kms":$scope.data.kms};
             console.log("datos del camión a subir: ")
