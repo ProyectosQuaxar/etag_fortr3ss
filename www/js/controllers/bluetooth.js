@@ -458,7 +458,33 @@ $scope.data.imgConBluetooth = false;
 
    $scope.openModal = function(index) {
         console.log("Entramos al modal!" + index)
-        if (index == 1) $scope.oModal1.show();
+        if (index == 1){
+          //////////////////
+          var bluetoothName = $localStorage.dataBluetooth;
+
+          if(bluetoothName.length > 0){
+            console.log(bluetoothName.length)
+            console.log("ya hay un bluetooth conectado llamado: " + $localStorage.dataBluetooth);
+            console.log("so... mostrar sus opciones");
+            $scope.data.translogikOptions = true;
+            $scope.data.deviceActivated = true; 
+            $scope.data.deviceName = bluetoothName;
+            $scope.data.btnDisc = true;
+          } else {
+            console.log("No hay bluetooth entonces ir a pedir lista");
+            bluetoothSerial.isEnabled(function() {
+                $localStorage.bluetooth = true;
+            }, function(reason) {
+                $localStorage.bluetooth = false;
+            });
+            $scope.data.bluetooth = $localStorage.bluetooth;  
+            
+            $scope.data.btnFindDevs = true;
+
+          }
+          //////////////////
+          $scope.oModal1.show();
+        }
        
     };
 
