@@ -407,6 +407,10 @@ $scope.data.imgConBluetooth = false;
             $scope.data.readingTag = false;
             $scope.data.notResults = false;
             console.log("Encontrado");
+            $scope.openModal(1);
+            
+            $scope.data.tagResult = result['result'];
+            console.log($scope.data.tagResult);
             $ionicLoading.hide();
         } else if (result['exist'] == 'NO') {
             $scope.data.formFindTag = false;
@@ -457,7 +461,7 @@ $scope.data.imgConBluetooth = false;
 
 
    $scope.openModal = function(index) {
-        console.log("Entramos al modal!" + index)
+        console.log("Entramos al modal!" + index) 
         if (index == 1) $scope.oModal1.show();
        
     };
