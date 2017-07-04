@@ -254,14 +254,14 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
 
     $scope.openModal = function(index) {
         if (index == 1) $scope.oModal1.show();
-        if (index == 2) $scope.oModal2.show()
+        if (index == 2) $scope.oModal2.show();
         if (index == 3) $scope.oModal3.show();
         if (index == 4) $scope.oModal4.show();
     };
 
     $scope.closeModal = function(index) {
         if (index == 1) $scope.oModal1.hide();
-        if (index == 2) $scope.oModal2.hide()
+        if (index == 2) $scope.oModal2.hide();
         if (index == 3) $scope.oModal3.hide();
         if (index == 4) $scope.oModal4.hide();
     };

@@ -461,8 +461,39 @@ $scope.data.imgConBluetooth = false;
 
 
    $scope.openModal = function(index) {
+<<<<<<< HEAD
         console.log("Entramos al modal!" + index) 
         if (index == 1) $scope.oModal1.show();
+=======
+        console.log("Entramos al modal!" + index)
+        if (index == 1){
+          //////////////////
+          var bluetoothName = $localStorage.dataBluetooth;
+
+          if(bluetoothName.length > 0){
+            console.log(bluetoothName.length)
+            console.log("ya hay un bluetooth conectado llamado: " + $localStorage.dataBluetooth);
+            console.log("so... mostrar sus opciones");
+            $scope.data.translogikOptions = true;
+            $scope.data.deviceActivated = true; 
+            $scope.data.deviceName = bluetoothName;
+            $scope.data.btnDisc = true;
+          } else {
+            console.log("No hay bluetooth entonces ir a pedir lista");
+            bluetoothSerial.isEnabled(function() {
+                $localStorage.bluetooth = true;
+            }, function(reason) {
+                $localStorage.bluetooth = false;
+            });
+            $scope.data.bluetooth = $localStorage.bluetooth;  
+            
+            $scope.data.btnFindDevs = true;
+
+          }
+          //////////////////
+          $scope.oModal1.show();
+        }
+>>>>>>> 7d3075c201c31c48888fcea3bf1a656200276156
        
     };
 
@@ -471,7 +502,7 @@ $scope.data.imgConBluetooth = false;
        
     };
 
-    $ionicModal.fromTemplateUrl('templates/detallesLlanta.html', {
+    $ionicModal.fromTemplateUrl('templates/bluetoothModal.html', {
         id: '1', // We need to use and ID to identify the modal that is firing the event!
         scope: $scope,
         backdropClickToClose: false,

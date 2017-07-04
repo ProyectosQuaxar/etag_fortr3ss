@@ -1,19 +1,89 @@
 <ion-modal-view>
     <ion-header-bar class="bar-assertive" style="background-color: #003A5D!important;">
         <h1 class="title">
-            MODAL BLUETOOTH
+            {{ 'INSPECTION_BLUETOOTH' | translate }}
         </h1>
     </ion-header-bar>
-    <ion-content>
-        <div class="ion-content">
-            <center>
-                <h4>MODAL BLUETOOTH</h4>
-            </center>
-            <center>
-              <a class="button button-small button-assertive" ng-click="closeModal(1)" style="padding-top:5px">
-                {{ 'REPORTS_CERRAR' | translate }}
-              </a>            
-            </center> 
-        </div>  
-    </ion-content>
+  <ion-content>
+    <ion-refresher pulling-text="{{'MSG_UPDATE'|translate}}" refreshing-text="{{'MSG_UPDATING'|translate}}" on-refresh="init()">
+    </ion-refresher>  
+    <br>
+    <center>
+    <h3 style="font-size:20px;">
+      <span ng-if="data.bluetooth == false">
+        <i class="icon ion-bluetooth assertive"></i> {{ 'BLUETOOTH_DESACTIVADO' | translate }}
+      </span>
+      <span ng-if="data.bluetooth == true">
+        <i class="icon ion-bluetooth balanced"></i> {{ 'BLUETOOTH_ACTIVADO' | translate }}
+      </span>
+    </h3>     
+    <button class="button button-fab button-positive pull-right" ng-click="bluetoothOptions()">
+        <i class="icon ion-settings"></i>
+    </button> 
+    <button ng-click="scanDevices()" ng-show="data.btnFindDevs"  class="fadein fadeout button button-fab button-calm">
+        <i class="icon ion-search" ng-disabled="!data.bluetooth"></i>
+      </button> 
+    <br><br>   
+    </center>        
+    <div ng-show="showDevices" class="fadein fadeout">
+        {{ 'BLUETOOTH_DEVICES' | translate }}:
+        <br><br>
+        <div class="item item-text-wrap form-border-bottom" style="margin-top:-10px;">
+            <label class="item item-input item-select " style="height:40px;">
+                <select ng-model="device" ng-change="connectDevice(device)"style="max-width:100%;">
+                    <option value="0">...</option>
+                    <option ng-repeat="device in devs" value="{{device}}" >
+                        <strong>{{device.name}}</strong>
+                    </option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div ng-show="data.imgConBluetooth">
+      <center>
+        <img src="img/connecting.png" style="width:100px;height:100px;">
+        <br>
+        <p><strong>{{ 'MSG_BLUETOOTH_CONNECTING' | translate }}</strong></p>
+      </center>
+    </div>
+    <div ng-show="data.translogikOptions" class="fadein fadeout">
+      <center>
+        <h4>
+          <span ng-show="data.deviceActivated"  class="fadein fadeout">
+            <strong>{{data.deviceName}}</strong>            
+          </span>
+        </h4>
+        <h3 style="font-size:20px;">          
+          <!--BETWEN 100 and 75%-->
+          <span ng-show="data.batteryPercent > 80 && data.batteryPercent < 100" class="fadein fadeout positive" style="font-size:16px;">
+            <i class="icon ion-battery-full"></i> {{data.batteryPercent | number:2 }} %
+          </span>
+          <span ng-show="data.batteryPercent > 40 && data.batteryPercent < 80" class="fadein fadeout balanced" style="font-size:16px;">
+            <i class="icon ion-battery-half"></i> {{data.batteryPercent | number:2 }} %
+          </span>
+          <span ng-show="data.batteryPercent > 15 && data.batteryPercent < 40" class="fadein fadeout energized" style="font-size:16px;">
+            <i class="icon ion-battery-full"></i> {{data.batteryPercent | number:2 }} %
+          </span>
+          <span ng-show="data.batteryPercent > 0 && data.batteryPercent < 15" class="fadein fadeout assertive" style="font-size:16px;">
+            <i class="icon ion-battery-full"></i> {{data.batteryPercent | number:2 }} %
+          </span> 
+        </h3>        
+        <br>      
+        <button class="button button-assertive button-small" ng-click="shutDown()">
+          <i class="icon ion-power"></i>
+        </button>
+        <button class="button button-small button-assertive" ng-click="desconect()" ng-show="data.btnDisc" class="fadein fadeout">
+          <i class="icon ion-bluetooth"></i> <i class="icon ion-log-out"></i>
+        </button>
+        <br><br>
+        <button class="button button-small button-calm" ng-click="getBatteryStatus()"><i class="icon ion-battery-full"></i></button>           
+      </center>
+    </div>    
+    <br><br>
+    <center>
+      <a class="button button-small button-assertive" ng-click="closeModal(1)" style="padding-top:5px">
+        {{ 'REPORTS_CERRAR' | translate }}
+      </a>            
+    </center> 
+  </ion-content>    
  </ion-modal-view>

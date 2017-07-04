@@ -136,7 +136,9 @@ angular.module('NFC', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pa
 
                 $scope.getNumberTag = function(tagValue){
                     var numberTag = tagValue
+                    $scope.data.tagValue = tagValue;
                     console.log(numberTag);
+
                     numberTag = numberTag.replace(/[^0-9]/gi, '');
                     $scope.data.tagValue = numberTag;
                     $scope.data.tagCamion = numberTag;
