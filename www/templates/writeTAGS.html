@@ -1,4 +1,17 @@
-<ion-view view-title="{{ 'MENU_WRITE_TAGS_LABEL' | translate }}" controller="NFCCtrl" ng-init="init()">
+<ion-view view-title=" " controller="NFCCtrl" ng-init="init()">
+  <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>    
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>       
+        <div style="padding-left: 5px;">
+            <button class="button button-positive button-fab"  ng-click="openModal(1)" style="margin-left: 10dp;" ng-controller="bluetoothCtrl">
+                    <i class="icon ion-bluetooth"></i>
+                </button>
+        </div>        
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
+        </button>
+    </ion-nav-buttons>  
   <ion-content>
   <br>
    <ion-refresher pulling-text="{{'MSG_UPDATE'|translate}}" refreshing-text="{{'MSG_UPDATING'|translate}}" on-refresh="init()"  class="fadein fadeout" ng-controller="NFCCtrl"></ion-refresher>
@@ -17,7 +30,7 @@
                   <br><br>
                 </center>
                   <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
-                      <select ng-model="data.tagCamion" style="max-width:100%;" ng-change="getNumberTag(data.tagCamionN)">   
+                      <select ng-model="data.tagCamion" style="max-width:100%;" ng-change="getNumberTag(data.tagCamion)">   
                         <option ng-repeat="truck in trucks" value="{{truck.tag}}">{{ 'DASHBOARD_TAG' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
                       </select> 
                   </label>    
@@ -46,11 +59,11 @@
             <div class="content">
                 <center>
                   <!--<h4>{{ 'MENU_WRITE_TAGS_LABEL' | translate }} NFC</h4> --> <br>                
-                  <img src="img/nfc_inspection.png" style="max-width:200px;height:auto;"/>
+                  <img src="img/nfc_inspection.png" style="max-width:120px;height:auto;"/>
                   <label class="item item-input item-stacked-label form-border-bottom leftZero" style="border:1px solid #fff;">
                   <span class="input-label">{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</span>
                   </label>          
-                  <br>
+                  <br><br>
                 </center>
                   <label class="item item-select" style="margin-top:-20px;margin-bottom:-10px;">      
                       <select ng-model="data.tagCamion" style="max-width:100%;" ng-change="getTag(data.tagCamion)">   

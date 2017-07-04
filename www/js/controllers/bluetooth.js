@@ -467,7 +467,7 @@ $scope.data.imgConBluetooth = false;
        
     };
 
-    $ionicModal.fromTemplateUrl('templates/detallesLlanta.html', {
+    $ionicModal.fromTemplateUrl('templates/bluetoothModal.html', {
         id: '1', // We need to use and ID to identify the modal that is firing the event!
         scope: $scope,
         backdropClickToClose: false,
