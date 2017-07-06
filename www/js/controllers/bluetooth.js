@@ -461,10 +461,9 @@ $scope.data.imgConBluetooth = false;
 
 
    $scope.openModal = function(index) {
-<<<<<<< HEAD
         console.log("Entramos al modal!" + index) 
         if (index == 1) $scope.oModal1.show();
-=======
+
         console.log("Entramos al modal!" + index)
         if (index == 1){
           //////////////////
@@ -493,7 +492,6 @@ $scope.data.imgConBluetooth = false;
           //////////////////
           $scope.oModal1.show();
         }
->>>>>>> 7d3075c201c31c48888fcea3bf1a656200276156
        
     };
 
