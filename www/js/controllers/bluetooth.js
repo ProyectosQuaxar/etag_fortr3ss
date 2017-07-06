@@ -213,7 +213,7 @@ $scope.data.imgConBluetooth = false;
         });
         bluetooth.callBackOnrfidNoTagFoundResponse = null;
     }
-
+    $scope.oModal1.show();
   }//end scanRFID Function
 
   $scope.readRFID = function(tag){    
@@ -407,7 +407,7 @@ $scope.data.imgConBluetooth = false;
             $scope.data.readingTag = false;
             $scope.data.notResults = false;
             console.log("Encontrado");
-            $scope.openModal(1);
+            $scope.openModal(2);
             
             $scope.data.tagResult = result['result'];
             console.log($scope.data.tagResult);
@@ -461,9 +461,12 @@ $scope.data.imgConBluetooth = false;
 
 
    $scope.openModal = function(index) {
+<<<<<<< HEAD
         console.log("Entramos al modal!" + index) 
         if (index == 1) $scope.oModal1.show();
 
+=======
+>>>>>>> 951e36f9a7b26b8a2c4e4a31f077646ae3f9929a
         console.log("Entramos al modal!" + index)
         if (index == 1){
           //////////////////
@@ -492,11 +495,18 @@ $scope.data.imgConBluetooth = false;
           //////////////////
           $scope.oModal1.show();
         }
+<<<<<<< HEAD
        
+=======
+        if(index == 2){
+          $scope.oModal2.show();
+        }
+>>>>>>> 951e36f9a7b26b8a2c4e4a31f077646ae3f9929a
     };
 
     $scope.closeModal = function(index) {
         if (index == 1) $scope.oModal1.hide();
+        if (index == 2) $scope.oModal2.hide();
        
     };
 
@@ -507,6 +517,15 @@ $scope.data.imgConBluetooth = false;
         animation: 'slide-in-up'
     }).then(function(modal) {
         $scope.oModal1 = modal;
+    });
+
+    $ionicModal.fromTemplateUrl('templates/detallesLlanta.html', {
+        id: '2', // We need to use and ID to identify the modal that is firing the event!
+        scope: $scope,
+        backdropClickToClose: false,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.oModal2 = modal;
     });
 
 });

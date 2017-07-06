@@ -454,10 +454,13 @@ angular.module('reports', ['ionic', 'ionic-toast', 'tabSlideBox', 'ionic-materia
                                 var rendMark = {
                                     id: value.id,
                                     marca: value.marca,
-                                    prom: value.suma / value.cantidad
+                                    prom: value.km / value.mm
                                 } 
                                 $scope.rendMarcas.push(rendMark)                           
                             }) 
+
+                            $scope.rendMarcas = $filter('orderBy')($scope.rendMarcas, 'prom', true) 
+
 
                             console.log("los rendimientos son: ")
                             console.log($scope.rendMarcas)
