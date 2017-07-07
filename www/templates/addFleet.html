@@ -42,8 +42,11 @@
                     <input type="hidden" class="input-label"  focus-me="focusInput" id="data.companyNameSelected" style= "margin-top: 10px;" placeholder="..." ng-model="company" ng-value="c.id"/>
                   </div>
                 <span ng-show="showCustomers" class="fadein fadeout">
-                
+
                   <ul id="customers_ul" style="margin-top:-10px; margin-left: 10px;" ng-click="showCustomers = !showCustomers">
+                    
+                    <li ng-repeat="sc in storageCustomer" style="margin-top: 5px;" ng-model="data.companyNameSelected" ng-click="selectCustomer(sc.email)" ><i class="icon ion-wifi"></i>&nbsp;{{sc.company}}<br/>
+                    </li>                    
                     <li ng-repeat="c in customers | filter:data.companyNameSelected | orderBy: orderList" style="margin-top: 5px;" ng-model="data.companyNameSelected" ng-click="selectCustomer(c.id)" >{{c.nameCompany}}<br/>
                     </li>
                   </ul>

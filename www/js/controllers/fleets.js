@@ -29,24 +29,43 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
             $scope.company = $localStorage.company;
             console.log($localStorage.company)
             console.log($localStorage.companyName)
+            console.log("clientes en offline")            
+            $scope.storageCustomer = $localStorage.storageCustomers;
+            console.log($scope.storageCustomer)
             $scope.getCustomerInfo;
         }
 
         $scope.selectCustomer = function (id) {
-            console.log("Se presiono el boton " + id);
-            $scope.company = id;
-            console.log("Nuevo ID " + $scope.company)
-            angular.forEach($localStorage.customers, function(value, key) {
-                        if (id == value.id) {
-                            $localStorage.companyName = value.nameCompany;
-                            $scope.nameCompany = value.nameCompany;
-                            $localStorage.customerEmail = value.email;
-                        }
-                    });
-            $scope.data.companyNameSelected = $scope.nameCompany;
-            console.log($scope.nameCompany)
-            $localStorage.company = id;
-            console.log($localStorage.company);
+            if($localStorage.appModeStatus == false){
+                console.log("Se presiono el boton " + id);
+                $scope.company = id;
+                console.log("Nuevo ID " + $scope.company)
+                angular.forEach($localStorage.customers, function(value, key) {
+                    if (id == value.id) {
+                        $localStorage.companyName = value.nameCompany;
+                        $scope.nameCompany = value.nameCompany;
+                        $localStorage.customerEmail = value.email;
+                    }
+                });
+                $scope.data.companyNameSelected = $scope.nameCompany;
+                console.log($scope.nameCompany)
+                $localStorage.company = id;
+                console.log($localStorage.company);
+            }
+
+            if($localStorage.appModeStatus == true){
+                console.log("SELECCIONAR POR OFFLINE")
+                console.log("el cliente es? " + id)
+                angular.forEach($localStorage.storageCustomer, function(value, key) {
+                    if (id == value.company) {
+                        $localStorage.companyName = value.company;
+                        $scope.nameCompany = value.company;
+                        $localStorage.customerEmail = value.email;
+                    }
+                });                    
+            }
+
+            
             $scope.$broadcast('scroll.refreshComplete');
         }
 

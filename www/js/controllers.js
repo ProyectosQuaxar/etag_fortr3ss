@@ -1,22 +1,18 @@
 angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
 
-.run(function($localStorage, $window, $translate, $ionicPlatform, $rootScope, $cordovaBluetoothSerial) {
-    //$rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
-    //$rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
-    //$rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
-
-    //$rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
-    //$rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
-    //$rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
+.run(function($localStorage, $window, $translate, $ionicPlatform, $rootScope, $cordovaBluetoothSerial, $ionicPopup) {    
+    $rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
+    $rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
+    $rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
     
     //$rootScope.baseurl = 'http://52.41.40.176/millantarfid/';
     //$rootScope.url = 'http://52.41.40.176/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://52.41.40.176/millantarfid/mobileUserApp/';
     
 
-    $rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
-    $rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
-    $rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
+    //$rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
+    //$rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
+    //$rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
 
     if ($localStorage.storageTrucks == '' || $localStorage.storageTrucks === undefined)
         $localStorage = $localStorage.$default({storageTrucks: []});
@@ -93,11 +89,26 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
           window.StatusBar.hide();
         }
 
-        
+
         bluetoothSerial.isEnabled(function () {
-            alert("Bluetooth is Enabled.");
+            //DISPONIBLE
+            var aceptar = $translate.instant('MSG_ACEPTAR')                
+            $ionicPopup.alert({
+                template: '<center><p><b>' + $translate.instant('BLUETOOTH_ACTIVADO') + '</b></p></center>',
+                okText: aceptar,
+                okType: 'button-balanced'
+            }); 
+            console.log("ACTIVADO");
           }, function (reason) {
-            alert("Bluetooth is *not* Enabled.");
+            //NO DISPONIBLE
+            var popTitle = $translate.instant('MSG_INFORMATION')
+          var aceptar = $translate.instant('MSG_ACEPTAR')                
+          $ionicPopup.alert({
+              title: popTitle,
+              template: '<center><p><b>' + $translate.instant('BLUETOOTH_DESACTIVADO') + '</b></p></center>',
+              okText: aceptar,
+              okType: 'button-assertive'
+          });   
           }
         );
                 
