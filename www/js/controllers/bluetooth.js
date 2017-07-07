@@ -461,12 +461,6 @@ $scope.data.imgConBluetooth = false;
 
 
    $scope.openModal = function(index) {
-<<<<<<< HEAD
-        console.log("Entramos al modal!" + index) 
-        if (index == 1) $scope.oModal1.show();
-
-=======
->>>>>>> 951e36f9a7b26b8a2c4e4a31f077646ae3f9929a
         console.log("Entramos al modal!" + index)
         if (index == 1){
           //////////////////
@@ -492,16 +486,11 @@ $scope.data.imgConBluetooth = false;
             $scope.data.btnFindDevs = true;
 
           }
-          //////////////////
           $scope.oModal1.show();
         }
-<<<<<<< HEAD
-       
-=======
         if(index == 2){
           $scope.oModal2.show();
         }
->>>>>>> 951e36f9a7b26b8a2c4e4a31f077646ae3f9929a
     };
 
     $scope.closeModal = function(index) {
