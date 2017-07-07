@@ -66,7 +66,9 @@ TIRES_OBSERVATIONS: 'Observaciones',
 BLUETOOTH_ACTIVADO: 'Bluetooth Activado',
 BLUETOOTH_DESACTIVADO: 'Bluetooth Desactivado',
 BLUETOOTH_DEVICES: 'Dispositivos',
-NFC_TAG_NOT_FOUND: 'Tag no encontrado'
+NFC_TAG_NOT_FOUND: 'Tag no encontrado',
+MENU_QUICK_SEARCH: 'Búsqueda Rápida'
+
 		});
 
         $translateProvider.translations('en', {
@@ -548,7 +550,9 @@ NFC_LEYENDO_TAG: 'Reading Tire TAGS',
 NFC_ACERQUE_DISPOSITIVO: 'Approach the probe at the tag position',
 TIRES_HISTORY: 'Tire history',
 TIRES_REGISTRATION_DATE: 'Registration date',
-TIRES_OBSERVATIONS: 'Observations'
+TIRES_OBSERVATIONS: 'Observations',
+MENU_QUICK_SEARCH: 'Quick Search',
+
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',
