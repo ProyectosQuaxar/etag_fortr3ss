@@ -340,6 +340,69 @@ $scope.data.imgConBluetooth = false;
 
   }
 
+
+
+    $scope.detectTag = function(tag){
+
+    var loading = $translate.instant('MSG_LOADING');
+    $ionicLoading.show({
+        template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+        content: loading,
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });  
+    console.log("entró a leer tag: " + tag);
+    $scope.data.formFindTag = false;
+    $scope.data.dataResult = false; 
+    $scope.data.readingTag = true;
+    $scope.data.notResults = false;
+
+    bluetooth.callBackOnrfidNoTagFoundResponse = onNoTagsFound;
+    if (rfid_timeout_var !== "off") {
+        console.log('set timout frid' + rfid_timeout_var)
+        rfid_timeout_id = window.setTimeout(function() {
+            onNoTagsFound();
+            bluetooth.rfidOff(function() {
+            })
+        }, rfid_timeout_var);
+    }
+
+    bluetooth.readRFID(function(data) {
+      console.log('clear timeout frid')
+      window.clearTimeout(rfid_timeout_id);
+      var epc_header = data.EPCheader;
+      var cai = data.cai;
+      var company_prefix = data.companyPrefix;
+      var partition = data.partition;
+      var serial_number = data.sn;
+      var filter = data.filter;
+      var matricule = "";//data.michelin;
+      var encodingData = data.encodedData;
+      console.log("rfid : cai = "+cai);
+      console.log("rfid : company_prefix = "+company_prefix);
+      console.log("rfid : partition = "+partition);
+      console.log("rfid : filter = "+filter);
+      console.log("rfid : epc_header = "+epc_header);
+      console.log("rfid : matricule = "+matricule);
+      console.log("rfid : serial_number = "+serial_number);
+      console.log("rfid : encodingData = "+encodingData);
+      $scope.findTag(String(serial_number));   
+
+      if(String(tag) == String(serial_number)){
+        $ionicLoading.hide();
+        alert("ES EL MISMO");
+        //$scope.data.tagDetected = "SI"
+      } else if (String(tag) != String(serial_number)){
+        $ionicLoading.hide();
+        alert("NO ES EL MISMO TAG\nLEÍDO: " + serial_number + "\nORIGINAL: " + tag);
+      }
+      console.log(serial_number);
+      
+    }); 
+  }
+
   $scope.cancelReadTag = function(){
       $scope.data.formFindTag = true;
       $scope.data.dataResult = false; 
@@ -372,7 +435,6 @@ $scope.data.imgConBluetooth = false;
   $scope.data.notResults = false;
 
   $scope.readOtherTag = function(){
-
       $scope.data.formFindTag = true;
       $scope.data.dataResult = false; 
       $scope.data.readingTag = false;

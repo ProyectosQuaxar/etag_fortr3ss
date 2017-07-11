@@ -1,0 +1,56 @@
+<ion-view view-title="{{ 'MENU_QUICK_SEARCH' | translate }}" class="ion-content" data-ng-init="init()" ng-controller="InspectionCtrl">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>
+        <button class="button button-balanced button-fab"  ng-click="clearTruck()">
+            <i class="icon ion-arrow-swap rotate-90"></i>
+        </button>
+        <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
+        </button>        
+    </ion-nav-buttons>    
+    <ion-content scroll="true">
+        <br>
+        <ion-refresher pulling-text="{{'MSG_UPDATE'|translate}}" refreshing-text="{{'MSG_UPDATING'|translate}}" on-refresh="init()" class="fadein fadeout">
+        </ion-refresher>        
+        <div class="fadein fadeout" style="height:80%!important;width:auto;">
+            <ion-slides  options="options" slider="data.slider" style="height:100%!important;width:auto;">
+                <ion-slide-page>
+                    <center>
+                        <!--<h4>{{ 'INSPECTION_USO_MANUAL' | translate }}</h4>--><br>
+                        <div class="col-67">     
+                            <br>
+                            <img src="img/icon_quick_search.png" style="max-width:200px;height:auto;"/>                   
+                            <br>
+                            <p style="font-size:16px;"><strong>{{ 'INSPECTION_CHOOSE_TRUCK' | translate }}:</strong></p>
+                            <label class="item item-input item-select " style="height:40px;">
+                                <select ng-change="quickSearch(data.tagCamion)" ng-model="data.tagCamion" style="max-width:100%;">   
+                                    <option ng-repeat="truck in trucks | orderBy:idModelo" value="{{truck.tag}}">{{ 'DASHBOARD_TAG' | translate }}: {{truck.unidad}} - {{ 'INSPECTION_PLACA_LABEL' | translate }}: {{ truck.placas | uppercase}}</option>
+                                </select> 
+                            </label>                                                        
+                        </div>
+                    </center>                      
+                </ion-slide-page>
+                <ion-slide-page>
+                    <center>                       
+                        <div class="col-67">
+                            <br>          
+                            <img src="img/icon_quick_search.png" style="max-width:200px;height:auto;"/>                   
+                            <br>
+                            <p style="font-size:18px;"><strong>{{ 'INSPECTION_WRITE_TRUCK_TAG' | translate }}:</strong></p>
+                            <br>
+                            <label class="item-stacked-label form-border-bottom">               
+                                <input type="text" ng-model="tagCamion" required="" class="ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched" style="border-bottom:1px solid #F4001E;"/>
+                            </label>   
+                            <br><br>
+                            <button id="fab" class="button button-assertive button-fab" ng-click="quickSearch(tagCamion)">
+                                <i class="icon ion-paper-airplane"></i>
+                            </button>                                                                                                  
+                        </div>
+                    </center>                                                      
+                </ion-slide-page>                
+            </ion-slides>    
+        </div>
+    </ion-content>   
+</ion-view>

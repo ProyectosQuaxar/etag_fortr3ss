@@ -444,7 +444,6 @@ zeroToEnd = function(_string, _length) {
     cache:false,
     controller: 'LoginCtrl'
   })
-
   .state('app.login', {
     url: '/login',
     views: {
@@ -464,6 +463,26 @@ zeroToEnd = function(_string, _length) {
       }
     },
     cache:false
+  })
+  .state('app.quickSearch', {
+    url: '/quickSearch',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/quickSearch.html',
+        controller: 'InspectionCtrl',
+        cache:false
+      }
+    }
+  })
+  .state('app.iQuickSearch', {
+    url: '/iQuickSearch',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/iQuickSearch.html',
+        controller: 'InspectionCtrl',
+        cache:false
+      }
+    }
   })
   .state('app.iManual', {
     url: '/iManual',

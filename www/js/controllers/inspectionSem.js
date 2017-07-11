@@ -244,6 +244,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
         $scope.findTruck = function(tagCamion) {
             $scope.tagCamion = tagCamion;
+            console.log($scope.tagCamion)
             if ($scope.tagCamion !== undefined) {
                 if ($localStorage.appModeStatus) {
                     //si el modo offline está activado
@@ -306,13 +307,16 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 $ionicLoading.hide();
                                 $scope.camionExiste = true;
                                 $scope.trucks = result['truck'];
+                                console.log();
                                 $scope.tires = result['tires'];
                                 $scope.historialInspections = result['historialInspections'];
                                 $localStorage.inspectionTrucks = result['truck'];
                                 $localStorage.inspectionTires = result['tires'];
+                                console.log($localStorage.inspectionTires);
                                 $scope.truckTypes = $localStorage.truckTypes;
                                 $scope.pressureTypes = $localStorage.pressureTypes;
                                 $scope.tagCamion = tagCamion;
+                                console.log($scope.tagCamion);
                                 $scope.userId = $localStorage.userId;
                                 $scope.showHistorialInspecciones = false;
 
@@ -730,7 +734,6 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     animation: 'slide-in-down'
                                 });    
                             }
-                            
 
                             $scope.data.inspectionTires = $localStorage.inspectionTires;
                             $scope.data.tireConditions = $localStorage.tireConditions;
@@ -2783,5 +2786,154 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             }
         };
                 
-    
+    $scope.quickSearch = function (tagCamion) {
+        console.log("Entramos a busqueda rapida con TAG: " + tagCamion)
+        $state.go('app.iQuickSearch', {
+            animation: 'slide-in-down'
+        });
+         $scope.tagCamion = tagCamion;
+            console.log($scope.tagCamion)
+            if ($scope.tagCamion !== undefined) {
+                if ($localStorage.appModeStatus) {
+                    //si el modo offline está activado
+                    var trucks = $localStorage.trucks;
+                    var truckExist = false;
+                    var idtruck = ""
+                    angular.forEach($localStorage.trucks, function(value, key) {                            
+                        if(value.tag == tagCamion){
+                            $scope.data.idtruck = value.id;
+                            idtruck = value.id;
+                            truckExist = true;
+                        }
+                    });
+                    console.log("camion existe? " + truckExist)
+
+                    if (truckExist) {
+                        //BUSCAMOS EN LOCALSTORAGE y enviamos los valores recibidos
+                        $scope.camionExiste = true;
+                        $scope.trucks = $localStorage.trucks;
+                        console.log($scope.trucks);
+                        $scope.tires = $localStorage.tires;
+                        $scope.truckTypes = $localStorage.truckTypes;
+                        $scope.pressureTypes = $localStorage.pressureTypes;
+                        var tireNumber = 0;
+
+                        angular.forEach($scope.truckTypes, function(value, key) {                            
+                            if(value.id == $scope.data.inspectionTrucks[0].tipo){                                                
+                                $scope.data.truckImg = $rootScope.baseurl + "static/images/trucktypes/" + value.img;
+                            }
+                        });
+                        console.log("entonces la imagen es: " + $scope.data.truckImg)
+                        angular.forEach($localStorage.tires, function(value, key) {                                                     
+                            if(value.camionId == idtruck){
+                                console.log(value)
+                                tireNumber = tireNumber + 1;
+                            }
+                        });         
+                        $scope.data.tiresRegistred = tireNumber;
+                    } else {
+                        var msgError = $translate.instant('DASHBOARD_CAMION') + ': <strong>' + tagCamion + '</strong> ' + $translate.instant('MSG_NOTAVAILABLE') + ' ' + $translate.instant('MSG_INTHIS') + ' ' + $translate.instant('DASHBOARD_CLIENTE_LABEL')
+                        var popTitle = $translate.instant('MENU_MODO_OFFLINE_ACTIVE')
+                        var aceptar = $translate.instant('MSG_ACEPTAR')
+                        $ionicLoading.hide();
+                        $ionicPopup.alert({
+                            title: popTitle,
+                            template: '<center><p><b>' + msgError + '</p></center>',
+                            okText: aceptar,
+                            okType: 'button-positive'
+                        });
+                    }
+                } else {
+                    //si hay conexión a internet
+                    var loading = $translate.instant('MSG_LOADING');
+                    $ionicLoading.show({
+                        template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                        content: loading,
+                        animation: 'fade-in',
+                        showBackdrop: true,
+                        maxWidth: 200,
+                        showDelay: 0
+                    });
+
+                    var DataPromise = Data.getTruckData($rootScope.url, tagCamion)
+                    DataPromise.then(function(result) {
+                            if (result['message'] == 'found') {
+                                //DATOS CARGADOS
+                                $ionicLoading.hide();
+                                $scope.camionExiste = true;
+                                $scope.trucks = result['truck'];
+                                console.log($scope.trucks);
+                                $scope.data.flashTires = result['tires'];     
+                                console.log($scope.tires);                          
+                                $scope.truckTypes = $localStorage.truckTypes;
+                                $scope.pressureTypes = $localStorage.pressureTypes;
+                                $scope.tagCamion = tagCamion;
+                                $scope.userId = $localStorage.userId;
+                                $scope.showHistorialInspecciones = false;
+
+                                var countTiresRegistred = 0;
+                                if ($scope.tires !== undefined) {
+                                    countTiresRegistred = $scope.tires;
+                                    var tiresRegistred = Object.keys(countTiresRegistred).length;
+                                    $scope.data.tiresRegistred = tiresRegistred;
+                                } else {
+                                    $scope.data.tiresRegistred = 0;
+                                }
+
+                            } else if (result['message'] == 'not found') {
+                                //DATOS CON ERRORES O INCOMPLETOS
+                                $ionicLoading.hide();
+
+                                $scope.showErrorMessage($translate.instant('DASHBOARD_CAMION') + " <strong>" + tagCamion + "</strong> " + $translate.instant('MSG_NOT_FOUND'));
+
+                            } else {
+                                //SE RECIBIÓ UNA RESPUESTA INESPERADA
+                                $ionicLoading.hide();
+                                var error = $translate.instant('MSG_ERROR');
+                                var aceptar = $translate.instant('MSG_ACEPTAR');
+                                var errorOcurred = $translate.instant('MSG_ERROR_OCURRED');
+                                var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                                $ionicPopup.alert({
+                                    title: error,
+                                    template: '<center><p>' + errorOcurred + '<br/><b>' + tryAgain + '</b></p></center>',
+                                    okText: aceptar,
+                                    okType: 'button-assertive'
+                                });
+                            }
+
+                        }, function(reason) {
+                            //ERROR DE CONEXIÓN
+                            $ionicLoading.hide();
+                            var error = $translate.instant('MSG_ERROR');
+                            var aceptar = $translate.instant('MSG_ACEPTAR');
+                            var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                            var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                            $ionicLoading.hide();
+                            $ionicPopup.alert({
+                                title: error,
+                                template: '<center><p>' + errorConexion + '<br/><b>' + tryAgain + '</b></p></center>',
+                                okText: aceptar,
+                                okType: 'button-assertive'
+                            });
+                        })
+                        .finally(function() {
+                            // Stop the ion-refresher from spinning
+                            $scope.$broadcast('scroll.refreshComplete');
+                        });
+                }
+            } else {
+                var msgError = $translate.instant('MSG_ERROR_TAGEMPTY')
+                var popTitle = $translate.instant('MSG_ERROR')
+                var aceptar = $translate.instant('MSG_ACEPTAR')
+                $ionicLoading.hide();
+                $ionicPopup.alert({
+                    title: popTitle,
+                    template: '<center><p><b>' + msgError + '</p></center>',
+                    okText: aceptar,
+                    okType: 'button-positive'
+                });
+            }
+        console.log("Solicitamos los datos del camión");   
+    }
+
     })
