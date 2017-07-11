@@ -68,7 +68,9 @@ BLUETOOTH_DESACTIVADO: 'Bluetooth Desactivado',
 BLUETOOTH_DEVICES: 'Dispositivos',
 NFC_TAG_NOT_FOUND: 'Tag no encontrado',
 MENU_QUICK_SEARCH: 'Búsqueda Rápida',
-TIRES_DETECT_TAG: 'Detectar TAG'
+TIRES_DETECT_TAG: 'Detectar TAG',
+TIRES_SEND_REPORT: 'Enviar informe'
+
 
 		});
 
@@ -553,7 +555,9 @@ TIRES_HISTORY: 'Tire history',
 TIRES_REGISTRATION_DATE: 'Registration date',
 TIRES_OBSERVATIONS: 'Observations',
 MENU_QUICK_SEARCH: 'Quick Search',
-TIRES_DETECT_TAG: 'Detect TAG'
+TIRES_DETECT_TAG: 'Detect TAG',
+TIRES_SEND_REPORT: 'Send report'
+
 
         });
         $translateProvider.translations('pt', {

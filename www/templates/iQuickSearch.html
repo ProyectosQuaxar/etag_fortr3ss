@@ -43,18 +43,15 @@
                 </p>
             </a>
             <div style="background-color:#FFFFFF; margin-top: 5px; margin-bottom: 5px;" ng-show="showLlanta">	
-            <center>
-				<button class="button button-small button-assertive" ng-click="detectTag(it.tagId)" ng-controller="bluetoothCtrl" style="z-index:1000"><i class="icon ion-bluetooth" style="margin-left: 5px; margin-right: 5px;"></i>{{ 'TIRES_DETECT_TAG' | translate }}</button>			
-			</center>          
-            <br>
-			<center>
-				<button class="button button-small button-secondary" ng-click="" style="z-index:1000">{{ '' | translate }}</button>			
-			</center>
+	            <center>
+					<button class="button button-small button-assertive" ng-click="1|(it.tagId)" ng-controller="bluetoothCtrl" style="z-index:1000"><i class="icon ion-bluetooth" style="margin-left: 5px; margin-right: 5px;"></i>{{ 'TIRES_DETECT_TAG' | translate }}</button>			
+				</center>          
+	            <br>				
             </div>
         </div>
         <center>
             <div style="width:100%; padding-top:20px;">
-            	<button class="button button-small button-balanced" ng-click="">{{ 'NFC_WRITE' | translate }}</button>
+            	<button class="button button-small button-balanced" ng-click="">{{ 'TIRES_SEND_REPORT' | translate }}</button>
           	</div>
         </center>
 	</ion-content>
