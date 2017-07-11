@@ -1,16 +1,33 @@
-<ion-view view-title="eTAG" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()">
+<ion-view view-title="" hide-nav-bar="false" hide-back-button="true" data-ng-init="init()">
 
     <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
     </ion-nav-buttons>
-    <ion-nav-buttons side="right" ng-click='chooseOption()'>          
-        <button class="button button-balanced button-fab"  ng-click="toggleCompany()" ng-hide="data.appModeStatus || data.usertype == 'cliente'">
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>
+        <span ng-show="showButtons">
+            <span>          
+                <button class="button button-calm button-fab"  ng-click="visitCustomerFinished()" style="margin-left: 10dp;">
+                    <i class="icon ion-share"></i>
+                </button>            
+            </span>
+            <span>
+                <button class="button button-balanced button-fab"  ng-click="toggleCompany()" ng-hide="data.appModeStatus || data.usertype == 'cliente'" style="background-color:#FF0000;color:#FFFFFF;">
             <i class="icon ion-arrow-swap rotate-90"></i>
-        </button>    
+        </button>          
+            </span>
+        </span>         
+        <div style="padding-left: 5px;">
+            <button class="button button-balanced button-fab"  ng-click="showButtons = !showButtons">
+                <i class="icon ion-navicon-round" ng-show="showButtons == false"></i>
+                <i class="icon ion-close" ng-show="showButtons == true"></i>
+            </button>
+        </div>        
         <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
         </button>
     </ion-nav-buttons>
+
+
     <ion-content>
             <ion-refresher pulling-text="{{'MSG_UPDATE'|translate}}" refreshing-text="{{'MSG_UPDATING'|translate}}" on-refresh="selectCliente(company)" ng-controller="DashboardCtrl">
         </ion-refresher>

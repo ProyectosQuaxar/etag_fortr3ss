@@ -1,5 +1,5 @@
 angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
-    .controller('DashboardCtrl', function($ionicPlatform, ionicMaterialInk, $scope, $localStorage, $ionicModal, $ionicHistory, $window, $translate, $ionicLoading, Data, $ionicPopup, $state, $rootScope, $cordovaBluetoothSerial, $timeout) {              
+    .controller('DashboardCtrl', function($ionicPlatform, ionicMaterialInk, $scope, $localStorage, $ionicModal, $ionicHistory, $window, $translate, $ionicLoading, Data, $ionicPopup, $state, $rootScope, $cordovaBluetoothSerial, $timeout, ionicToast) {              
         $scope.data.username = {};
         $scope.customers = {};
         $scope.changeCompany = false;
@@ -8,6 +8,7 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
         $scope.dataTrucks = false;
         $scope.dataTires = false;
         $scope.search = "";
+        $scope.showButtons = false;
         
         $ionicPlatform.offHardwareBackButton(function() {
             console.log("Hola"); 
@@ -29,6 +30,26 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
             console.log("Se presiono el boton para borrar...");
             $scope.data.search = "";
         };
+
+        $scope.showToast = function(message, time){         
+          ionicToast.show(message, 'bottom', false, time);
+        };
+
+        $scope.visitCustomerFinished = function(){
+            $scope.showToast($translate.instant('DASHBOARD_FINISHED_VISIT') + ":<br>" + $localStorage.companyName ,5000);
+
+            var DataPromise = Data.visitCustomerFinished($rootScope.url, $localStorage.languague, $localStorage.company)
+            DataPromise.then(function(result) {
+                if (result['result'] == "OK") {
+                    $scope.showToast($translate.instant('DASHBOARD_EMAIL_SUCCESSFULY') + ": <br>" + $localStorage.companyName ,5000);                    
+                } else {    
+                    $scope.showToast($translate.instant('DASHBOARD_ERROR_OCURRED_SENDING_EMAIL') + ":<br>" + $localStorage.companyName ,5000);
+                }
+
+            }, function(reason) {
+            $scope.showToast($translate.instant('DASHBOARD_ERROR_OCURRED_SENDING_EMAIL') + ":<br>" + $localStorage.companyName ,5000);
+            })                
+        }
 
         $scope.selectCompany = function(company) {
             console.log("Se presiono un elemento de la lista");
