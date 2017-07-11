@@ -148,10 +148,22 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                 console.log("entró a insertar mensaje en id: " + $localStorage.inspectionId);
                 var DataPromise = Data.messageToInspection($rootScope.url, $localStorage.languague, $localStorage.inspectionId, $scope.data.messageInspection)
                 DataPromise.then(function(result) {
-                    if (result['results'] == "OK") {                    
-                        $state.go('app.dashboard', {
-                            animation: 'slide-in-down'
-                        });
+                    if (result['results'] == "OK") {                                            
+                        if($localStorage.inspectionMode == 'Manual'){
+                            $state.go('app.inspSemManual', {
+                                animation: 'slide-in-down'
+                            });
+                        }
+                        if($localStorage.inspectionMode == 'NFC'){
+                            $state.go('app.inspSemNFC', {
+                                animation: 'slide-in-down'
+                            });
+                        }
+                        if($localStorage.inspectionMode == 'Translogik'){
+                            $state.go('app.inspSemTranslogik', {
+                                animation: 'slide-in-down'
+                            });
+                        }
                     } else {
                         $state.go('app.dashboard', {
                             animation: 'slide-in-down'
@@ -166,11 +178,22 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                     $scope.showErrorMessage(errorConexion);
                 })
             } else {
-                $state.go('app.dashboard', {
-                    animation: 'slide-in-down'
-                });
-            }
-                        
+                if($localStorage.inspectionMode == 'Manual'){
+                    $state.go('app.inspSemManual', {
+                        animation: 'slide-in-down'
+                    });
+                }
+                if($localStorage.inspectionMode == 'NFC'){
+                    $state.go('app.inspSemNFC', {
+                        animation: 'slide-in-down'
+                    });
+                }
+                if($localStorage.inspectionMode == 'Translogik'){
+                    $state.go('app.inspSemTranslogik', {
+                        animation: 'slide-in-down'
+                    });
+                }
+            }                    
         }    
         $scope.init = function() {
             $scope.data.tireModels = $localStorage.tireModels;
