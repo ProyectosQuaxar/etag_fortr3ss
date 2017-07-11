@@ -35,8 +35,9 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
             $scope.getCustomerInfo;
         }
 
-        $scope.selectCustomer = function (id) {
-            if($localStorage.appModeStatus == false){
+
+        $scope.selectCustomer = function (id, method) {            
+            if(method == 'online'){
                 console.log("Se presiono el boton " + id);
                 $scope.company = id;
                 console.log("Nuevo ID " + $scope.company)
@@ -53,16 +54,16 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 console.log($localStorage.company);
             }
 
-            if($localStorage.appModeStatus == true){
-                console.log("SELECCIONAR POR OFFLINE")
-                console.log("el cliente es? " + id)
-                angular.forEach($localStorage.storageCustomer, function(value, key) {
-                    if (id == value.company) {
+            if(method == 'offline'){            
+                angular.forEach($localStorage.storageCustomers, function(value, key) {             
+                    if (id == value.email) {                     
                         $localStorage.companyName = value.company;
                         $scope.nameCompany = value.company;
                         $localStorage.customerEmail = value.email;
                     }
-                });                    
+                });  
+                $scope.data.companyNameSelected = $scope.nameCompany;
+                $localStorage.company = id;               
             }
 
             

@@ -258,6 +258,16 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
+    function messageToInspection(url, lang, id, message){
+        return $http({method:"GET", url:url+ 'messageToInspection?lang=' + lang + '&id=' + id + '&message=' + message}).then(function(result){
+            return result.data;
+        });
+    }
+    function visitCustomerFinished(url, lang, id){
+        return $http({method:"GET", url:url+ 'visitCustomerFinished?lang=' + lang + '&id=' + id}).then(function(result){
+            return result.data;
+        });
+    }
 
     return { 
         login:function(url, nm, pw){
@@ -409,6 +419,12 @@ angular.module('starter.services', [])
         },
         getHistoryByTag:function(url, tag){
             return getHistoryByTag(url, tag);
+        },
+        messageToInspection:function(url, lang, id, message){
+            return messageToInspection(url, lang, id, message);
+        },
+        visitCustomerFinished:function(url, lang, idCustomer){
+            return visitCustomerFinished(url, lang, idCustomer);
         }
     }
 })

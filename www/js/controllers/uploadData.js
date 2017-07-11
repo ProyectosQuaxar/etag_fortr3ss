@@ -659,9 +659,9 @@ angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimat
             if ($localStorage.appModeStatus) {                    
                     $scope.showErrorConnectionMsg();
                     //si el modo offline está activado
-            } else {
+            } else {                                                                                                            
                     angular.forEach(fleets, function(value, key) { 
-                         var DataPromise = Data.insertFleet($rootScope.url, $localStorage.languague, value.adminId, value.nombre, value.calle, value.colonia, value.ciudad, value.estado, value.pais, value.telefono, value.email, value.password, value.idCliente, value.encargado, value.roldeCambio)
+                         var DataPromise = Data.insertFleet($rootScope.url, $localStorage.languague, value.idCliente, value.nombre, value.calle, value.colonia, value.ciudad, value.estado, value.pais, value.telefono, value.email, value.password, value.adminId, value.encargado, value.roldeCambio)
                          DataPromise.then(function(result) {
                         if (result['message'] == 'success') {
                             //DATOS CARGADOS

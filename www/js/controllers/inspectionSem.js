@@ -140,10 +140,38 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         });
 
         $scope.recallToInspection = function() {
-            $state.go('app.dashboard', {
-                animation: 'slide-in-down'
-            });            
-        }       
+            console.log("el scope es..." + $scope.data.messageInspection)
+            
+            var errorConexion = $translate.instant('INSPECTION_MESSAGE_ERROR');           
+
+            if($scope.data.messageInspection){
+                console.log("entró a insertar mensaje en id: " + $localStorage.inspectionId);
+                var DataPromise = Data.messageToInspection($rootScope.url, $localStorage.languague, $localStorage.inspectionId, $scope.data.messageInspection)
+                DataPromise.then(function(result) {
+                    if (result['results'] == "OK") {                    
+                        $state.go('app.dashboard', {
+                            animation: 'slide-in-down'
+                        });
+                    } else {
+                        $state.go('app.dashboard', {
+                            animation: 'slide-in-down'
+                        });
+                        $scope.showErrorMessage(errorConexion);
+                    }
+
+                }, function(reason) {
+                    $state.go('app.dashboard', {
+                        animation: 'slide-in-down'
+                    });                    
+                    $scope.showErrorMessage(errorConexion);
+                })
+            } else {
+                $state.go('app.dashboard', {
+                    animation: 'slide-in-down'
+                });
+            }
+                        
+        }    
         $scope.init = function() {
             $scope.data.tireModels = $localStorage.tireModels;
             $scope.data.tireSizes = $localStorage.tireSizes;
