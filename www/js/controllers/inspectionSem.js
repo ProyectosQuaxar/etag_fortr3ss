@@ -3,7 +3,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
         $scope.camionExiste = false;
         $scope.camionEncontrado = true;
-        $scope.data.tagId = 0;
+        $scope.data.tagId = ''; // Al parecer nunca lo ocupamos... 
         $scope.activatedNFC = false;
         $scope.data.images = {}
         $scope.devices = {}
@@ -16,12 +16,11 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         $scope.data.tireModels = $localStorage.tireModels;
         $scope.data.tireSizes = $localStorage.tireSizes;
         $scope.data.tireBrands = $localStorage.tireBrands;
-        $scope.tagId = '';
+        $scope.tagId = ''; // No se ocupa nunca !!!
+        $scope.data.truckTag = ''; // Se agrega para buscar el TAG con que localizaremos la inspección realizada
         console.log($scope.data.tireBrands);
 
-        
         /*$scope.tag = nfcService.tag;*/
-        
         
         $scope.data.dr = bluetooth.milimetraje_;
         $scope.data.psi = bluetooth.pressure_;
@@ -139,16 +138,66 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             //console.log('Modal ' + modal.id + ' is hidden!');
         });
 
-        $scope.recallToInspection = function() {
-            console.log("el scope es..." + $scope.data.messageInspection)
-            
-            var errorConexion = $translate.instant('INSPECTION_MESSAGE_ERROR');           
 
-            if($scope.data.messageInspection){
-                console.log("entró a insertar mensaje en id: " + $localStorage.inspectionId);
-                var DataPromise = Data.messageToInspection($rootScope.url, $localStorage.languague, $localStorage.inspectionId, $scope.data.messageInspection)
-                DataPromise.then(function(result) {
-                    if (result['results'] == "OK") {                                            
+        $scope.recallToInspection = function() {
+            if ($localStorage.appModeStatus) {
+                var messageInspection = $scope.data.messageInspection;
+                console.log($scope.data.truckTag);
+
+                if($localStorage.inspectionMode == 'Manual'){
+                    $state.go('app.inspSemManual', {
+                        animation: 'slide-in-down'
+                    });
+                }
+                if($localStorage.inspectionMode == 'NFC'){
+                    $state.go('app.inspSemNFC', {
+                        animation: 'slide-in-down'
+                    });
+                }
+                if($localStorage.inspectionMode == 'Translogik'){
+                    $state.go('app.inspSemTranslogik', {
+                        animation: 'slide-in-down'
+                    });
+                }   
+            } else {
+                console.log("el scope es..." + $scope.data.messageInspection)           
+                    // Si contamos con red
+                    var errorConexion = $translate.instant('INSPECTION_MESSAGE_ERROR');           
+
+                    if($scope.data.messageInspection){
+                        console.log("entró a insertar mensaje en id: " + $localStorage.inspectionId);
+                        var DataPromise = Data.messageToInspection($rootScope.url, $localStorage.languague, $localStorage.inspectionId, $scope.data.messageInspection)
+                        DataPromise.then(function(result) {
+                            if (result['results'] == "OK") {                                            
+                                if($localStorage.inspectionMode == 'Manual'){
+                                    $state.go('app.inspSemManual', {
+                                        animation: 'slide-in-down'
+                                    });
+                                }
+                                if($localStorage.inspectionMode == 'NFC'){
+                                    $state.go('app.inspSemNFC', {
+                                        animation: 'slide-in-down'
+                                    });
+                                }
+                                if($localStorage.inspectionMode == 'Translogik'){
+                                    $state.go('app.inspSemTranslogik', {
+                                        animation: 'slide-in-down'
+                                    });
+                                }
+                            } else {
+                                $state.go('app.dashboard', {
+                                    animation: 'slide-in-down'
+                                });
+                                $scope.showErrorMessage(errorConexion);
+                            }
+
+                        }, function(reason) {
+                            $state.go('app.dashboard', {
+                                animation: 'slide-in-down'
+                            });                    
+                            $scope.showErrorMessage(errorConexion);
+                        })
+                    } else {
                         if($localStorage.inspectionMode == 'Manual'){
                             $state.go('app.inspSemManual', {
                                 animation: 'slide-in-down'
@@ -164,36 +213,9 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 animation: 'slide-in-down'
                             });
                         }
-                    } else {
-                        $state.go('app.dashboard', {
-                            animation: 'slide-in-down'
-                        });
-                        $scope.showErrorMessage(errorConexion);
-                    }
-
-                }, function(reason) {
-                    $state.go('app.dashboard', {
-                        animation: 'slide-in-down'
-                    });                    
-                    $scope.showErrorMessage(errorConexion);
-                })
-            } else {
-                if($localStorage.inspectionMode == 'Manual'){
-                    $state.go('app.inspSemManual', {
-                        animation: 'slide-in-down'
-                    });
-                }
-                if($localStorage.inspectionMode == 'NFC'){
-                    $state.go('app.inspSemNFC', {
-                        animation: 'slide-in-down'
-                    });
-                }
-                if($localStorage.inspectionMode == 'Translogik'){
-                    $state.go('app.inspSemTranslogik', {
-                        animation: 'slide-in-down'
-                    });
-                }
-            }                    
+                    }      
+            }
+                           
         }    
         $scope.init = function() {
             $scope.data.tireModels = $localStorage.tireModels;
@@ -676,6 +698,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
        
         $scope.startInspection = function(userId, tag, marca, modelo, unidad, placas, tagInstalado, tipoInspeccion) {
             $scope.disableArea = true;
+            $scope.data.tagId = tag;
             var _userId = userId;
             if(_userId === undefined || _userId == ""){
                 _userId = $localStorage.userId;
@@ -731,6 +754,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     idtruck = value.id;
                                 }
                             });
+
+                            $scope.data.truckTag = tag; 
 
                             var storageSemaphoreInspection = {
                                 idtruck: idtruck,
@@ -1131,7 +1156,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     idtruck = value.id;
                                 }
                             });
-
+                                
                             var storageSemaphoreInspection = {
                                 idtruck: idtruck,
                                 userId: _userId, 
@@ -2379,6 +2404,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         }   
         $scope.addTireInspection = function(tire) {
             console.log(tire)
+            console.log($scope.data.truckTag);
             var condFounds = "";
             var otherDetected = false;
             angular.forEach($scope.selection.ids, function(value, key) {
@@ -2566,9 +2592,11 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                         $scope.data.tireModels = $localStorage.tireModels;
                                         $scope.data.tireSizes = $localStorage.tireSizes;
                                         $scope.data.tireBrands = $localStorage.tireBrands;
-                                        $scope.data.historyId = $localStorage.inspectionId;
-                                        $scope.data.dr = "";
-                                        $scope.data.psi = "";
+                                        $scope.data.historyId = $localStorage.inspectionId;                                        
+                                        $scope.data.dr = '';
+                                        console.log($scope.data.dr);
+                                        $scope.data.psi = '';
+                                        console.log($scope.data.psi);
                                         $scope.data.tiresRegistred = Object.keys($scope.data.inspectionTires).length;
                                         console.log("el numero de llantas faltantes: " + $scope.data.tiresRegistred)
                                         if($scope.data.tiresRegistred == 0){
@@ -2580,8 +2608,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                                 "ninguna": false
                                             }
                                         };
-                                        $scope.data.dr = "";
-                                        $scope.data.psi = "";
+                                        $scope.data.dr = '';
+                                        $scope.data.psi = '';
                                         $scope.data.comments = "";
                                         $scope.data.tagDetected = "NO";
                                         $ionicScrollDelegate.scrollTop();
