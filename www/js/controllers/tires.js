@@ -422,6 +422,46 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 })
             }
         }
+
+        $scope.getMilims = function(){
+            console.log("Milimetraje almacenado del equipo")
+            $scope.data.dr = bluetooth.milimetraje_;
+
+            console.log("delay 500 milisegundos")
+            $timeout(function() {                
+                if($scope.data.dr == 0){                        
+                    console.log("si el milimetraje es igual a cero entonces vovler a llamar función")
+                    $scope.getMilims();                                        
+                } else if($localStorage.milim == $scope.data.dr) {
+                    console.log("si el milimetraje almacenado... es igual al milimetraje ")
+                    $scope.getMilims();
+                } else {
+                    console.log("el milimetraje es diferente y se guardó")
+                    $localStorage.milim = bluetooth.milimetraje_;
+                    $scope.startSemaphore($localStorage.milim);
+                }                
+            }, 1000);                    
+        }
+        $scope.getPressure = function(){
+            
+            console.log("Presión almacenado del equipo")
+            $scope.data.psi = bluetooth.pressure_;
+
+            console.log("delay 500 milisegundos")
+            $timeout(function() {                
+                if($scope.data.psi == 0){                        
+                    console.log("si la Presión es igual a cero entonces vovler a llamar función")
+                    $scope.getPressure();                                        
+                } else if($localStorage.psi == $scope.data.psi) {
+                    console.log("si la Presión almacenado... es igual a la Presión ")
+                    $scope.getPressure();
+                } else {
+                    console.log("la Presión es diferente y se guardó")
+                    $localStorage.psi = bluetooth.pressure_;                
+                }
+            }, 1000); 
+        }
+
         $scope.startSemaphore = function(wear) {
             if (wear <= 3){
                 console.log("Semaforo Rojo")

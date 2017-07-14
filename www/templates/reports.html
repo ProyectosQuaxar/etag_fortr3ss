@@ -210,38 +210,43 @@
                                     <h2 style="color:#ff0000;">{{ 'REPORTS_ROJO' | translate }}</h2>
                                     <p>{{semaforo.rojo}} {{'REPORTS_TIRES'|translate}}</p>
                                 </ion-item>
-                                
+                                <!--
                                 <div class="card" style="padding:10px; color:#E5BE01;">
                                     <p><strong>1) Llanta a desecho</strong>, esta llanta va para la pila de desecho ya que se encontró corte en uno de los costados</p>
                                     <strong><p>0) Renovado</p></strong>
                                 </div>
-                            
+                                -->
                                 <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Amarillo');">
                                     <img src="img/amarillo.jpg" style="border:1px solid black;">
                                     <h2 style="color:#ffbe00;">{{ 'REPORTS_AMARILLO' | translate }}</h2>
                                     <p>{{semaforo.amarillo}} {{'REPORTS_TIRES'|translate}}</p>
                                 </ion-item>
+                                <!--
                                 <div class="card" style="padding:10px;">
                                     <p><strong>1) Renovado</strong>, esta llanta está seleccionada para renovado pues no se encontró ninguna condición encontrada</p>
                                     <p><strong>1) Llanta a desecho</strong>, aunque tiene buen milimetraje, pero se encontró con un corte y cuerdas expuesta, pone en riesgo la vida del conductor.</p>                                    
                                 </div>
+                                -->
                                 <ion-item style="transition-delay: 0.5s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Verde');">
                                     <img src="img/verde.jpg" style="border:1px solid black;">
                                     <h2 style="color:#00b100;">{{ 'REPORTS_VERDE' | translate }}</h2>
                                     <p>{{semaforo.verde}} {{'REPORTS_TIRES'|translate}}</p>
                                 </ion-item>  
+                                <!--
                                 <div class="card" style="padding:10px;">
                                     <p>llantas en buenas condiciones, lo que significa que en promedio cada una les durará 224,000 kms más.</p>
                                 </div>
-
+                                -->
                                 <ion-item style="transition-delay: 0.24s;" nav-clear="" menu-close="" class="item-icon-right item-avatar item in in done done" ng-click="loadDetallesLlantas('Blanco');">
                                     <img src="img/blanco.jpg" style="border:1px solid black;">
                                     <h2>{{ 'REPORTS_BLANCO' | translate }}</h2>
                                     <p>{{semaforo.blanco}} {{'REPORTS_TIRES'|translate}}</p>
                                 </ion-item>
+                                <!--
                                 <div class="card" style="padding:10px;">
                                     <p>Llantas en excelentes condiciones</p>
                                 </div>                        
+                                -->
                             </div>
                         </ion-list>
                         <h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>  <h1>&nbsp;</h1><h1>&nbsp;</h1>
