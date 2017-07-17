@@ -100,6 +100,29 @@ $scope.data.imgConBluetooth = false;
     bluetooth.disconnect(onDisconnectFromDevice, onConnectionError);
   }
 
+  $scope.showPopupTAG = function(writeTag) {
+    var popTitle = $translate.instant('MSG_SUCCESS_WRITE')
+    var aceptar = $translate.instant('MSG_ACEPTAR')                
+    $ionicPopup.alert({
+      title: popTitle,
+      template: '<center><p><b>' + writeTag + '</b></p></center>',
+      okText: aceptar,
+      okType: 'button-positive'
+    });     
+  }
+
+  $scope.showPopupReadTAG = function(readTag) {
+    var popTitle = $translate.instant('MSG_SUCCESS_READ')
+    var aceptar = $translate.instant('MSG_ACEPTAR')                
+    $ionicPopup.alert({
+      title: popTitle,
+      template: '<center><p><b>' + readTag + '</b></p></center>',
+      okText: aceptar,
+      okType: 'button-positive'
+    });     
+  }
+
+
   ///////// LISTA DE DISPOSITIVOS
   function onDeviceList(data) {
       console.log(data);
@@ -284,7 +307,7 @@ $scope.data.imgConBluetooth = false;
       $timeout(function() {
         console.log("_______________________________________________")
         console.log(data);
-        alert('Escrito')
+        $scope.showPopupTAG(tag);
         bluetooth.rfidOff(function(){}); 
         $ionicLoading.hide();               
         }, 3000); 
@@ -334,8 +357,9 @@ $scope.data.imgConBluetooth = false;
       console.log("rfid : matricule = "+matricule);
       console.log("rfid : serial_number = "+serial_number);
       console.log("rfid : encodingData = "+encodingData);
-      $scope.findTag(String(serial_number));   
-      alert(serial_number)   
+      $scope.findTag(String(serial_number));
+      $scope.showPopupReadTAG(serial_number);    
+      
     });
 
   }

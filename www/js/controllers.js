@@ -1,6 +1,7 @@
 angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
 
 .run(function($localStorage, $window, $translate, $ionicPlatform, $rootScope, $cordovaBluetoothSerial, $ionicPopup) {    
+
     //$rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
     //$rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
     // $rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
@@ -8,14 +9,19 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
     //$rootScope.baseurl = 'http://10.6.159.11/millantarfid/';
     //$rootScope.url = 'http://10.6.159.11/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://10.6.159.11/millantarfid/mobileUserApp/';
+
+    $rootScope.baseurl = 'http://10.6.159.12:8090/millantarfid/';
+    $rootScope.url = 'http://10.6.159.12:8090/millantarfid/mobileApp/';
+    $rootScope.urlCustomer = 'http://10.6.159.12:8090/millantarfid/mobileUserApp/';
+
     
     //$rootScope.baseurl = 'http://52.41.40.176/millantarfid/';
     //$rootScope.url = 'http://52.41.40.176/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://52.41.40.176/millantarfid/mobileUserApp/';
     
-    $rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
-    $rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
-    $rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
+    //$rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
+    //$rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
+    //$rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
 
     if ($localStorage.storageTrucks == '' || $localStorage.storageTrucks === undefined)
         $localStorage = $localStorage.$default({storageTrucks: []});
@@ -91,8 +97,8 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
         if(window.StatusBar){
           window.StatusBar.hide();
         }
-
-        /*
+        
+       
         bluetoothSerial.isEnabled(function () {
             //DISPONIBLE
             var aceptar = $translate.instant('MSG_ACEPTAR')                
@@ -113,7 +119,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
               okType: 'button-assertive'
           });   
           }
-        );*/
+        ); 
                 
     });
 })

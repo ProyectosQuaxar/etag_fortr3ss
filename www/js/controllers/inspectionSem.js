@@ -247,6 +247,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             }
             $scope.$broadcast('scroll.refreshComplete');            
         }
+
+       
         $scope.showOkMessage = function(error){
           var popTitle = $translate.instant('MSG_ERROR')
           var aceptar = $translate.instant('MSG_ACEPTAR')                
@@ -257,6 +259,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
               okType: 'button-positive'
           });                    
         }
+
         $scope.showSuccessMessage = function(error){
           var aceptar = $translate.instant('MSG_ACEPTAR')                
           $ionicPopup.alert({

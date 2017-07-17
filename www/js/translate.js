@@ -69,7 +69,9 @@ BLUETOOTH_DEVICES: 'Dispositivos',
 NFC_TAG_NOT_FOUND: 'Tag no encontrado',
 MENU_QUICK_SEARCH: 'Búsqueda Rápida',
 TIRES_DETECT_TAG: 'Detectar TAG',
-TIRES_SEND_REPORT: 'Enviar informe'
+TIRES_SEND_REPORT: 'Enviar informe',
+MSG_SUCCESS_WRITE: 'Se guardo el TAG: ',
+MSG_SUCCESS_READ: 'El TAG es: '
 
 
 		});
@@ -556,7 +558,9 @@ TIRES_REGISTRATION_DATE: 'Registration date',
 TIRES_OBSERVATIONS: 'Observations',
 MENU_QUICK_SEARCH: 'Quick Search',
 TIRES_DETECT_TAG: 'Detect TAG',
-TIRES_SEND_REPORT: 'Send report'
+TIRES_SEND_REPORT: 'Send report',
+MSG_SUCCESS_WRITE: 'The TAG was saved:',
+MSG_SUCCESS_READ: 'The TAG is: '
 
 
         });
