@@ -151,10 +151,17 @@
         </ion-header-bar>
         <ion-content class="stable-bg has-expanded-header">        
             <ion-list>   
-                <ion-item menu-close href="#/app/bluetooth" style="margin-bottom:-20px;">
+                <ion-item menu-close ng-click="openModal(1)" ng-controller="bluetoothCtrl" style="margin-bottom:-20px;">
                     <img src="img/icon_bluetooth.png" style="width:16px;height:16px;" />
                     <strong>{{ 'INSPECTION_BLUETOOTH' | translate }}</strong>
                 </ion-item>
+
+
+                <!--<ion-item menu-close href="#/app/bluetoothModal" style="margin-bottom:-20px;">
+                    <img src="img/icon_bluetooth.png" style="width:16px;height:16px;" />
+                    <strong>{{ 'INSPECTION_BLUETOOTH' | translate }}</strong>
+                </ion-item> -->
+
                 <!--                                          
                 <ion-item nav-clear menu-close href="#/app/scheduler" style="margin-top: -10px;margin-bottom: -20px;" ng-show="!data.appModeStatus">
                     <i class="icon ion-android-calendar"></i>&nbsp;<strong>{{'MENU_CALENDAR'|translate}}</strong>

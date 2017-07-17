@@ -572,6 +572,7 @@ $scope.data.imgConBluetooth = false;
     };
 
     $scope.closeModal = function(index) {
+        console.log("Se cerrara modal: " + index);
         if (index == 1) $scope.oModal1.hide();
         if (index == 2) $scope.oModal2.hide();
        

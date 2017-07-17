@@ -169,6 +169,11 @@
 				<br>
 				<img src="img/icon_inspection_finished.png" class="full-image spaceOn">
 				<br><br>
+				
+				<label class="item item-input item-stacked-label form-border-bottom">
+	              <span>{{'INSPECTION_MESSAGE'|translate}}</span>
+	              <input type="text" ng-model="data.messageInspection" required  class="inputNumber"/>
+	            </label>
 
                 <button class="button button-assertive button-fab button-fab-bottom-middle" ng-click="recallToInspection()">
                     <i class="icon ion-android-close"></i>

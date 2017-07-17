@@ -743,6 +743,16 @@ views: {
     }
   }
 })
+.state('app.bluetoothModal', {
+  url: '/bluetoothModal',
+  cache:false,
+  views: {
+    'menuContent': {
+      templateUrl: 'templates/bluetoothModal.html',
+      controller: 'bluetoothCtrl'
+    }
+  }
+})
 
 
   $urlRouterProvider.otherwise('/app/login');

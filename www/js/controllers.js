@@ -22,6 +22,8 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
     //$rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
     //$rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
+    if ($localStorage.appModeStatus == '' || $localStorage.appModeStatus === undefined)
+        $localStorage = $localStorage.$default({appModeStatus: false});
 
     if ($localStorage.storageTrucks == '' || $localStorage.storageTrucks === undefined)
         $localStorage = $localStorage.$default({storageTrucks: []});
