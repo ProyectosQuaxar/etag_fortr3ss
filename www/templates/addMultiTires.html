@@ -4,10 +4,15 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
     </ion-nav-buttons>    
-    <ion-nav-buttons side="right" ng-click='chooseOption()'>
+    <ion-nav-buttons side="right" ng-click='chooseOption()'>       
+        <div style="padding-left: 5px;">
+            <button class="button button-positive button-fab"  ng-click="openModal(1)" style="margin-left: 10dp;" ng-controller="bluetoothCtrl">
+                    <i class="icon ion-bluetooth"></i>
+                </button>
+        </div>        
         <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
         </button>
-    </ion-nav-buttons>
+    </ion-nav-buttons> 
 	<ion-content>
 	<br><br><br>                
 		<center>						                  
@@ -84,8 +89,8 @@
 					<label class="item item-select" style="padding-top: 0px;">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TYPE_TYRE' | translate }}</span>
 						<select ng-model ="data.tireType" style="max-width:100%;" required>
-							<option value="NUEVA">{{ 'TIRES_NEW' | translate }}</option>
-							<option value="RENOVADA">{{ 'TIRES_RENEWED' | translate }}</option>							
+							<option value="ORIGINAL" ng-selected="it.tireType == 'ORIGINAL'">{{ 'TIRES_ORIGINAL' | translate }}</option>
+								<option value="RENOVADA" ng-selected="it.tireType == 'RENOVADA'">{{ 'TIRES_RENEWED' | translate }}</option>						
 						</select>
 					</label>
 					<label class="item item-input">
@@ -99,7 +104,7 @@
 					<button class="button button-fab button-small button-balanced pull-right button-InRightMiddle" ng-click="openModal(5)"><i class="icon ion-help"></i></button>
 					<label class="item item-input">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIRE_WEAR' | translate }}</span>
-						<input type ="number" class="inputNumber" ng-model ="wear" ng-change="startSemaphore(wear)" style="max-width:100%;" required>
+						<input type ="number" class="inputNumber" ng-model ="wear" ng-change="startSemaphore(wear)" style="max-width:100%;" required  ng-click="getMilims()">
 					</label>
 					<label class="item item-select" style="padding-top: 0px;">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_INITIAL_SEMAPHORE' | translate }}</span>
@@ -112,7 +117,7 @@
 					</label>						  
 					<label class="item item-input">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_PR' | translate }}</span>
-						<input type ="number" class ="inputNumber" ng-model="pressure" style="max-width:100%;" required>
+						<input type ="number" class ="inputNumber" ng-model="pressure" style="max-width:100%;" required  ng-click="getPressure()">
 					</label>                                              					
 					<label class="item item-input">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TAG_HASBEEN_INSTALLED' | translate }}</span>

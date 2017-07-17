@@ -9,6 +9,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
     $scope.truckModels = {};
     $scope.truckTypes = {};
     $scope.data.truckInspectionated = "";
+    $scope.data.truckType = "";
 
     $ionicPlatform.offHardwareBackButton(function() {
       console.log("Hola"); 

@@ -324,7 +324,6 @@ $scope.data.imgConBluetooth = false;
   $scope.readTag = function(){   
     console.log("entró a leer tag")
     $scope.data.formFindTag = false;
-    $scope.data.dataResult = false; 
     $scope.data.readingTag = true;
     $scope.data.notResults = false;
 
@@ -378,7 +377,6 @@ $scope.data.imgConBluetooth = false;
     });  
     console.log("entró a leer tag: " + tag);
     $scope.data.formFindTag = false;
-    $scope.data.dataResult = false; 
     $scope.data.readingTag = true;
     $scope.data.notResults = false;
 
@@ -428,7 +426,6 @@ $scope.data.imgConBluetooth = false;
 
   $scope.cancelReadTag = function(){
       $scope.data.formFindTag = true;
-      $scope.data.dataResult = false; 
       $scope.data.readingTag = false;
       $scope.data.notResults = false;
 
@@ -453,13 +450,11 @@ $scope.data.imgConBluetooth = false;
   }
         //////////////////////BLUETOOTH MODULE/////////////////////
   $scope.data.formFindTag = true;
-  $scope.data.dataResult = false;
   $scope.data.readingTag = false;
   $scope.data.notResults = false;
 
   $scope.readOtherTag = function(){
-      $scope.data.formFindTag = true;
-      $scope.data.dataResult = false; 
+      $scope.data.formFindTag = true;; 
       $scope.data.readingTag = false;
       $scope.data.notResults = false;                                   
   }
@@ -487,8 +482,7 @@ $scope.data.imgConBluetooth = false;
     var DataPromise = Data.getHistoryByTag($rootScope.url, tag)
     DataPromise.then(function(result) {
         if (result['exist'] == 'YES') {               
-            $scope.data.formFindTag = false;
-            $scope.data.dataResult = true;
+            $scope.data.formFindTag = true;
             $scope.data.readingTag = false;
             $scope.data.notResults = false;
             console.log("Encontrado");
@@ -499,7 +493,6 @@ $scope.data.imgConBluetooth = false;
             $ionicLoading.hide();
         } else if (result['exist'] == 'NO') {
             $scope.data.formFindTag = false;
-            $scope.data.dataResult = false;
             $scope.data.readingTag = false;
             $scope.data.notResults = true;
             console.log("No Encontrado");
