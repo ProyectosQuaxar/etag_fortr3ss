@@ -1,5 +1,5 @@
 angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
-    .controller('TiresCtrl', function($ionicPlatform, ionicMaterialInk, $ionicModal, $scope, $localStorage, $translate, $ionicLoading, $ionicPopup, Data, StorageService, $rootScope, $state, $timeout, $ionicScrollDelegate, Check){
+    .controller('TiresCtrl', function($ionicPlatform, ionicMaterialInk, $ionicModal, $scope, $localStorage, $translate, $ionicLoading, $ionicPopup, Data, StorageService, $rootScope, $state, $timeout, $ionicScrollDelegate, Check, ionicToast, $filter){
 
         //$scope.customers = {};
         //$scope.fleets = {};
@@ -23,6 +23,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
         $scope.data.semaphore = "";
         $scope.disableArea = true;
         
+        $scope.tirebrand = 0;
         $scope.data.truckId = "";
         $scope.data.fleet = "";
         $scope.data.company = "";
@@ -34,6 +35,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
         $scope.data.imgTruck = "";
         $scope.data.numLlantas = "";
         $scope.data.kms = 0;
+        $scope.size = "";
         $scope.selection = {
             ids: {
                 "ninguna": false
@@ -82,6 +84,9 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
               okType: 'button-assertive'
           });                    
         }
+        $scope.showToast = function(message, time){         
+          ionicToast.show(message, 'bottom', false, time);
+        };
         $scope.getFlotas = function(company) {
             $scope.data.company = company;
             if ($localStorage.appModeStatus) {
@@ -343,6 +348,12 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             return new Array(tiresNumber);
         }
         $scope.getBrands = function() {
+            if($localStorage.selectedBrand){
+                $scope.data.tirebrand = $localStorage.selectedBrand;
+                console.log("el id nuevo es? " + $scope.tirebrand)
+            } else {
+                $scope.data.tirebrand = 0;
+            }
             if ($localStorage.appModeStatus) {
                 //si el modo offline está activado                
                 $scope.data.tireBrands = $localStorage.tireBrands;
@@ -362,7 +373,8 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 var DataPromise = Data.getTireBrands($rootScope.url)
                 DataPromise.then(function(result) {
                     if (result['marcas']) {
-                        $scope.data.tireBrands = result['marcas'];
+                        $scope.tirebrand = "";
+                        $scope.data.tireBrands = $filter('orderBy')(result['marcas'], 'nombre', false);
                         $ionicLoading.hide();
                     } else {
                         $ionicLoading.hide();
@@ -955,11 +967,18 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
             }
             if (index == 2) $scope.oModal2.show();
             if (index == 3) {
-                $scope.brandId = $scope.tirebrand;
+                $scope.brandId = $scope.data.tirebrand;
                 $scope.tireBrands = $localStorage.tireBrands;
                 $scope.oModal3.show();
             }
-            if (index == 4) $scope.oModal4.show();
+            if (index == 4){
+                $scope.oModal4.show();
+                $scope.brandId = $scope.data.tirebrand;
+                $scope.tireSizeId = $scope.size;
+                $scope.tireBrands = $localStorage.tireBrands;
+                console.log(" medida? " + $scope.data.size)
+                console.log(" marca? " + $scope.data.tirebrand)
+            } 
             if (index == 5) $scope.oModal5.show();        
         };
         
@@ -1030,49 +1049,46 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 }
                 StorageService.addTireBrand(tireBrand);  
                 console.log($localStorage.tireBrand);
-                $scope.data.tireBrand.push(tireBrand);
-                //$localStorage.tireBrand.push(tireBrand);  ;                          
+                $scope.data.tireBrands.push(tireBrand);                
                 $scope.closeModal(2);
             } else {
                 console.log("modo online activado")
                  //ONLINE
-                            var DataPromise = Data.addTireBrand($rootScope.url, $localStorage.languague, tireBrand)
-                            DataPromise.then(function(result) {
-                                if (result['message'] == 'success') {
-                                    //DATOS CARGADOS                                                                                                
-                                    console.log("Datos cargados con exito")
-                                    if(result['result']){
-                                    console.log("entró a actualizar la lista de Tire Brands");
-                                        $localStorage.tireBrands = result['result'];
-                                        $scope.data.tireBrands = $localStorage.tireBrands;
-                                        $scope.tirebrand = result['id'];
-                                    }
-                                    $scope.closeModal(1);
-                                    //Si está en modo online y se insertó entonces                                
-                                    $ionicScrollDelegate.scrollTop();
-                                } else if (result['message'] == "error") {
-                                    //DATOS CON ERRORES O INCOMPLETOS
-                                    $scope.showErrorMessage($translate.instant('INSPECTION_CANNOT_INSERT_THISTORY'))                            
-                                } else {
-                                    //SE RECIBIÓ UNA RESPUESTA INESPERADA
-                                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
-                                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
-                                    $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)                            
-                                }
+                var DataPromise = Data.addTireBrand($rootScope.url, $localStorage.languague, tireBrand)
+                DataPromise.then(function(result) {
+                    if (result['message'] == 'success') {
+                        //DATOS CARGADOS                                                                                                
+                        console.log("Datos cargados con exito")
+                        if(result['result']){                            
+                            $scope.showToast($translate.instant('MSG_SUCCESS_SUBMIT_TIREBRAND'),5000);
+                            $localStorage.tireBrands = result['result'];
+                            $localStorage.selectedBrand = result['id']
+                            $scope.getBrands();
+                        }
+                        $scope.closeModal(2);
+                        //Si está en modo online y se insertó entonces                                
+                        $ionicScrollDelegate.scrollTop();
+                    } else if (result['message'] == "error") {
+                        //DATOS CON ERRORES O INCOMPLETOS
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_SUBMIT_TIREBRAND'))                            
+                    } else {
+                        //SE RECIBIÓ UNA RESPUESTA INESPERADA
+                        var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                        var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                        $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)                            
+                    }
 
-                            }, function(reason) {
-                                //ERROR DE CONEXIÓN
-                                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
-                                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
-                                    $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)   
-                            }) 
+                }, function(reason) {
+                    //ERROR DE CONEXIÓN
+                        var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                        var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                        $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)   
+                }) 
             }
         }
 
         $scope.recallToInspection = function() {
-            console.log("Entramos a recall inspection...");
-
-             if ($localStorage.appModeStatus) {
+            if ($localStorage.appModeStatus) {
                 var messageInspection = $scope.data.messageInspection;
                 console.log($scope.data.truckTag);
 
@@ -1095,8 +1111,7 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 console.log("el scope es..." + $scope.data.messageInspection)           
                     // Si contamos con red
                     var errorConexion = $translate.instant('INSPECTION_MESSAGE_ERROR');           
-                    console.log($localStorage.inspectionMode);
-                    console.log($scope.data.messageInspection);
+
                     if($scope.data.messageInspection){
                         console.log("entró a insertar mensaje en id: " + $localStorage.inspectionId);
                         var DataPromise = Data.messageToInspection($rootScope.url, $localStorage.languague, $localStorage.inspectionId, $scope.data.messageInspection)
@@ -1147,15 +1162,16 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                             });
                         }
                     }      
-            }       
-        }
+            }                        
+        }  
 
         $scope.addTireSize = function(brandId, tireSize){
             console.log(brandId)
             console.log(tireSize)
              var addBrandId = brandId;
              var addTireSize = tireSize;
-             if ($localStorage.appModeStatus) {
+             console.log("modo offline? " + $localStorage.appModeStatus)
+             if ($localStorage.appModeStatus == 'false' || $localStorage.appModeStatus == false) {
                 console.log("modo Offline activado")
                 if ($localStorage.appModeStatus) {                
                      console.log("modo Offline activado")
@@ -1171,36 +1187,45 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                 
             } else {
                 console.log("modo online activado")
-                 //ONLINE
-                            var DataPromise = Data.addTireSize($rootScope.url, $localStorage.languague, brandId, tireSize)
-                            DataPromise.then(function(result) {
-                                if (result['message'] == 'success') {
-                                    //DATOS CARGADOS                                                                                                
-                                    console.log("Datos cargados con exito")
-                                    if(result['result']){
-                                    console.log("entró a actualizar la lista de Tire Brands");
-                                        $localStorage.tireSizes = result['result'];                                        
-                                        $scope.data.tireSizes = $localStorage.tireSizes;
-                                        $scope.size = result['id'];
-                                    }
-                                    $scope.closeModal(2);
-                                    //Si está en modo online y se insertó entonces                                
-                                } else if (result['message'] == "error") {
-                                    //DATOS CON ERRORES O INCOMPLETOS
-                                    $scope.showErrorMessage($translate.instant('INSPECTION_CANNOT_INSERT_THISTORY'))                            
-                                } else {
-                                    //SE RECIBIÓ UNA RESPUESTA INESPERADA
-                                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
-                                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
-                                    $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)                            
-                                }
+                //ONLINE
+                var DataPromise = Data.addTireSize($rootScope.url, $localStorage.languague, brandId, tireSize)
+                DataPromise.then(function(result) {
+                    if (result['message'] == 'success') {
+                        //DATOS CARGADOS                                                                                                
+                        console.log("Datos cargados con exito")
+                        if(result['result']){
+                            console.log("entró a actualizar la lista de Tire Brands");
+                            
+                            $localStorage.tireSizes = result['result'];                            
+                            var tireSize = {
+                                id: result['id'],    
+                                marca: brandId,
+                                medida: tireSize
+                            }
+                            StorageService.addTireSize(tireSize);  
+                            $scope.data.tireSizes.push(tireSize);
+                            $scope.size = result['id'];
 
-                            }, function(reason) {
-                                //ERROR DE CONEXIÓN
-                                    var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
-                                    var tryAgain = $translate.instant('MSG_TRY_AGAIN');
-                                    $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)   
-                            }) 
+                            $scope.showToast($translate.instant('MSG_SUCCESS_SUBMIT_TIRESIZE'),5000);
+                        }
+                        $scope.closeModal(3);
+                        //Si está en modo online y se insertó entonces                                
+                    } else if (result['message'] == "error") {
+                        //DATOS CON ERRORES O INCOMPLETOS
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_SUBMIT_TIRESIZE'))                            
+                    } else {
+                        //SE RECIBIÓ UNA RESPUESTA INESPERADA
+                        var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                        var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                        $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)                            
+                    }
+
+                }, function(reason) {
+                    //ERROR DE CONEXIÓN
+                        var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
+                        var tryAgain = $translate.instant('MSG_TRY_AGAIN');
+                        $scope.showErrorMessage(errorConexion + '<br/><b>' + tryAgain)   
+                }) 
             }
 
         }
@@ -1247,13 +1272,14 @@ angular.module('tires', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', '
                                         $localStorage.tireModels = result['result'];                                        
                                         $scope.data.tireModels = $localStorage.tireModels;
                                         $scope.design = result['id'];
+                                        $scope.closeModal(4);
+                                        $scope.showToast($translate.instant('MSG_SUCCESS_SUBMIT_TIRESIZE'),5000);
                                     }
-                                    $scope.closeModal(3);
                                     //Si está en modo online y se insertó entonces                                
                                     $ionicScrollDelegate.scrollTop();
                                 } else if (result['message'] == "error") {
                                     //DATOS CON ERRORES O INCOMPLETOS
-                                    $scope.showErrorMessage($translate.instant('INSPECTION_CANNOT_INSERT_THISTORY'))                            
+                                    $scope.showErrorMessage($translate.instant('MSG_ERROR_SUBMIT_TIREMODEL'))                            
                                 } else {
                                     //SE RECIBIÓ UNA RESPUESTA INESPERADA
                                     var errorConexion = $translate.instant('MSG_ERROR_CONEXION');
