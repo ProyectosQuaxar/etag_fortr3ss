@@ -652,6 +652,7 @@ zeroToEnd = function(_string, _length) {
   })
   .state('app.addMultiTires', {
     url: '/addMultiTires',
+    cache:false,
       views: {
         'menuContent': {
           templateUrl: 'templates/addMultiTires.html',
