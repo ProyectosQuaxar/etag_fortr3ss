@@ -6,14 +6,14 @@
       <div class="list">              
         <label class="item item-select" style="padding-top: 0px;">
           <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIRE_BRAND' | translate }}</span>
-          <select ng-model="tirebrand" style="max-width:100%;" ng-change="getSizesByBrand(tirebrand)" required class="inputNumber">
-            <option ng-repeat="brands in data.tireBrands" ng-value="{{brands.id}}">{{brands.nombre}}</option>
+          <select ng-model="brandId" style="max-width:100%;" ng-change="getSizesByBrand(brandId)" required class="inputNumber">
+            <option ng-repeat="brands in data.tireBrands" ng-value="{{brands.id}}" ng-selected="brandId == brands.id">{{brands.nombre}}</option>
           </select>                       
         </label>        
         <label class="item item-select" style="padding-top: 0px;">
           <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIRE_SIZE' | translate }}</span>
           <select ng-model="tireSizeId" style="max-width:100%;" required class="inputNumber">
-            <option ng-repeat="sizes in data.tireSizes" ng-value="{{sizes.id}}">{{sizes.medida}}</option>
+            <option ng-repeat="sizes in data.tireSizes" ng-value="{{sizes.id}}" ng-selected="sizes.id == tireSizeId">{{sizes.medida}}</option>
           </select>
         </label>
         <label class="item item-input">
@@ -27,8 +27,8 @@
         <label class="item item-select">
         <span class="input-label" style="font-size: 12px;">{{ 'TIRES_TYPE_TYRE' | translate }}</span>
           <select name="typeSelect" ng-model="data.typeSelect" style="max-width:100%;" required class="inputNumber">
-            <option value="nueva">{{ 'TIRES_NEW' | translate }}</option>
-            <option value="renovada">{{ 'TIRES_RENEWED' | translate }}</option>
+              <option value="ORIGINAL" ng-selected="it.tireType == 'ORIGINAL'">{{ 'TIRES_ORIGINAL' | translate }}</option>
+              <option value="RENOVADA" ng-selected="it.tireType == 'RENOVADA'">{{ 'TIRES_RENEWED' | translate }}</option>
           </select>
         </label>
         <label class="item item-input">
