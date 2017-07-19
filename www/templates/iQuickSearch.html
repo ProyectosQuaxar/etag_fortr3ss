@@ -8,15 +8,21 @@
         </button>
     </ion-nav-buttons>
 	<ion-content>
-
 		<center ng-if="data.tiresRegistred != 0">
-			<img ng-src="{{data.truckImg}}" style="min-height: 10px;max-height: 400px; min-width:10px; max-width:250px;" ng-if="data.truckImg"/>
-		</center>      
-
-        <div ng-repeat="it in data.flashTires">
+			<img ng-src="{{data.truckImg}}" style="min-height: 10px;max-height: 400px; min-width:10px; max-width:250px;" ng-if="data.truckImg"/>			
+		</center> 
+        <div ng-repeat="it in data.flashTires">	
+        	  	
             <a class="item item-avatar" ng-click="showLlanta = !showLlanta" style="padding-left:75px;">
             	<img src="img/icon_tire2.png"/>
               	<h2 style="overflow:visible!important;">
+              	<span class="fadein fadeout balanced" style="font-size:16px; margin-left: 20px;">
+		   			<i class="icon ion-checkmark-circled"></i>
+			  	</span>		  	
+	            <span class="fadein fadeout assertive" style="font-size:16px;">
+			   		<i class="icon ion-close-circled"></i>
+			  	</span>		
+
 					<center>
 						<strong>								
 							<span ng-repeat="tireBrand in data.tireBrands">
@@ -44,14 +50,18 @@
             </a>
             <div style="background-color:#FFFFFF; margin-top: 5px; margin-bottom: 5px;" ng-show="showLlanta">	
 	            <center>
-					<button class="button button-small button-assertive" ng-click="1|(it.tagId)" ng-controller="bluetoothCtrl" style="z-index:1000"><i class="icon ion-bluetooth" style="margin-left: 5px; margin-right: 5px;"></i>{{ 'TIRES_DETECT_TAG' | translate }}</button>			
+					<button class="button button-small button-assertive" ng-click="detectTag(it.tagId, it.position)" ng-controller="bluetoothCtrl" style="z-index:1000"><i class="icon ion-bluetooth" style="margin-left: 5px; margin-right: 5px;"></i>{{ 'TIRES_DETECT_TAG' | translate }}</button>			
 				</center>          
 	            <br>				
             </div>
         </div>
+        <label class="item item-input item-stacked-label form-border-bottom">
+            <span>{{'INSPECTION_FAST_COMMENT'|translate}}</span>
+            <input type="text" ng-model="data.messageInspection" required  class="inputNumber"/>
+        </label>
         <center>
             <div style="width:100%; padding-top:20px;">
-            	<button class="button button-small button-balanced" ng-click="">{{ 'TIRES_SEND_REPORT' | translate }}</button>
+            	<button class="button button-small button-balanced" ng-click="sendQuickReport()">{{ 'TIRES_SEND_REPORT' | translate }}</button>
           	</div>
         </center>
 	</ion-content>

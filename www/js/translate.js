@@ -9,7 +9,14 @@ MSG_ERROR_SUBMIT_TIREBRAND: 'Error al Insertar marca de llanta.',
 MSG_SUCCESS_SUBMIT_TIRESIZE: 'Medida de llanta ingresada correctamente.',
 MSG_ERROR_SUBMIT_TIRESIZE: 'Error al Insertar medida de llanta.',
 MSG_SUCCESS_SUBMIT_TIREMODEL: 'Diseño de llanta ingresada correctamente.',
-MSG_ERROR_SUBMIT_TIREMODEL: 'Error al Insertar diseño de llanta.'
+MSG_ERROR_SUBMIT_TIREMODEL: 'Error al Insertar diseño de llanta.', MSG_SUCCESS_WRITE: 'Se guardo el TAG: ',
+MSG_SUCCESS_READ: 'El TAG es:',
+MSG_SUCCESS_DETECT: 'El TAG corresponde',
+MSG_ERROR_DETECT: 'El TAG no corresponde',
+MSG_ALERT_TAG: 'El TAG leído es ',
+MSG_ALERT_ERROR_TAG: 'debería de ser',
+INSPECTION_FAST_COMMENT: 'Comentario de la inspección rápida'
+
 		});
 
         $translateProvider.translations('en', {
@@ -21,7 +28,15 @@ MSG_ERROR_SUBMIT_TIREBRAND: 'An error has occurred creating tire brand',
 MSG_SUCCESS_SUBMIT_TIRESIZE: 'Tire size created successfully',
 MSG_ERROR_SUBMIT_TIRESIZE: 'An error has occurred creating tire size',
 MSG_SUCCESS_SUBMIT_TIREMODEL: 'Tire model created successfully',
-MSG_ERROR_SUBMIT_TIREMODEL: 'An error has occurred creating tire model'
+MSG_ERROR_SUBMIT_TIREMODEL: 'An error has occurred creating tire model',
+MSG_SUCCESS_WRITE: 'The TAG was saved:',
+MSG_SUCCESS_READ: 'The TAG is:',
+MSG_SUCCESS_DETEC: 'The TAG matches',
+MSG_ERROR_DETECT: 'TAG does not match',
+MSG_ALERT_TAG: 'The read TAG is ',
+MSG_ALERT_ERROR_TAG: 'should be',
+INSPECTION_FAST_COMMENT: 'Quick inspection comments'
+
         });
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',

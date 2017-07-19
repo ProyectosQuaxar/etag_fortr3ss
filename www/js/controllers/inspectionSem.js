@@ -646,28 +646,30 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         }
 
         $scope.getMilims = function(){
+           
             console.log("Milimetraje almacenado del equipo")
             $scope.data.dr = bluetooth.milimetraje_;
-
             console.log("delay 500 milisegundos")
             $timeout(function() {                
                 if($scope.data.dr == 0){                        
-                    console.log("si el milimetraje es igual a cero entonces vovler a llamar función")
-                    $scope.getMilims();                                        
+                    console.log("si el milimetraje es igual a cero entonces volver a llamar función")
+                    $scope.getMilims();  
+                                                     
                 } else if($localStorage.milim == $scope.data.dr) {
                     console.log("si el milimetraje almacenado... es igual al milimetraje ")
                     $scope.getMilims();
+                  
                 } else {
                     console.log("el milimetraje es diferente y se guardó")
-                    $localStorage.milim = bluetooth.milimetraje_;                
+                    $localStorage.milim = bluetooth.milimetraje_;     
+                   
                 }
             }, 1000);                    
         }
-        $scope.getPressure = function(){
-            
+
+        $scope.getPressure = function(){            
             console.log("Presión almacenado del equipo")
             $scope.data.psi = bluetooth.pressure_;
-
             console.log("delay 500 milisegundos")
             $timeout(function() {                
                 if($scope.data.psi == 0){                        
@@ -685,8 +687,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
         $scope.getTAGS = function(intentos){
               $scope.data.lecturas = 0;
-            $scope.data.lecturasRem = [];                    
-
+            $scope.data.lecturasRem = [];
             $timeout(function() {
                 if(intentos < 50)
                 {
@@ -709,7 +710,6 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             
             if ($scope.data.kilometraje === undefined) {
                 console.log("el km IS undefined")
-
                 var popTitle = $translate.instant('MSG_ERROR')
                 var aceptar = $translate.instant('MSG_ACEPTAR')
                 var msgError = $translate.instant('INSPECTION_WRITE_KILOMETRAGE')
@@ -2755,7 +2755,6 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 console.log(tireInspection)
 
                                 StorageService.addTireToInspection(tireInspection);
-
                                 $ionicLoading.hide();
                                 $scope.showSuccessMessage($translate.instant('INSPECTION_TIRE_SAVED_SUCCESSFULLY'))
 
@@ -2766,8 +2765,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     }
                                 }               
 
-                                $scope.data.tiresRegistred = Object.keys($scope.data.inspectionTires).length;         
-
+                                $scope.data.tiresRegistred = Object.keys($scope.data.inspectionTires).length; 
                                 $scope.data.dr = "";
                                 $scope.data.psi = "";
                                 $scope.data.comments = "";
@@ -2952,6 +2950,15 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 $scope.tagCamion = tagCamion;
                                 $scope.userId = $localStorage.userId;
                                 $scope.showHistorialInspecciones = false;
+                                console.log("Procedemos a insertar el insertHistorialFastCamion");
+                                var DataPromise = Data.insertHistorialFastCamion($rootScope.url, $localStorage.languague, tagCamion, $scope.userId, "appMobile")
+                                DataPromise.then(function(result) {
+                                    if (result['result'] == 'OK') {
+                                        console.log(result['data']) 
+                                        $localStorage.fastIdHistory = result['data'];
+                                        console.log($localStorage.fastIdHistory);
+                                    }                                    
+                                });
 
                                 var countTiresRegistred = 0;
                                 if ($scope.tires !== undefined) {
@@ -2961,6 +2968,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 } else {
                                     $scope.data.tiresRegistred = 0;
                                 }
+                                
 
                             } else if (result['message'] == 'not found') {
                                 //DATOS CON ERRORES O INCOMPLETOS
@@ -3017,5 +3025,28 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             }
         console.log("Solicitamos los datos del camión");   
     }
+
+     $scope.sendQuickReport = function () {
+        console.log("Adivinen que? Voy a mandar la información de la inspección rapida" + $scope.data.messageInspection)
+        var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+            content: loading,
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        var DataPromise = Data.insertFastCamionMessage($rootScope.url, $localStorage.languague, $localStorage.fastIdHistory, $scope.data.messageInspection)
+        DataPromise.then(function(result) {
+            console.log(result)
+            $ionicLoading.hide();
+            $state.go('app.dashboard', {
+                animation: 'slide-in-down'
+            });
+        });
+
+
+     }
 
     })

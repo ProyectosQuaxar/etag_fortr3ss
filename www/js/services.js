@@ -268,6 +268,21 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
+    function insertHistorialFastCamion(url, lang, tagCamion, idUsuario, plataforma){
+        return $http({method:"GET", url:url+ 'insertHistorialFastCamion?lang=' + lang + '&tagCamion=' + tagCamion + '&idUsuario=' + idUsuario + '&plataforma=' + plataforma}).then(function(result){
+            return result.data;
+        });
+    }
+    function insertHistorialFastLlanta(url, lang, idHist, tagLlanta, tagDetect, position){
+        return $http({method:"GET", url:url+ 'insertHistorialFastLlanta?lang=' + lang + '&idHistFastCamion=' + idHist + '&tagLlanta=' + tagLlanta + '&tagDetectado=' + tagDetect + '&posicion=' + position}).then(function(result){
+            return result.data;
+        });
+    }
+    function insertFastCamionMessage(url, lang, idHist,comment){
+        return $http({method:"GET", url:url+ 'insertFastCamionMessage?lang=' + lang + '&id=' + idHist + '&comment=' + comment}).then(function(result){
+            return result.data;
+        });
+    }
 
     return { 
         login:function(url, nm, pw){
@@ -425,6 +440,15 @@ angular.module('starter.services', [])
         },
         visitCustomerFinished:function(url, lang, idCustomer){
             return visitCustomerFinished(url, lang, idCustomer);
+        },
+        insertHistorialFastCamion(url, lang, tagCamion, idUsuario, plataforma){
+            return insertHistorialFastLlanta(url, lang, tagCamion, idUsuario, plataforma);
+        },
+        insertHistorialFastLlanta(url, lang, idHist, tagLlanta, tagDetect, position){
+            return insertHistorialFastLlanta(url, lang, idHist, tagLlanta, tagDetect, position);
+        },
+        insertFastCamionMessage(url, lang, idHist, comment){
+            return insertFastCamionMessage(url, lang, idHist, comment);
         }
     }
 })
