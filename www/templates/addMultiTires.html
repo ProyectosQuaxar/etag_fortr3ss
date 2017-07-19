@@ -36,7 +36,7 @@
 	        </p>
 	    </center>
 	    <div ng-repeat="t in data.addTire">
-            <a class="item item-avatar" ng-click="showLlanta = !showLlanta" style="padding-left:75px;">
+            <a class="item item-avatar" ng-click="showLlanta = !showLlanta" style="padding-left:65px;">
                 <img src="img/icon_tire2.png"/>
                 <h2 style="overflow:visible!important;">
                     <center>
@@ -46,16 +46,13 @@
                     </center>                   
                 </h2>
             </a>
+            <button class="button button-small button-fab pull-right" ng-click="deletePos(t.posicion)" style="color:#FFFFFF; background-color: #FF0000; width: 35px!important; height: 35px!important; margin-top:-60px;"><i class="icon ion-trash-a"></i></button>
             <div ng-show="showLlanta"class="spaceOn-PaddingRight" style="padding-top:15px;">
 		        <input ng-model="data.company" type="hidden">
 		        <input ng-model="data.fleet" type="hidden">
 		        <input ng-model="data.truckId" type="hidden">
 		        <input ng-model="data.kms" type="hidden">
 				<div class="list">
-					<label>
-						<button class="button button-small button-assertive pull-right" ng-click="deletePos(t.posicion)"><i class="icon ion-trash-a"></i> {{ 'TIRES_DELETE_THIS_POS' | translate }} #{{t.posicion}}</button>
-					</label>
-					<br><br>
 					<label class="item item-input" style="width:50%;float:left;">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_POSITION' | translate }}</span>
 						<input type ="text" ng-model="t.posicion" style="max-width:100%;" value="{{t.posicion}}" class="inputNumber" required ng-readonly="true">		     

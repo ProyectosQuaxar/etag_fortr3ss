@@ -100,7 +100,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
           window.StatusBar.hide();
         }
         
-       
+        
         bluetoothSerial.isEnabled(function () {
             //DISPONIBLE
             var aceptar = $translate.instant('MSG_ACEPTAR')                
@@ -121,7 +121,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
               okType: 'button-assertive'
           });   
           }
-        ); 
+        );
                 
     });
 })

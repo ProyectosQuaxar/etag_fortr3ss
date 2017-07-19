@@ -439,17 +439,17 @@ angular.module('starter.services', [])
             return messageToInspection(url, lang, id, message);
         },
         visitCustomerFinished:function(url, lang, idCustomer){
-            return visitCustomerFinished(url, lang, idCustomer);
+            return visitCustomerFinished(url, lang, idCustomer);            
         },
-        insertHistorialFastCamion(url, lang, tagCamion, idUsuario, plataforma){
+        insertHistorialFastCamion:function(url, lang, tagCamion, idUsuario, plataforma){
             return insertHistorialFastLlanta(url, lang, tagCamion, idUsuario, plataforma);
         },
-        insertHistorialFastLlanta(url, lang, idHist, tagLlanta, tagDetect, position){
+        insertHistorialFastLlanta:function(url, lang, idHist, tagLlanta, tagDetect, position){
             return insertHistorialFastLlanta(url, lang, idHist, tagLlanta, tagDetect, position);
         },
-        insertFastCamionMessage(url, lang, idHist, comment){
-            return insertFastCamionMessage(url, lang, idHist, comment);
-        }
+        insertFastCamionMessage:function(url, lang, idHist, comment){
+            return insertFastCamionMessage(url, lang, idHist, comment);  
+        }      
     }
 })
 

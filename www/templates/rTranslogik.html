@@ -42,22 +42,8 @@
                 <img src="img/icon_tire2.png"/>
                 <h2 style="overflow:visible!important;">
                     <center>
-                        <strong>                                
-                            <span ng-repeat="tireBrand in data.tireBrands">
-                                <span ng-if="tireBrand.id == it.tireBrand">
-                                    {{tireBrand.nombre}}
-                                </span>
-                            </span> 
-                            <span ng-repeat="tireModel in data.tireModels">
-                                <span ng-if="tireModel.id == it.tireModel">
-                                    {{tireModel.nombre}}                                        
-                                </span>
-                            </span>                                 
-                            <span ng-repeat="tireSize in data.tireSizes">
-                                <span ng-if="tireSize.id == it.tireSize">
-                                    {{tireSize.medida}}                                     
-                                </span>                                 
-                            </span> 
+                        <strong>
+                        {{it.tireBrand}} {{it.tireModel}} {{it.tireSize}}
                         </strong>
                     </center>                   
                 </h2>

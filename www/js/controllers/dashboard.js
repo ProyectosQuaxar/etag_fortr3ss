@@ -298,6 +298,20 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                 $scope.totalPressureTypes = totalPressureTypes;
             }
 
+            var countTireStorage
+            if ($localStorage.tireStorage !== undefined) {
+                countTireStorage = $localStorage.tireStorage;
+                var totalTireStorage = Object.keys(countTireStorage).length;
+                $localStorage.totalTireStorage = totalTireStorage;
+                $scope.totalTireStorage = totalTireStorage;
+                $scope.totaltirePressure = totalTireStorage;
+            } else {
+                $scope.totaltirePressure = 0;
+            }
+
+            console.log("en storage hay ")
+            console.log($localStorage.tireStorage)
+
             /***********CONTEO DE DATOS ALMACENADOS*******************/
             var totalToSubmit = 0;
 
@@ -490,6 +504,7 @@ angular.module('dashboard', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate
                             $localStorage.truckTypes = result['truckTypes'];
                             $localStorage.pressureTypes = result['pressureTypes'];
                             $localStorage.companyIdAccount = result['companyIdAccount'];
+                            $localStorage.tireStorage = result['tireStorage'];
                             $scope.flotas = $localStorage.fleets;
                             $scope.totalReceive = 0;
                             
