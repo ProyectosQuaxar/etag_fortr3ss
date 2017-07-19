@@ -1,5 +1,5 @@
 <ion-view view-title="{{ 'MENU_QUICK_SEARCH' | translate }}" hide-nav-bar="false" hide-back-button="true" ng-controller="InspectionCtrl">
-	<ion-nav-buttons side="left">
+    <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
     </ion-nav-buttons>    
@@ -7,52 +7,44 @@
         <button class="button button-icon button-clear ion-gear-b" menu-toggle="right" ng-click='chooseOption()'>
         </button>
     </ion-nav-buttons>
-	<ion-content>
-		<center ng-if="data.tiresRegistred != 0">
-			<img ng-src="{{data.truckImg}}" style="min-height: 10px;max-height: 400px; min-width:10px; max-width:250px;" ng-if="data.truckImg"/>			
-		</center> 
-        <div ng-repeat="it in data.flashTires">	
-        	  	
+    <ion-content>
+        <center ng-if="data.tiresRegistred != 0">
+            <img ng-src="{{data.truckImg}}" style="min-height: 10px;max-height: 400px; min-width:10px; max-width:250px;" ng-if="data.truckImg"/>            
+        </center> 
+        <div ng-repeat="it in data.flashTires"> 
+                
             <a class="item item-avatar" ng-click="showLlanta = !showLlanta" style="padding-left:75px;">
-            	<img src="img/icon_tire2.png"/>
-              	<h2 style="overflow:visible!important;">
-              	<span class="fadein fadeout balanced" style="font-size:16px; margin-left: 20px;">
-		   			<i class="icon ion-checkmark-circled"></i>
-			  	</span>		  	
-	            <span class="fadein fadeout assertive" style="font-size:16px;">
-			   		<i class="icon ion-close-circled"></i>
-			  	</span>		
-
-					<center>
-						<strong>								
-							<span ng-repeat="tireBrand in data.tireBrands">
-								<span ng-if="tireBrand.id == it.tireBrand">
-									{{tireBrand.nombre}}
-								</span>
-							</span> 
-							<span ng-repeat="tireModel in data.tireModels">
-								<span ng-if="tireModel.id == it.tireModel">
-									{{tireModel.nombre}}										
-								</span>
-							</span> 								
-							<span ng-repeat="tireSize in data.tireSizes">
-								<span ng-if="tireSize.id == it.tireSize">
-									{{tireSize.medida}}										
-								</span>									
-							</span>	
-						</strong>
-					</center>                  	
-              	</h2>
-                <p style="text-align:center;">{{it.tagId}} {{ 'TIRES_POSITION' | translate }} #{{it.position}}                    	
+                <img src="img/icon_tire2.png"/>
+                <h2 style="overflow:visible!important;">
+                <span class="fadein fadeout balanced" style="font-size:16px; margin-left: 20px;">
+                    <i class="icon ion-checkmark-circled"></i>
+                </span>         
+                <span class="fadein fadeout assertive" style="font-size:16px;">
+                    <i class="icon ion-close-circled"></i>
+                </span>     
+                    <center>
+                        <strong>{{it.tireBrand}} {{it.tireModel}} {{it.tireSize}}</strong>
+                    </center>                   
+                </h2>
+                <p style="text-align:center;">{{it.tagId}} {{ 'TIRES_POSITION' | translate }} #{{it.position}}                      
                     <i class="ion ion-pricetag balanced" ng-if="it.tagInstalado == 'SI'"></i>
                     <i class="ion ion-pricetag assertive" ng-if="it.tagInstalado == 'NO'"></i>
                 </p>
+<<<<<<< HEAD
             
             <div style="background-color:#FFFFFF; margin-top: 5px; margin-bottom: 5px;" ng-show="showLlanta">	
 	            <center>
 					<button class="button button-small button-assertive" ng-click="detectTag(it.tagId, it.position)" ng-controller="bluetoothCtrl" style="z-index:1000"><i class="icon ion-bluetooth" style="margin-left: 5px; margin-right: 5px;"></i>{{ 'TIRES_DETECT_TAG' | translate }}</button>			
 				</center>          
 	            <br>				
+=======
+            </a>
+            <div style="background-color:#FFFFFF; margin-top: 5px; margin-bottom: 5px;" ng-show="showLlanta">   
+                <center>
+                    <button class="button button-small button-assertive" ng-click="detectTag(it.tagId, it.position)" ng-controller="bluetoothCtrl" style="z-index:1000"><i class="icon ion-bluetooth" style="margin-left: 5px; margin-right: 5px;"></i>{{ 'TIRES_DETECT_TAG' | translate }}</button>            
+                </center>          
+                <br>                
+>>>>>>> 25e2a013213f9ea49517c1506cacc348d5a4da6e
             </div>
             </a>
         </div>
@@ -62,8 +54,8 @@
         </label>
         <center>
             <div style="width:100%; padding-top:20px;">
-            	<button class="button button-small button-balanced" ng-click="sendQuickReport()">{{ 'TIRES_SEND_REPORT' | translate }}</button>
-          	</div>
+                <button class="button button-small button-balanced" ng-click="sendQuickReport()">{{ 'TIRES_SEND_REPORT' | translate }}</button>
+            </div>
         </center>
-	</ion-content>
+    </ion-content>
 </ion-view>

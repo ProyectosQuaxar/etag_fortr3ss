@@ -122,7 +122,7 @@ $scope.data.imgConBluetooth = false;
     });     
   }
 
-  $scope.showPopupDetectTAG = function(readTag) {
+$scope.showPopupDetectTAG = function(readTag) {
     var popTitle = $translate.instant('MSG_SUCCESS_DETECT')
     var aceptar = $translate.instant('MSG_ACEPTAR')                
     $ionicPopup.alert({
@@ -137,9 +137,9 @@ $scope.data.imgConBluetooth = false;
     var popTitle = $translate.instant('MSG_ERROR_DETECT')
     var aceptar = $translate.instant('MSG_ACEPTAR')                
     $ionicPopup.alert({
-      title: popTitle,
+     title: popTitle,
        template: '<center><p><b>'+ $translate.instant('MSG_ALERT_TAG') + ' ' + readTag + ' ' + $translate.instant('MSG_ALERT_ERROR_TAG') + ' ' + tag +'</b></p></center>',
-      okText: aceptar,
+     okText: aceptar,
       okType: 'button-assertive'
     });     
   }
@@ -174,6 +174,7 @@ $scope.data.imgConBluetooth = false;
       $scope.data.deviceActivated = true;      
       $scope.data.btnFindDevs = false;
       $scope.data.btnDisc = true;
+
       $scope.getBatteryStatus();
   }
 
@@ -240,6 +241,7 @@ $scope.data.imgConBluetooth = false;
           var filter = data.filter;
           var matricule = '';//data.michelin;
           var encodingData = data.encodedData;
+
           console.log("rfid : cai="+cai);
           console.log("rfid : company_prefix="+company_prefix);
           console.log("rfid : partition="+partition);
@@ -248,6 +250,7 @@ $scope.data.imgConBluetooth = false;
           console.log("rfid : matricule="+matricule);
           console.log("rfid : serial_number="+serial_number);
           console.log("rfid : encodingData="+encodingData);
+
       });
     }else {
         console.log('No Read: '+data_localize.scan_rfid);
@@ -261,7 +264,9 @@ $scope.data.imgConBluetooth = false;
   $scope.readRFID = function(tag){    
     console.log("entró a read RFID")
     console.log("el TAG es: " + tag)
+
     var numberPattern = /\d+/g;
+
     var newTag = tag.match( numberPattern )
     newTag = String(newTag).replace(",","")
     console.log("el nuevo TAG es: " + newTag)
@@ -309,6 +314,8 @@ $scope.data.imgConBluetooth = false;
     console.log("el tag a escribir es: " +  tag)
     
     var encodedData = encodeDataRFID(1, 0, 1, 1, 1, tag); //Toma los datos guardados en un scope "tag_data" y genera una cadena en 64b
+
+
     bluetooth.writeRFID(encodedData, function(data) {
       var loading = $translate.instant('MSG_LOADING');
       $ionicLoading.show({
@@ -373,8 +380,12 @@ $scope.data.imgConBluetooth = false;
       console.log("rfid : encodingData = "+encodingData);
       $scope.findTag(String(serial_number));
       $scope.showPopupReadTAG(serial_number);    
+      
     });
+
   }
+
+
 
     $scope.detectTag = function(tag, position){
     var loading = $translate.instant('MSG_LOADING');
@@ -419,26 +430,18 @@ $scope.data.imgConBluetooth = false;
       console.log("rfid : epc_header = "+epc_header);
       console.log("rfid : matricule = "+matricule);
       console.log("rfid : serial_number = "+serial_number);
-      console.log("rfid : encodingData = "+encodingData);
-      //$scope.findTag(String(serial_number));   
-      // TAG a leer contra TAG detectado
+      console.log("rfid : encodingData = "+encodingData);      
+
       if(String(tag) == String(serial_number)){
         $ionicLoading.hide();
         $scope.showPopupDetectTAG(tag);
         $scope.tagDetected = 'SI';
-
         //$scope.data.tagDetected = "SI"
       } else if (String(tag) != String(serial_number)){
         $ionicLoading.hide();
         $scope.showPopupNotDetectTAG(tag, serial_number);
-         $scope.tagDetected = 'NO';
+        $scope.tagDetected = 'NO';
       }
-      var DataPromise = Data.insertHistorialFastLlanta($rootScope.url, $localStorage.languague, $localStorage.fastIdHistory, tag, $scope.tagDetected, position)
-        DataPromise.then(function(result) {
-          if (result['result'] == 'OK') {
-            alert('Reporte enviado OK');
-          }                                    
-      });
       console.log(serial_number);
       
     }); 

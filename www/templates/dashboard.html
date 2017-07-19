@@ -102,6 +102,16 @@
                     </center>
                 </div>
             </div>
+            <div class="row">
+                <div class="col col-33"></div>
+                <div class="col col-33">
+                    <center>
+                        <img src="img/icon_tire_storage.png" style="width:40px;height:40px;" />
+                        <br> <strong>{{totaltirePressure}} {{'DASHBOARD_LLANTAS_ALMACENADAS'|translate}}</strong>
+                    </center>
+                </div>
+                <div class="col col-33"></div>
+            </div>
 
             <table ng-show="dataCustomer" class="fadein fadeout">
                 <tbody ng-repeat="c in customers | filter:{camionId:company}" ng-if="company">
@@ -196,16 +206,8 @@
                         <center>
                             <strong>{{ 'DASHBOARD_TAG' | translate }}</strong>: {{tire.tagId}}
                             <i class="ion ion-pricetag balanced" ng-show="tire.tagInstalado == 'SI'"></i>
-                            <i class="ion ion-pricetag assertive" ng-show="tire.tagInstalado == 'NO'"></i>                                                    
-                            <span ng-repeat="tireBrand in tireBrands">
-                                <span ng-if="tireBrand.id == tire.tireBrand">{{tireBrand.nombre}}</span>
-                            </span>
-                            <!--<span ng-repeat="tireSize in tireSizes">
-                                <span ng-if="tireSize.id == tire.tireSize">{{tireSize.medida}}</span>
-                            </span>
-                            <span ng-repeat="tireModel in tireModels">
-                                <span ng-if="tireModel.id == tire.tireModel">{{tireModel.nombre}}</span>
-                            </span>-->
+                            <i class="ion ion-pricetag assertive" ng-show="tire.tagInstalado == 'NO'"></i>
+                            {{tire.tireBrand}} {{tire.tireModel}} {{tire.tireBrand}}
                         </center>
                     </td>
                 </tr>                
@@ -344,7 +346,7 @@
                             <i class="ion ion-close assertive" ng-hide="totalPressureTypes > 0"></i>
                             <br> {{'DASHBOARD_DOWNLOAD_PRESSURETYPES_LABEL'|translate}}
                         </center>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>
