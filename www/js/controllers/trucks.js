@@ -233,6 +233,15 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
     $scope.insertTruck = function(company, idFlota, idModelo, placas, anio, tag, unidad, pressureType, tagInstalado, nombreOperador, tipo, tiresBefore, truckBrandTag, truckKms) {                
         console.log("insertar llantas? " + tiresBefore)
         console.log("Compañia: " + company + "Flota: " + idFlota + " Modelo: " + idModelo + "Placas: " + placas + "Año: " + anio + "Tag: " + tag + "Unidad: " + unidad + "Presión: " + pressureType + "E. Tag: " + tagInstalado + "Operador: " + nombreOperador + "Tipo: " + tipo + "Llantas despues: " + tiresBefore + "Marca: " + truckBrandTag + "Kms: " + truckKms);
+        var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+            content: loading,
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
         if(tiresBefore){
             //SI AGREGAREMOS LLANTAS DESPUES
             console.log($scope.data.kms);
@@ -330,7 +339,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                                 tipoInspeccion:"Manual"
                             }
                             StorageService.addSemaphoreInspection(storageSemaphoreInspection);
-
+                        $ionicLoading.hide();
                         /** Y aqui despues del desmadre pasamos a insertar las llantas**/
                         $state.go("app.addMultiTires", {
                                 animation: 'slide-in-down'
@@ -351,8 +360,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         DataPromise.then(function(result) {
                             if (result['message'] == 'success') {
                                 var truckId = result['truckId'];
-                                //DATOS CARGADOS
-                                $ionicLoading.hide();
+                                //DATOS CARGADOS                                
                                 /************ ACTUALIZAMOS LOS DATOS DE ESTE CLIENTE **********/
                                 if($localStorage.company){
                                     $scope.selectCliente($localStorage.company)
@@ -377,8 +385,18 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                                             tipoInspeccion:"Manual"
                                         }
                                         StorageService.addSemaphoreInspection(storageSemaphoreInspection);
+                                        $ionicLoading.hide();
                                     //Si está en modo offline y se insertó entonces                                    
                                 } else {
+                                    var loading = $translate.instant('MSG_LOADING');
+                                    $ionicLoading.show({
+                                        template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                                        content: loading,
+                                        animation: 'fade-in',
+                                        showBackdrop: true,
+                                        maxWidth: 200,
+                                        showDelay: 0
+                                    });
                                     //INICIA INSPECCION ONLINE
                                     var DataPromise = Data.insertTruckHistorial($rootScope.url, $localStorage.userId, tag, "", "",  unidad, $scope.data.kms, placas, tagInstalado, "", "Manual")
                                     DataPromise.then(function(result) {
@@ -442,7 +460,7 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                                             });
                                             $scope.data.addTire = $localStorage.addTire;
                                             $scope.truckTypes = $localStorage.truckTypes;
-
+                                            $ionicLoading.hide();
                                             $state.go("app.addMultiTires", {
                                                 animation: 'slide-in-down'
                                             });

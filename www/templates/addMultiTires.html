@@ -80,7 +80,7 @@
 					<label class="item item-select" style="padding-top: 0px;">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIREDESIGN' | translate }}</span>
 						<select ng-model="design" style="max-width:100%;" required>
-							<option ng-repeat="model in data.tireModels">{{model.nombre}}</option>
+							<option value="{{model.id}}" ng-repeat="model in data.tireModels">{{model.nombre}}</option>
 						</select>
 					</label>
 					<label class="item item-select" style="padding-top: 0px;">

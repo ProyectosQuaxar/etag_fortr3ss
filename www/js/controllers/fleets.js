@@ -212,11 +212,11 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                 var msgOk = $translate.instant('TIRES_FLEET') + " " + $translate.instant('MSG_SAVED_SUCCESSFULY');
 
                 $ionicLoading.hide();
-                $ionicPopup.alert({
+                /*$ionicPopup.alert({ PARA ELIMINACIÓN PARECE SER EL DOBLE MENSAJE AL INSERTAR LA FLOTA
                     template: '<center><p><b>' +  msgOk + '</p></center>',
                     okText: aceptar,
                     okType: 'button-balanced'
-                });
+                });*/
 
                 if ($scope.data.truckAfter == true){                             
                     $ionicPopup.alert({
@@ -274,11 +274,11 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                             var tryAgain = $translate.instant('MSG_TRY_AGAIN');
 
 
-                            $ionicPopup.alert({
+                            /*$ionicPopup.alert({ ESTAS OTRAS LINEAS ESTAN PARA ELIMINACIÓN, GENERAN DOBLE MENSAJE 
                                 template: '<center><p><strong>' + msgSuccess + '</strong></p></center>',
                                 okText: aceptar,
                                 okType: 'button-balanced'
-                            });
+                            });/*
 
                             /************ ACTUALIZAMOS LOS DATOS DE ESTE CLIENTE **********/
                             if($localStorage.company){

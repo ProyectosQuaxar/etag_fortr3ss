@@ -168,7 +168,8 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                         console.log("entró a insertar mensaje en id: " + $localStorage.inspectionId);
                         var DataPromise = Data.messageToInspection($rootScope.url, $localStorage.languague, $localStorage.inspectionId, $scope.data.messageInspection)
                         DataPromise.then(function(result) {
-                            if (result['results'] == "OK") {                                            
+                            console.log(result);
+                            if (result['result'] == "OK") {                                            
                                 if($localStorage.inspectionMode == 'Manual'){
                                     $state.go('app.inspSemManual', {
                                         animation: 'slide-in-down'
@@ -2414,6 +2415,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         }   
         $scope.addTireInspection = function(tire) {
             console.log(tire)
+            console.log($scope.data.tireType);
             console.log($scope.data.truckTag);
             var condFounds = "";
             var otherDetected = false;
@@ -2577,6 +2579,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
                                 console.log("ONLINE: "+$scope.data.dr)
                                 //ONLINE START
+                                console.log($scope.data.tireType + " TireType ");
                                 var DataPromise = Data.insertTireHistorial($rootScope.url, $scope.userId, tire.tagId, $scope.data.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, $scope.data.kilometraje, $scope.data.truckTag, $scope.data.dr, $scope.data.psi, $scope.data.comments, condFounds, $scope.data.tagDetected, $scope.data.tireType);                    
                                 DataPromise.then(function(result) {
                                     if (result['message'] == "success") {                            
