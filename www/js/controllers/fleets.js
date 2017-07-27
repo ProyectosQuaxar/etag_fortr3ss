@@ -522,8 +522,7 @@ angular.module('fleets', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
                         $scope.phone = result['phone']
                         $ionicLoading.hide();
                     } else if (result['message'] == "User invalid") {
-                         alert("USUARIO INVALIDO")
-                         // http://www.querisa.co/uploads/2032.jpg 
+                         alert("USUARIO INVALIDO")                        
                          $ionicLoading.hide();
                     } else {
                         $ionicLoading.hide();

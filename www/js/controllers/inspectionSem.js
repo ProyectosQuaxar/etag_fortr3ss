@@ -2785,7 +2785,6 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 $ionicScrollDelegate.scrollTop();
                                 $scope.data.others = ""
                                 $scope.disableArea = true;
-
                                 $scope.selection = {
                                     ids: {
                                         "ninguna": false

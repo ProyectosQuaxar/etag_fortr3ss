@@ -73,14 +73,14 @@
 					<label class="item item-select" style="padding-top: 0px;">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIRESIZE' | translate }}</span>
 						<select ng-model="size" style="max-width:100%;" ng-change="getDesignBySize(size)" required>
-							<option ng-repeat="sizes in data.tireSizes" value="{{sizes.id}}" ng-selected="sizes.id == size">{{sizes.medida}}</option>
+							<option ng-repeat="sizes in data.tireSizes" value="{{sizes.id}}" ng-if="sizes.marca==tirebrand" ng-selected="sizes.id == size">{{sizes.medida}}</option>
 						</select>
 					</label>
 					<button class="button button-fab button-small button-calm pull-right button-InRightMiddle" ng-click="openModal(4)"><i class="icon ion-plus-round"></i></button>
 					<label class="item item-select" style="padding-top: 0px;">
 						<span class="input-label" style="font-size: 12px;">{{ 'TIRES_TIREDESIGN' | translate }}</span>
 						<select ng-model="design" style="max-width:100%;" required>
-							<option value="{{model.id}}" ng-repeat="model in data.tireModels">{{model.nombre}}</option>
+							<option value="{{model.id}}" ng-repeat="model in data.tireModels" ng-if="model.medida==size">{{model.nombre}}</option>
 						</select>
 					</label>
 					<label class="item item-select" style="padding-top: 0px;">
@@ -146,7 +146,7 @@
                         <span class="input-label">{{'INSPECTION_ADD_OTHER_CONDITIONS_II'|translate}}</span>
                     </label>
                     <label class="form-border-bottom" style="width:100%; ">               
-                        ​<textarea ng-model="data.others" rows="3" ng-disabled = "disableArea"style="border-bottom:1px solid #F4001E; font-size:16px; width:100%;" placeholder="{{ 'INSPECTION_OTHER_CONDITION' | translate }}"></textarea>
+                        ​<textarea ng-model="data.others" rows="3" ng-disabled = "disableArea" style="border-bottom:1px solid #F4001E; font-size:16px; width:100%;" placeholder="{{ 'INSPECTION_OTHER_CONDITION' | translate }}"></textarea>
                     </label>                  
                 </div>
                 <br><br>			    							    

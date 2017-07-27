@@ -302,8 +302,8 @@ angular.module('trucks', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
 
                         console.log("el numero de llantas a registrar es: " + $scope.data.numLlantas)
                         //$scope.data.truckInspectionated = truckData;
-                        console.log("entonces el camión es? ")
-                        console.log($scope.data.truckInspectionated)
+                        //console.log("entonces el camión es? ")
+                        //console.log($scope.data.truckInspectionated)
                         
                         //Insertamos llanta a llanta
                         $localStorage.addTire = [];           

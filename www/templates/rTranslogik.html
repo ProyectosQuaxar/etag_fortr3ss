@@ -1,5 +1,5 @@
 <ion-view view-title="{{ 'INSPECTION_TRANSLOGIK' | translate }}" hide-nav-bar="false" hide-back-button="true" ng-controller="InspectionRendCtrl">
-	<ion-nav-buttons side="left">
+    <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
     </ion-nav-buttons>    
@@ -13,7 +13,7 @@
         </center>
         <ion-slides  options="options" slider="data.slider" style="height:300px!important;width:auto;" ng-if="data.tiresRegistred != 0">
             <ion-slide-page style="margin-bottom: 20px;">
-        	    <label class="item-stacked-label form-border-bottom" ng-repeat="record in tag.ndefMessage">
+                <label class="item-stacked-label form-border-bottom" ng-repeat="record in tag.ndefMessage">
                 {{ 'INSPECTION_TAG_LEIDO' | translate }}: 
                 <center>
                     <strong>
@@ -51,7 +51,7 @@
                     <i class="ion ion-pricetag balanced" ng-if="it.tagInstalado == 'SI'"></i>
                     <i class="ion ion-pricetag assertive" ng-if="it.tagInstalado == 'NO'"></i>
                 </p>
-            </a>
+            </a>     
             <div style="background-color:#FFFFFF;" ng-show="showLlanta">
             <form id="addData" name="addData">                    
                 <table>                                                 
@@ -64,22 +64,22 @@
                         <div class="row">
                             <div class="col col-sm-2">
                                 <label class="item item-input notBorder inputTitle"> 1:
-                                    <input type ="text" ng-model="data.pos1_rem1" class="inputNumber" required ng-focus="getRemainingsPos1(0,0)">     
+                                    <input type ="text" ng-model="data.pos1_rem1" class="inputNumber" ng-click="getMilims(1, 1)" required>       
                                 </label>
                             </div>
                             <div class="col col-sm-2">
                                 <label class="item item-input notBorder inputTitle"> 2:
-                                    <input type ="text" ng-model="data.pos1_rem2" class="inputNumber" required>     
+                                    <input type ="text" ng-model="data.pos1_rem2" class="inputNumber" ng-click="getMilims(1, 2)" required>     
                                 </label>
                             </div>
                             <div class="col col-sm-2"> 
                                 <label class="item item-input notBorder inputTitle"> 3:
-                                    <input type ="text" ng-model="data.pos1_rem3" class="inputNumber" required>     
+                                    <input type ="text" ng-model="data.pos1_rem3" class="inputNumber" ng-click="getMilims(1, 3)" required>     
                                 </label>
                             </div>
                             <div class="col col-sm-2"> 
                                 <label class="item item-input notBorder inputTitle"> 4:
-                                    <input type ="text" ng-model="data.pos1_rem4" class="inputNumber" required>     
+                                    <input type ="text" ng-model="data.pos1_rem4" class="inputNumber" ng-click="getMilims(1, 4)" required>     
                                 </label>
                             </div>                          
                         </div>  
@@ -89,7 +89,7 @@
                         <div class="row">
                             <div class="col col-sm-2">
                                 <label class="item item-input notBorder inputTitle"> 1:
-                                    <input type ="text" ng-model="data.pos2_rem1" class="inputNumber" required ng-focus="getRemainingsPos2(0,0)">     
+                                    <input type ="text" ng-model="data.pos2_rem1" class="inputNumber" required>     
                                 </label>
                             </div>
                             <div class="col col-sm-2">
@@ -114,7 +114,7 @@
                         <div class="row">
                             <div class="col col-sm-2">
                                 <label class="item item-input notBorder inputTitle"> 1:
-                                    <input type ="text" ng-model="data.pos3_rem1" class="inputNumber" required ng-focus="getRemainingsPos3(0,0)">     
+                                    <input type ="text" ng-model="data.pos3_rem1" class="inputNumber" required>     
                                 </label>
                             </div>
                             <div class="col col-sm-2">
@@ -132,7 +132,7 @@
                                     <input type ="text" ng-model="data.pos3_rem4" class="inputNumber" required>     
                                 </label>
                             </div>
-                        </div>                      
+                        </div>                 
                     </tr>
                     <tr>                        
                         <td style="text-align:right;">
@@ -143,7 +143,18 @@
                                 <input type="number" ng-model="data.psi" class="inputNumber"/>
                             </label>                                
                         </td>
-                    </tr>                                               
+                    </tr>
+                    <tr>
+                        <td tyle="text-align:right;vertical-align:middle;"><strong>{{ 'TIRES_TYPE_TYRE' | translate }}:</strong></td>
+                        <td>
+                            <label class="item item-select">    
+                                <select ng-model="data.tireType" style="max-width:100%;" required> 
+                                    <option value="ORIGINAL" ng-selected="it.tireType == 'ORIGINAL'">{{ 'TIRES_ORIGINAL' | translate }}</option>
+                                    <option value="RENOVADA" ng-selected="it.tireType == 'RENOVADA'">{{ 'TIRES_RENEWED' | translate }}</option>
+                                </select>
+                            </label>    
+                        </td>
+                    </tr>                                                
                 </table>
                 <div class="row">
                     <div class="col col-sm-3">
@@ -197,11 +208,15 @@
                 <br>
                 <img src="img/icon_inspection_finished.png" class="full-image spaceOn">
                 <br><br>
+                <label class="item item-input item-stacked-label form-border-bottom">
+                  <span>{{'INSPECTION_MESSAGE'|translate}}</span>
+                  <input type="text" ng-model="data.messageInspection" required  class="inputNumber"/>
+                </label>
 
                 <button class="button button-assertive button-fab button-fab-bottom-middle" ng-click="recallToInspection()">
                     <i class="icon ion-android-close"></i>
                 </button>
             </center>
         </div>           
-	</ion-content>	    
+    </ion-content>      
 </ion-view>

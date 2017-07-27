@@ -17,7 +17,9 @@ MSG_SUCCESS_DETECT: 'El TAG corresponde',
 MSG_ERROR_DETECT: 'El TAG no corresponde',
 MSG_ALERT_TAG: 'El TAG leído es ',
 MSG_ALERT_ERROR_TAG: 'debería de ser',
-INSPECTION_FAST_COMMENT: 'Comentario de la inspección rápida'
+INSPECTION_FAST_COMMENT: 'Comentario de la inspección rápida',
+INSPECTION_TRANSLOGIK: 'Inspección Rendimiento - Translogik'
+
 		});
 
         $translateProvider.translations('en', {
@@ -37,8 +39,10 @@ MSG_SUCCESS_DETEC: 'The TAG matches',
 MSG_ERROR_DETECT: 'TAG does not match',
 MSG_ALERT_TAG: 'The read TAG is ',
 MSG_ALERT_ERROR_TAG: 'should be',
-INSPECTION_FAST_COMMENT: 'Quick inspection comments'
-        });
+INSPECTION_FAST_COMMENT: 'Quick inspection comments',
+INSPECTION_TRANSLOGIK: 'Performance Inspection - Translogik'
+});
+
         $translateProvider.translations('pt', {
 CONFIG_IDIOMA: 'Languague',
 CONFIG_LANG_DE: 'Alemão',

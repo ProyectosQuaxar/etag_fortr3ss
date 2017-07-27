@@ -10,11 +10,11 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
     //$rootScope.url = 'http://10.6.159.11/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://10.6.159.11/millantarfid/mobileUserApp/';
 
-    $rootScope.baseurl = 'http://10.6.159.12:8090/millantarfid/';
-    $rootScope.url = 'http://10.6.159.12:8090/millantarfid/mobileApp/';
-    $rootScope.urlCustomer = 'http://10.6.159.12:8090/millantarfid/mobileUserApp/';
-
-    
+    $rootScope.baseurl = 'http://10.6.159.13:8090/millantarfid/';
+    $rootScope.url = 'http://10.6.159.13:8090/millantarfid/mobileApp/';
+    $rootScope.urlCustomer = 'http://10.6.159.13:8090/millantarfid/mobileUserApp/';
+        
+        
     //$rootScope.baseurl = 'http://52.41.40.176/millantarfid/';
     //$rootScope.url = 'http://52.41.40.176/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://52.41.40.176/millantarfid/mobileUserApp/';
@@ -22,6 +22,7 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
     //$rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
     //$rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
     //$rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
+
     if ($localStorage.appModeStatus == '' || $localStorage.appModeStatus === undefined)
         $localStorage = $localStorage.$default({appModeStatus: false});
 

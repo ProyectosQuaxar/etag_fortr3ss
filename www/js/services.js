@@ -67,8 +67,8 @@ angular.module('starter.services', [])
             return result.data;
         });
     }
-    function insertTireHistorialRend(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4){        
-        return $http({method:"GET", url:url+ 'submitTireInspectionRend?userId=' + userId + '&tagId=' + tagId + '&historyId=' + historyId + '&brand=' + brand + '&tireSize=' + tireSize + '&model=' + model + '&position=' + position + '&tagInstalado=' + tagInstalado + '&kilometraje=' + kilometraje + '&truckTag=' + truckTag + '&psi=' + psi + '&comments=' + comments + '&condiciones=' + condiciones + '&tagDetectado=' + tagDetectado + '&pos1_rem1=' + pos1_rem1 + '&pos1_rem2=' + pos1_rem2 + '&pos1_rem3=' + pos1_rem3 + '&pos1_rem4=' + pos1_rem4 + '&pos2_rem1=' + pos2_rem1 + '&pos2_rem2=' + pos2_rem2 + '&pos2_rem3=' + pos2_rem3 + '&pos2_rem4=' + pos2_rem4 + '&pos3_rem1=' + pos3_rem1 + '&pos3_rem2=' + pos3_rem2 + '&pos3_rem3=' + pos3_rem3 + '&pos3_rem4=' + pos3_rem4}).then(function(result){
+    function insertTireHistorialRend(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4, tireType){        
+        return $http({method:"GET", url:url+ 'submitTireInspectionRend?userId=' + userId + '&tagId=' + tagId + '&historyId=' + historyId + '&brand=' + brand + '&tireSize=' + tireSize + '&model=' + model + '&position=' + position + '&tagInstalado=' + tagInstalado + '&kilometraje=' + kilometraje + '&truckTag=' + truckTag + '&psi=' + psi + '&comments=' + comments + '&condiciones=' + condiciones + '&tagDetectado=' + tagDetectado + '&pos1_rem1=' + pos1_rem1 + '&pos1_rem2=' + pos1_rem2 + '&pos1_rem3=' + pos1_rem3 + '&pos1_rem4=' + pos1_rem4 + '&pos2_rem1=' + pos2_rem1 + '&pos2_rem2=' + pos2_rem2 + '&pos2_rem3=' + pos2_rem3 + '&pos2_rem4=' + pos2_rem4 + '&pos3_rem1=' + pos3_rem1 + '&pos3_rem2=' + pos3_rem2 + '&pos3_rem3=' + pos3_rem3 + '&pos3_rem4=' + pos3_rem4 + '&tireType=' + tireType}).then(function(result){
             return result.data;
         });
     }
@@ -321,8 +321,8 @@ angular.module('starter.services', [])
         insertTireHistorial:function(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado, tireType){
             return insertTireHistorial(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, remanente, psi, comments, condiciones, tagDetectado, tireType);
         },
-        insertTireHistorialRend:function(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4){
-            return insertTireHistorialRend(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4);
+        insertTireHistorialRend:function(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4, tireType){
+            return insertTireHistorialRend(url, userId, tagId, historyId, brand, tireSize, model, position, tagInstalado, kilometraje, truckTag, psi, comments, condiciones, tagDetectado, pos1_rem1, pos1_rem2, pos1_rem3, pos1_rem4, pos2_rem1, pos2_rem2, pos2_rem3, pos2_rem4, pos3_rem1, pos3_rem2, pos3_rem3, pos3_rem4, tireType);
         },
         getCustomerNumber:function(url,id){
             return getCustomerNumber(url,id);

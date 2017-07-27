@@ -1,6 +1,6 @@
 angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
-.controller('InspectionRendCtrl', function($ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate, Check) {
-	$ionicPlatform.offHardwareBackButton(function() {
+.controller('InspectionRendCtrl', function($ionicPlatform, $parse, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate, Check) {
+    $ionicPlatform.offHardwareBackButton(function() {
       console.log("Hola"); 
     });
     $ionicPlatform.registerBackButtonAction(function(event) {
@@ -11,7 +11,7 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
             "ninguna": false
         }
     };
-	$scope.camionExiste = false;
+    $scope.camionExiste = false;
     $scope.camionEncontrado = true;
     $scope.data.tagId = 0;
     $scope.activatedNFC = false;
@@ -45,7 +45,7 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
         });                    
     }
 
-	$scope.init = function() {
+    $scope.init = function() {
         $scope.data.kilometraje = "";
         $scope.inspectionMode = $localStorage.inspectionMode;
         $scope.trucks = $localStorage.trucks;
@@ -58,8 +58,8 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
             console.log("inspección manual detectada")
         }
 
-        if ($scope.inspectionMode == 'Translogik') {            	
-           	console.log("inspección translogik detectada")
+        if ($scope.inspectionMode == 'Translogik') {                
+            console.log("inspección translogik detectada")
         }
         $scope.$broadcast('scroll.refreshComplete');
     }
@@ -100,7 +100,7 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
       });                    
     }
 
-    $scope.findTruck = function(tagCamion) {    	
+    $scope.findTruck = function(tagCamion) {        
             $scope.tagCamion = tagCamion;
             if ($scope.tagCamion !== undefined) {
                 if ($localStorage.appModeStatus) {
@@ -162,7 +162,9 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
                                 $ionicLoading.hide();
                                 $scope.camionExiste = true;
                                 $scope.trucks = result['truck'];
+                                console.log($scope.trucks);
                                 $scope.tires = result['tires'];
+                                console.log($scope.tires);
                                 $scope.historialInspections = result['historialInspections'];
                                 $localStorage.inspectionTrucks = result['truck'];
                                 $localStorage.inspectionTires = result['tires'];
@@ -247,6 +249,7 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
             }
     }
     $scope.startInspectionRend = function(userId, tag, marca, modelo, unidad, placas, tagInstalado) {
+        console.log("User: " + userId + " tag: " + tag + " marca: " + marca + "modelo: " + modelo + " unidad: " + unidad + " placas: " + placas + " tag Instalado: " + tagInstalado);
             $scope.disableArea = true;
             $scope.selection = {
                 ids: {
@@ -347,13 +350,13 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
                         }
                     }); 
                     if ($scope.inspectionMode == 'Manual') {
-                    	console.log("Redireccionando a rManual")
-            			$state.go('app.rManual');
-        			}
-        			if ($scope.inspectionMode == 'Translogik') {            	
-           				console.log("Redireccionando a rTranslogik")
-            			$state.go('app.rTranslogik');
-        			}                    
+                        console.log("Redireccionando a rManual")
+                        $state.go('app.rManual');
+                    }
+                    if ($scope.inspectionMode == 'Translogik') {                
+                        console.log("Redireccionando a rTranslogik")
+                        $state.go('app.rTranslogik');
+                    }                    
                     $scope.data.inspectionTires = $localStorage.inspectionTires;
                     $scope.data.tireConditions = $localStorage.tireConditions;
                     $scope.data.tireModels = $localStorage.tireModels;
@@ -373,13 +376,13 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
                             $ionicLoading.hide();
                             $ionicHistory.clearCache().then(function() {
                                 if ($scope.inspectionMode == 'Manual') {
-			                    	console.log("Redireccionando a rManual")
-			            			$state.go('app.rManual');
-			        			}
-			        			if ($scope.inspectionMode == 'Translogik') {            	
-			           				console.log("Redireccionando a rTranslogik")
-			            			$state.go('app.rTranslogik');
-			        			}   
+                                    console.log("Redireccionando a rManual")
+                                    $state.go('app.rManual');
+                                }
+                                if ($scope.inspectionMode == 'Translogik') {                
+                                    console.log("Redireccionando a rTranslogik")
+                                    $state.go('app.rTranslogik');
+                                }   
                                 $scope.data.activatedNFC = $localStorage.activatedNFC;
                                 $scope.data.inspectionTrucks = $localStorage.inspectionTrucks;
                                 $scope.data.inspectionTires = $localStorage.inspectionTires;
@@ -791,8 +794,7 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
                                 comments        : $scope.data.comments, 
                                 condFounds      : condFounds,
                                 tagDetected     : $scope.data.tagDetected                        
-                            }
-                       
+                            }                       
                         }
 
                         StorageService.addTireRendToInspection(tireInspection);
@@ -832,7 +834,7 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
                     } else {
 
                         //ONLINE START
-                        var DataPromise = Data.insertTireHistorialRend($rootScope.url, $scope.userId, tire.tagId, $scope.data.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, $scope.data.kilometraje, $scope.data.truckTag, $scope.data.psi, $scope.data.comments, condFounds, $scope.data.tagDetected, $scope.data.pos1_rem1, $scope.data.pos1_rem2, $scope.data.pos1_rem3, $scope.data.pos1_rem4, $scope.data.pos2_rem1, $scope.data.pos2_rem2, $scope.data.pos2_rem3, $scope.data.pos2_rem4, $scope.data.pos3_rem1, $scope.data.pos3_rem2, $scope.data.pos3_rem3, $scope.data.pos3_rem4);                    
+                        var DataPromise = Data.insertTireHistorialRend($rootScope.url, $scope.userId, tire.tagId, $scope.data.historyId, tire.tireBrand, tire.tireSize, tire.tireModel, tire.position, tire.tagInstalado, $scope.data.kilometraje, $scope.data.truckTag, $scope.data.psi, $scope.data.comments, condFounds, $scope.data.tagDetected, $scope.data.pos1_rem1, $scope.data.pos1_rem2, $scope.data.pos1_rem3, $scope.data.pos1_rem4, $scope.data.pos2_rem1, $scope.data.pos2_rem2, $scope.data.pos2_rem3, $scope.data.pos2_rem4, $scope.data.pos3_rem1, $scope.data.pos3_rem2, $scope.data.pos3_rem3, $scope.data.pos3_rem4, data.tireType);                    
                         DataPromise.then(function(result) {
                             if (result['message'] == "success") {                            
                                 var tiresToInspection = $localStorage.inspectionTires;
@@ -1139,4 +1141,40 @@ angular.module('inspectionRend', ['ionic', 'ionic-material', 'ionMdInput', 'ngAn
                 
         }
     };
+
+    $scope.getMilims = function(x, y){
+            //Limpio el contenido de la lectura en localStorage
+            //$localStorage.milim == '';
+            var the_string = 'data.pos'+x+'_rem'+y;
+            // Get the model
+            var model = $parse(the_string);
+            var milims = bluetooth.milimetraje_;
+            // Assigns a value to it
+            model.assign($scope, milims);
+
+            // Apply it to the scope
+            // $scope.$apply(); <- According to comments, this is no longer needed
+
+            //alert($scope.data.pos1_rem1); 
+            //alert($scope.data.pos1_rem2); 
+            //alert($scope.data.pos1_rem3); 
+            //alert($scope.data.pos1_rem4); 
+            //var posInput = $scope.data.['pos'+ x + '_rem' + y];
+            
+            //alert(posInput);
+
+            $timeout(function() {                
+                if( $scope[the_string] == 0){                        
+                    console.log("si el milimetraje es igual a cero entonces vovler a llamar función")
+                    $scope.getMilims(x, y);                                        
+                } else if($localStorage.milim ==  $scope[the_string]) {
+                    console.log("si el milimetraje almacenado... es igual al milimetraje ")
+                    $scope.getMilims(x, y);
+                } else {
+                    console.log("el milimetraje es diferente y se guardó")
+                    $localStorage.milim = bluetooth.milimetraje_;
+                    //$scope.startSemaphore($localStorage.milim);
+                }                
+            }, 1000);                    
+    }
 })
