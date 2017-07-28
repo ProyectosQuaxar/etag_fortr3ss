@@ -571,6 +571,25 @@
                 </ion-list>                               
             </span>              
 
+            <div class="page-header">
+                <h1>ngCsv <small>example with lazy load</small></h1>
+            </div>
+
+            <div class="form-group">
+                <label for="filename">Filename </label>
+                <input type="text" id="filename" class="form-control" ng-model="filename">
+            </div>
+
+            <div class="form-group">
+                <label for="separator">Field separator</label>
+                <input type="text" id="separator" class="form-control" ng-model="separator" ng-init="separator=','">
+            </div>
+
+            <button class="btn btn-default" ng-csv="getArray" lazy-load="true" filename="{{ filename }}.csv" field-separator="{{separator}}"
+                      >Export to CSV (Lazy Load)</button>
+
+            <button class="btn btn-default" ng-click="addRandomRow()">Add row</button>
+
         </div>        
 	</div>
 	</ion-content>

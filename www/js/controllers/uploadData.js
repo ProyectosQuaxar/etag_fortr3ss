@@ -1,4 +1,4 @@
-angular.module('uploadData', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
+angular.module('uploadData', ['ionic', 'ngSanitize', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
 
 .controller('UploadDataCtrl', function($ionicPlatform, $scope, $ionicPopup, $localStorage, Data, Check, $translate, $rootScope, StorageService, $state) {
         $scope.showFlotas = false;

@@ -284,6 +284,30 @@ angular.module('starter.services', [])
         });
     }
 
+    function moveTireToStorage(url, lang, id, status){
+        return $http({method:"GET", url:url+ 'moveTireToStorage?lang=' + lang + '&id=' + id + '&status=' + status}).then(function(result){
+            return result.data;
+        });
+    }
+
+    function getNewTag(url, lang, id){
+        return $http({method:"GET", url:url+ 'getNewTag?lang=' + lang + '&id=' + id}).then(function(result){
+            return result.data;
+        });
+    }
+
+    function setTireToTruck(url, lang, tireStorage, camionId, pos){
+        return $http({method:"GET", url:url+ 'setTireToTruck?lang=' + lang + '&tireStorage=' + tireStorage + '&camionId=' + camionId + '&pos=' + pos}).then(function(result){
+            return result.data;
+        });
+    }
+    
+    function insertTireEdited(url, lang, cliente, flota, unidad, marcaLlanta, tipoLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId){
+        return $http({method:"GET", url:url+ 'changeTireData?cliente=' + cliente + '&lang=' + lang + '&flota=' + flota + '&unidad=' + unidad + '&marcaLlanta=' + marcaLlanta + '&tipoLlanta=' + tipoLlanta + '&medidaLlanta=' + medidaLlanta + '&disenoLlanta=' + disenoLlanta + '&precio=' + precio + '&dot=' + dot + '&tag=' + tag + '&posicion=' + posicion + '&semaforo=' + semaforo + '&desgaste=' + desgaste + '&kilometraje=' + kilometraje + '&presion=' + presion + '&tagInstalado=' + tagInstalado + '&condiciones=' + condiciones + '&idHistorial=' + inspTruckId }).then(function(result){
+            return result.data;
+        });
+    }
+
     return { 
         login:function(url, nm, pw){
             return login(url, nm, pw);
@@ -442,7 +466,7 @@ angular.module('starter.services', [])
             return visitCustomerFinished(url, lang, idCustomer);            
         },
         insertHistorialFastCamion:function(url, lang, tagCamion, idUsuario, plataforma){
-            return insertHistorialFastLlanta(url, lang, tagCamion, idUsuario, plataforma);
+            return insertHistorialFastCamion(url, lang, tagCamion, idUsuario, plataforma);
         },
         insertHistorialFastLlanta:function(url, lang, idHist, tagLlanta, tagDetect, position){
             return insertHistorialFastLlanta(url, lang, idHist, tagLlanta, tagDetect, position);
@@ -450,6 +474,18 @@ angular.module('starter.services', [])
         insertFastCamionMessage:function(url, lang, idHist, comment){
             return insertFastCamionMessage(url, lang, idHist, comment);
       
+        },
+        moveTireToStorage:function(url, lang, id, status){      
+            return moveTireToStorage(url, lang, id, status)
+        },
+        getNewTag:function(url, lang, id){
+            return getNewTag(url, lang, id);
+        },
+        setTireToTruck:function(url, lang, tireStorage, camionId, pos){
+            return setTireToTruck(url, lang, tireStorage, camionId, pos);
+        },
+        insertTireEdited:function(url, lang, cliente, flota, unidad, marcaLlanta, tipoLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId){
+            return insertTireEdited(url, lang, cliente, flota, unidad, marcaLlanta, tipoLlanta, medidaLlanta, disenoLlanta, precio, dot, tag, posicion, semaforo, desgaste, kilometraje, presion, tagInstalado, condiciones, inspTruckId);
         }      
 
     }

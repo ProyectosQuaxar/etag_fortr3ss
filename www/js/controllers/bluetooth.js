@@ -9,7 +9,10 @@ $scope.data.btnDisc = false;
 $scope.data.btnFindDevs = true;
 $scope.data.translogikOptions = false;
 $scope.data.imgConBluetooth = false;
-
+$scope.showsecondCard = false;
+$scope.negativeIsFalse = false;
+$scope.showstartCard = true;
+$scope.showsecondCard = true;
   ///////// FUNCIÓN DE INICIALIZACIÓN
   $scope.init = function(){
       var bluetoothName = $localStorage.dataBluetooth;
@@ -387,66 +390,7 @@ $scope.showPopupDetectTAG = function(readTag) {
 
 
 
-    $scope.detectTag = function(tag, position){
-    var loading = $translate.instant('MSG_LOADING');
-    $ionicLoading.show({
-        template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
-        content: loading,
-        animation: 'fade-in',
-        showBackdrop: true,
-        maxWidth: 200,
-        showDelay: 0
-    });  
-    console.log("entró a leer tag: " + tag);
-    $scope.data.formFindTag = false;
-    $scope.data.readingTag = true;
-    $scope.data.notResults = false;
-
-    bluetooth.callBackOnrfidNoTagFoundResponse = onNoTagsFound;
-    if (rfid_timeout_var !== "off") {
-        console.log('set timout frid' + rfid_timeout_var)
-        rfid_timeout_id = window.setTimeout(function() {
-            onNoTagsFound();
-            bluetooth.rfidOff(function() {
-            })
-        }, rfid_timeout_var);
-    }
-
-    bluetooth.readRFID(function(data) {
-      console.log('clear timeout frid')
-      window.clearTimeout(rfid_timeout_id);
-      var epc_header = data.EPCheader;
-      var cai = data.cai;
-      var company_prefix = data.companyPrefix;
-      var partition = data.partition;
-      var serial_number = data.sn;
-      var filter = data.filter;
-      var matricule = "";//data.michelin;
-      var encodingData = data.encodedData;
-      console.log("rfid : cai = "+cai);
-      console.log("rfid : company_prefix = "+company_prefix);
-      console.log("rfid : partition = "+partition);
-      console.log("rfid : filter = "+filter);
-      console.log("rfid : epc_header = "+epc_header);
-      console.log("rfid : matricule = "+matricule);
-      console.log("rfid : serial_number = "+serial_number);
-      console.log("rfid : encodingData = "+encodingData);      
-
-      if(String(tag) == String(serial_number)){
-        $ionicLoading.hide();
-        $scope.showPopupDetectTAG(tag);
-        $scope.tagDetected = 'SI';
-        //$scope.data.tagDetected = "SI"
-      } else if (String(tag) != String(serial_number)){
-        $ionicLoading.hide();
-        $scope.showPopupNotDetectTAG(tag, serial_number);
-        $scope.tagDetected = 'NO';
-      }
-      console.log(serial_number);
-      
-    }); 
-  }
-
+    
   $scope.cancelReadTag = function(){
       $scope.data.formFindTag = true;
       $scope.data.readingTag = false;
@@ -618,5 +562,91 @@ $scope.showPopupDetectTAG = function(readTag) {
     }).then(function(modal) {
         $scope.oModal2 = modal;
     });
+
+    $scope.sendQuickSearchTire = function (tagLlanta, tagDetect, position){
+      console.log("mandamos la información por llanta");
+        var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+            content: loading,
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        var DataPromise = Data.insertHistorialFastLlanta($rootScope.url, $localStorage.languague, $localStorage.fastIdHistory, tagLlanta, tagDetect, position)
+        DataPromise.then(function(result) {
+            console.log(result)
+            $ionicLoading.hide();
+            alert("Datos almacenados");           
+        });
+     
+    }
+
+    $scope.detectTag = function(tag, position){
+    var loading = $translate.instant('MSG_LOADING');
+    $ionicLoading.show({
+        template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+        content: loading,
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });  
+    console.log("entró a leer tag: " + tag);
+    $scope.data.formFindTag = false;
+    $scope.data.readingTag = true;
+    $scope.data.notResults = false;
+
+    bluetooth.callBackOnrfidNoTagFoundResponse = onNoTagsFound;
+    if (rfid_timeout_var !== "off") {
+        console.log('set timout frid' + rfid_timeout_var)
+        rfid_timeout_id = window.setTimeout(function() {
+            onNoTagsFound();
+            bluetooth.rfidOff(function() {
+            })
+        }, rfid_timeout_var);
+    }
+
+    bluetooth.readRFID(function(data) {
+      console.log('clear timeout frid')
+      window.clearTimeout(rfid_timeout_id);
+      var epc_header = data.EPCheader;
+      var cai = data.cai;
+      var company_prefix = data.companyPrefix;
+      var partition = data.partition;
+      var serial_number = data.sn;
+      var filter = data.filter;
+      var matricule = "";//data.michelin;
+      var encodingData = data.encodedData;
+      console.log("rfid : cai = "+cai);
+      console.log("rfid : company_prefix = "+company_prefix);
+      console.log("rfid : partition = "+partition);
+      console.log("rfid : filter = "+filter);
+      console.log("rfid : epc_header = "+epc_header);
+      console.log("rfid : matricule = "+matricule);
+      console.log("rfid : serial_number = "+serial_number);
+      console.log("rfid : encodingData = "+encodingData);      
+
+      if(String(tag) == String(serial_number)){
+        $ionicLoading.hide();
+        $scope.showPopupDetectTAG(tag);
+        $scope.tagDetected = 'SI';
+        $scope.showstartCard = true;
+        $scope.showsecondCard = false;
+        $scope.sendQuickSearchTire(serial_number, $scope.tagDetected, position);
+
+        //$scope.data.tagDetected = "SI"
+      } else if (String(tag) != String(serial_number)){
+        $ionicLoading.hide();
+        $scope.showPopupNotDetectTAG(tag, serial_number);
+        $scope.tagDetected = 'NO';
+        $scope.showstartCard = false;
+        $scope.showsecondCard = true;
+        $scope.sendQuickSearchTire(serial_number, $scope.tagDetected, position);
+      }
+      console.log(serial_number);
+    }); 
+  }
 
 });

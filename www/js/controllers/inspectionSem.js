@@ -1,5 +1,5 @@
 angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 'pascalprecht.translate', 'ngSanitize', 'ngStorage', 'ngCordova.plugins.nfc', 'nfcFilters', 'ngRoute', 'ngCordova'])
-.controller('InspectionCtrl', function(/*nfcService,*/ $ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, Check, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate) {
+.controller('InspectionCtrl', function(/*nfcService,*/ $ionicPlatform, ionicMaterialInk, ionicMaterialMotion, $timeout, $stateParams, $scope, $localStorage, $translate, $ionicLoading, Data, Check, $ionicPopup, $rootScope, $ionicModal, $ionicHistory, $state, StorageService, $ionicScrollDelegate, ionicToast) {
 
         $scope.camionExiste = false;
         $scope.camionEncontrado = true;
@@ -18,6 +18,16 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         $scope.data.tireBrands = $localStorage.tireBrands;
         $scope.tagId = ''; // No se ocupa nunca !!!
         $scope.data.truckTag = ''; // Se agrega para buscar el TAG con que localizaremos la inspección realizada
+        $scope.negativeIsFalse = false;
+        $scope.showstartCard = true;
+        $scope.showsecondCard = true;
+        $scope.llantaVisible = true;
+        $scope.infoLlantaMover = true;
+        $scope.infoLlantaRemplazar = false;
+        $scope.llantaDeAlmacen = false;
+        $scope.infoLlantaSoloEditar = false;
+        $scope.llantaNueva = false;
+        $scope.optionsMoveTire = false;
         console.log($scope.data.tireBrands);
 
         /*$scope.tag = nfcService.tag;*/
@@ -109,34 +119,6 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
             $scope.oModal1.show();
             $scope.showButtons = false;
         }
-
-        $ionicModal.fromTemplateUrl('templates/bluetoothModal.html', {
-            id: '1', // We need to use and ID to identify the modal that is firing the event!
-            scope: $scope,
-            backdropClickToClose: false,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.oModal1 = modal;
-        });
-
-        $scope.openModal = function(index, tagId) {
-            console.log(tagId)            
-            if (index == 1) $scope.oModal1.show();
-        };
-
-        $scope.closeModal = function(index) {
-            if (index == 1) $scope.oModal1.hide();
-        };
-
-        /* Listen for broadcasted messages */
-
-        $scope.$on('modal.shown', function(event, modal) {
-            //console.log('Modal ' + modal.id + ' is shown!');
-        });
-
-        $scope.$on('modal.hidden', function(event, modal) {
-            //console.log('Modal ' + modal.id + ' is hidden!');
-        });
 
 
         $scope.recallToInspection = function() {
@@ -290,6 +272,18 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
 
         $scope.openModal = function(index, tagId) {            
             if (index == 1) {
+                $scope.oModal1.show();
+                $scope.llantaVisible = true;
+                $scope.infoLlantaMover = true;
+                $scope.infoLlantaRemplazar = false;
+                $scope.infoLlantaSoloEditar = false;
+                $scope.llantaNueva = false;
+                $scope.llantaDeAlmacen = false;
+                $scope.optionsMoveTire = false;
+                $scope.inspId = $scope.data.historyId;
+                $scope.inspKm = $scope.data.kilometraje;
+                $scope.data.tireSituation = undefined;
+                $scope.newTire = undefined;
                 $scope.data.myTagId = tagId;
                 console.log("ID: " + tagId)
                 console.log("Entramos al modal!" + index)
@@ -654,41 +648,67 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         }
 
         $scope.getMilims = function(){
-            console.log("Milimetraje almacenado del equipo")
-            $scope.data.dr = bluetooth.milimetraje_;
+           bluetoothSerial.isEnabled(function () {
+                //DISPONIBLE
+                console.log("Milimetraje almacenado del equipo")
+                $scope.data.dr = bluetooth.milimetraje_;
 
-            console.log("delay 500 milisegundos")
-            $timeout(function() {                
-                if($scope.data.dr == 0){                        
-                    console.log("si el milimetraje es igual a cero entonces vovler a llamar función")
-                    $scope.getMilims();                                        
-                } else if($localStorage.milim == $scope.data.dr) {
-                    console.log("si el milimetraje almacenado... es igual al milimetraje ")
-                    $scope.getMilims();
-                } else {
-                    console.log("el milimetraje es diferente y se guardó")
-                    $localStorage.milim = bluetooth.milimetraje_;                
-                }
-            }, 1000);                    
+                console.log("delay 500 milisegundos")
+                $timeout(function() {                
+                    if($scope.data.dr == 0){                        
+                        console.log("si el milimetraje es igual a cero entonces vovler a llamar función")
+                        $scope.getMilims();                                        
+                    } else if($localStorage.milim == $scope.data.dr) {
+                        console.log("si el milimetraje almacenado... es igual al milimetraje ")
+                        $scope.getMilims();
+                    } else {
+                        console.log("el milimetraje es diferente y se guardó")
+                        $localStorage.milim = bluetooth.milimetraje_;                
+                    }
+                }, 1000); 
+            }, function (reason) {
+                //NO DISPONIBLE
+                var popTitle = $translate.instant('MSG_INFORMATION')
+                var aceptar = $translate.instant('MSG_ACEPTAR')                
+                $ionicPopup.alert({
+                        title: popTitle,
+                        template: '<center><p><b>' + $translate.instant('BLUETOOTH_DESACTIVADO') + '</b></p></center>',
+                        okText: aceptar,
+                        okType: 'button-assertive'
+                });   
+              }
+            );               
         }
-        $scope.getPressure = function(){
-            
-            console.log("Presión almacenado del equipo")
-            $scope.data.psi = bluetooth.pressure_;
+        $scope.getPressure = function(){            
+             bluetoothSerial.isEnabled(function () {            
+                console.log("Presión almacenado del equipo")
+                $scope.data.psi = bluetooth.pressure_;
 
-            console.log("delay 500 milisegundos")
-            $timeout(function() {                
-                if($scope.data.psi == 0){                        
-                    console.log("si la Presión es igual a cero entonces vovler a llamar función")
-                    $scope.getPressure();                                        
-                } else if($localStorage.psi == $scope.data.psi) {
-                    console.log("si la Presión almacenado... es igual a la Presión ")
-                    $scope.getPressure();
-                } else {
-                    console.log("la Presión es diferente y se guardó")
-                    $localStorage.psi = bluetooth.pressure_;                
-                }
-            }, 1000); 
+                console.log("delay 500 milisegundos")
+                $timeout(function() {                
+                    if($scope.data.psi == 0){                        
+                        console.log("si la Presión es igual a cero entonces vovler a llamar función")
+                        $scope.getPressure();                                        
+                    } else if($localStorage.psi == $scope.data.psi) {
+                        console.log("si la Presión almacenado... es igual a la Presión ")
+                        $scope.getPressure();
+                    } else {
+                        console.log("la Presión es diferente y se guardó")
+                        $localStorage.psi = bluetooth.pressure_;                
+                    }
+                }, 1000); 
+                }, function (reason) {
+                //NO DISPONIBLE
+                var popTitle = $translate.instant('MSG_INFORMATION')
+                var aceptar = $translate.instant('MSG_ACEPTAR')                
+                $ionicPopup.alert({
+                        title: popTitle,
+                        template: '<center><p><b>' + $translate.instant('BLUETOOTH_DESACTIVADO') + '</b></p></center>',
+                        okText: aceptar,
+                        okType: 'button-assertive'
+                });   
+              }
+            );
         }
 
         $scope.getTAGS = function(intentos){
@@ -2909,12 +2929,15 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                         $scope.pressureTypes = $localStorage.pressureTypes;
                         var tireNumber = 0;
 
+                        /*
                         angular.forEach($scope.truckTypes, function(value, key) {                            
                             if(value.id == $scope.data.inspectionTrucks[0].tipo){                                                
                                 $scope.data.truckImg = $rootScope.baseurl + "static/images/trucktypes/" + value.img;
                             }
                         });
                         console.log("entonces la imagen es: " + $scope.data.truckImg)
+                        */
+
                         angular.forEach($localStorage.tires, function(value, key) {                                                     
                             if(value.camionId == idtruck){
                                 console.log(value)
@@ -2954,21 +2977,24 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                 $scope.camionExiste = true;
                                 $scope.trucks = result['truck'];
                                 console.log($scope.trucks);
-                                $scope.data.flashTires = result['tires'];     
-                                console.log($scope.tires);                          
+                                $scope.data.flashTires = result['tires'];
+
+
+                                /*
                                 $scope.truckTypes = $localStorage.truckTypes;
                                 $scope.pressureTypes = $localStorage.pressureTypes;
                                 $scope.tagCamion = tagCamion;
                                 $scope.userId = $localStorage.userId;
                                 $scope.showHistorialInspecciones = false;
-
+                                */
                                 console.log("Procedemos a insertar el insertHistorialFastCamion");
                                 var DataPromise = Data.insertHistorialFastCamion($rootScope.url, $localStorage.languague, tagCamion, $scope.userId, "appMobile")
                                 DataPromise.then(function(result) {
                                     if (result['result'] == 'OK') {
                                         console.log(result['data']) 
                                         $localStorage.fastIdHistory = result['data'];
-                                        console.log($localStorage.fastIdHistory);
+
+                                        //console.log($localStorage.fastIdHistory);
                                     }                                    
                                 });
 
@@ -2977,9 +3003,11 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
                                     countTiresRegistred = $scope.tires;
                                     var tiresRegistred = Object.keys(countTiresRegistred).length;
                                     $scope.data.tiresRegistred = tiresRegistred;
+                                    //$scope.data.flashTires.push({estado: "No encontrado"})
                                 } else {
                                     $scope.data.tiresRegistred = 0;
                                 }
+                                console.log($scope.data.flashTires);
 
                             } else if (result['message'] == 'not found') {
                                 //DATOS CON ERRORES O INCOMPLETOS
@@ -3038,7 +3066,7 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
     }
 
     $scope.sendQuickReport = function () {
-        console.log("Adivinen que? Voy a mandar la información de la inspección rapida" + $scope.data.messageInspection)
+        console.log("mandar la información de la inspección rapida" + $scope.data.messageInspection)
         var loading = $translate.instant('MSG_LOADING');
             $ionicLoading.show({
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
@@ -3058,5 +3086,515 @@ angular.module('inspections', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnima
         });
      }
 
+     $scope.tireToQuitSituation = function(id, situacion){
+        if(situacion != 'EDITAR'){
+            $scope.optionsMoveTire = true;
+            var loading = $translate.instant('MSG_LOADING');
+                $ionicLoading.show({
+                template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+                content: loading,
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+            var DataPromise = Data.moveTireToStorage($rootScope.url, $localStorage.languague, id, situacion)
+            DataPromise.then(function(result) {
+                console.log("******** " + result['result'])
+                
+                //angular.forEach(result['data'], function(value, key) {
+                    //console.log(value)
+                //});
+
+                if(result['data'] == 'tire not found'){                    
+                    $scope.showErrorMessage("tire not found"); //translate
+                    $scope.optionsMoveTire = false;
+                } else if(result['result'] == "OK"){                
+                    $scope.infoLlantaRemplazar = true;                    
+                    $scope.infoLlantaMover = true;
+                    $localStorage.tireStorage = result['tireStorage'];
+                    $scope.showToast($translate.instant('TIRES_TIRE_MOVED_SUCCESFULLY'),5000);                
+                } else {
+                    var error = $translate.instant('MSG_ERROR_OCURRED');
+                    $scope.showErrorMessage(error);
+                }                  
+                
+                $ionicLoading.hide();
+            });
+        } else {
+            $scope.optionsMoveTire = false;
+
+            console.log("VAMOS A PROCEDER A EDITAR");
+            $scope.infoLlantaRemplazar = false;                    
+            $scope.infoLlantaMover = false;
+            $scope.infoLlantaSoloEditar = true;
+        }       
+    }
+
+    $scope.getNewTag = function(status, camionId){ 
+        console.log("nueva llanta es? " +  status);
+        console.log("el id del camión es? " +  camionId);
+        
+        var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+            content: loading,
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        var DataPromise = Data.getNewTag($rootScope.url, $localStorage.languague, camionId)
+        DataPromise.then(function(result) {
+            if(result['result'] == "OK"){
+                console.log("las llantas son? ")
+                console.log($localStorage.tireStorage)
+
+                $scope.newTag = result['newTag'];
+                $scope.truckTires = result['tires'];                
+
+                $scope.infoLlantaRemplazar = true;                                
+                $scope.data.tireSituation = false;
+                $scope.newTire = undefined;
+                $scope.infoLlantaMover = false;
+
+                if(status == 'ALMACEN'){
+                    // TRAER LISTA DE LLANTAS DEL ALMACÉN.
+                    $scope.llantaDeAlmacen = true;
+                    $scope.llantaNueva = false;
+                    $scope.data.almacen = $localStorage.tireStorage;                    
+                }    
+                // SI NUEVA
+                if(status == 'NUEVA'){
+                    $scope.llantaDeAlmacen = false;
+                    $scope.llantaNueva = true;
+                    // MOSTRAR FORM PARA DAR DE ALTA UNA NUEVA LLANTA
+                    // GENERANDO EL SIGUIENTE TAG DE FORMA AUTOMÁTICA
+                    $scope.tireToEdit.tireBrand = undefined; 
+                    $scope.tireToEdit.tireSize = undefined; 
+                    $scope.tireToEdit.tireModel = undefined; 
+                    $scope.tireToEdit.tireType = undefined; 
+                    $scope.tireToEdit.price = undefined; 
+                    $scope.tireToEdit.year = undefined; 
+                    $scope.tireToEdit.tagId = result['newTag']; 
+                    $scope.tireToEdit.desgaste = undefined; 
+                    $scope.tireToEdit.pr = undefined; 
+                    $scope.tireToEdit.tagInstalado = undefined;
+                    $scope.tireToEdit.semaforo = undefined;
+
+                } 
+            } else {                
+                var error = $translate.instant('MSG_ERROR_OCURRED');
+                $scope.showErrorMessage(error);
+                $scope.newTire = null;
+            }
+            $ionicLoading.hide();
+        });
+
+    }
+    
+
+    $scope.setTireToTruck = function(tireStorage, camionId, pos){
+        console.log("la llanta a editar es? " + tireStorage + " del camión ? " +  camionId + "en posición? " +  pos)
+        var loading = $translate.instant('MSG_LOADING');
+            $ionicLoading.show({
+            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+            content: loading,
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        var DataPromise = Data.setTireToTruck($rootScope.url, $localStorage.languague, tireStorage, camionId, pos)
+        DataPromise.then(function(result) {
+            if(result['result'] == "OK"){
+                $scope.showToast($translate.instant('TIRES_LLANTA_ACTUALIZADA'),5000); 
+                $scope.closeModal(1);               
+            } else {                
+                var error = $translate.instant('MSG_ERROR_OCURRED');
+                $scope.showErrorMessage(error);
+            }
+            $ionicLoading.hide();
+        });        
+    }
+
+    $scope.insertTireNew  = function(inspId, tirebrand, tireSize, tireModel, tireType, price, year, tagId, position, desgaste, pr, tagInstalado, semaforo){
+        var nullValues = 0;
+        var otherDetected = false;
+        var submitDataTruck = $localStorage.submitDataTruck;        
+
+        $scope.data.tagInstalado = tagInstalado;
+
+        
+        inspId = Check.isNull(inspId);
+        tirebrand = Check.isNull(tirebrand);
+        tireSize = Check.isNull(tireSize);
+        tireModel = Check.isNull(tireModel);
+        tireType = Check.isNull(tireType)
+        price = Check.isNull(price)
+        year = Check.isNull(year)
+        tagId = Check.isNull(tagId)
+        position = Check.isNull(position)
+        desgaste = Check.isNull(desgaste)
+        pr = Check.isNull(pr)
+        tagInstalado = Check.isNull(tagInstalado)
+        semaforo = Check.isNull(semaforo)
+
+        console.log("los errores son? " + nullValues)
+                      
+        console.log("procedemos a insertar llanta")
+        var condFounds = "";
+        angular.forEach($scope.selection.ids, function(value, key) {
+            if(key != "ninguna" || key != 'OTRA'){
+                condFounds = condFounds + key + ","
+            }
+            if(key == "OTRA") {
+                if(value){
+                    console.log("OTRA: TRUE")
+                    otherDetected = true;
+                }
+            }
+        });
+        console.log("entonces, las condiciones encontradas son: " + condFounds) 
+        
+        if(otherDetected){
+            if($scope.data.others === undefined || $scope.data.others == ""){
+                console.log("NO LA ESCRIBIO")
+                var popTitle = $translate.instant('MSG_ERROR')
+                    var aceptar = $translate.instant('MSG_ACEPTAR')
+                    var msgError = $translate.instant('INSPECTION_WRITE_REMAINING')                
+                    $ionicPopup.alert({
+                        title: popTitle,
+                        template: '<center><p><b>!Escriba la otra condición encontrada!</b></p></center>',
+                        okText: aceptar,
+                        okType: 'button-assertive'
+                });
+
+            } else {
+
+                condFounds =  condFounds + $scope.data.others 
+                /////////////////////////INSERTAR LLANTA
+                if ($localStorage.appModeStatus) {
+                    console.log("modo Offline activado")
+                    var tiresToAdd = $localStorage.addTire;
+                    for (i = 0; i < tiresToAdd.length; i++) {                                
+                        if (tiresToAdd[i].posicion == position) {                                    
+                            $localStorage.addTire.splice(i, 1);
+                        }
+                    }    
+                    $scope.data.addTire = $localStorage.addTire;
+                    $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;                            
+                    $ionicScrollDelegate.scrollTop();
+                } else {
+                    console.log("modo online activado")
+                    //Procedemos a insertar llantas
+                    var loading = $translate.instant('MSG_LOADING');                                                                                                                                                                                                                                                                
+                    var DataPromise = Data.insertTireEdited($rootScope.url, $localStorage.languague, $scope.tireToEdit.customerId, $scope.tireToEdit.flotaId, $scope.tireToEdit.camionId, tirebrand, tireType, tireSize, tireModel, price, year, tagId, position, semaforo, desgaste, $scope.inspKm, pr, tagInstalado, condFounds, $localStorage.inspectionId);
+                    DataPromise.then(function(result) {
+                        console.log("entonces despues de subir las condiciones son? " + condFounds)
+                        console.log(result['result'])
+                        $scope.selection = {
+                            ids: {
+                                "ninguna": false
+                            }
+                        };
+                        $scope.data.others = "";
+                        if(result['result'] == "OK"){
+                            $scope.showSuccessMessage($translate.instant("INSPECTION_TIRE_SAVED_SUCCESSFULLY"));
+                        } else if(result['result'] == "TIRE EXIST"){
+                            $scope.showErrorMessage($translate.instant('TIRES_TIRE_EXIST'));
+                        }   else if(result['result'] == "error"){
+                            $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                            console.log("hay errores :/")
+                            console.log(result['result'])
+                        }                        
+                    }, function(reason) {
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                    })
+
+                    var tiresToAdd = $localStorage.addTire;
+                    for (i = 0; i < tiresToAdd.length; i++) {                                
+                        if (tiresToAdd[i].posicion == position) {                                    
+                            $localStorage.addTire.splice(i, 1);
+                        }
+                    }    
+                    $scope.data.addTire = $localStorage.addTire;
+                    $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
+                    $ionicScrollDelegate.scrollTop();  
+                }                          
+                /////////////////////////INSERTAR LLANTA                                                
+            }                    
+        } else {
+            /////////////////////////INSERTAR LLANTA
+            if ($localStorage.appModeStatus) {
+                console.log("modo Offline activado")
+                var tiresToAdd = $localStorage.addTire;
+                for (i = 0; i < tiresToAdd.length; i++) {                                
+                    if (tiresToAdd[i].posicion == position) {                                    
+                        $localStorage.addTire.splice(i, 1);
+                    }
+                }    
+
+                console.log("[company]: " + submitDataTruck.company)
+                console.log("[fleet]: " + submitDataTruck.fleet)
+                console.log("[truckId]: " + submitDataTruck.truckId)
+                console.log("[kms] : " + submitDataTruck.kms)
+
+                var tireAdd = {                            
+                    customerId: submitDataTruck.company,
+                    flotaId: submitDataTruck.fleet,
+                    camionId: submitDataTruck.truckId,
+                    tireBrand: tirebrand,
+                    tireType: tireType,
+                    tireSize: size,
+                    tireModel: design,
+                    price: price,
+                    year: dot,    
+                    tagId: tag,
+                    position: position,
+                    semaforo: semaphore,                            
+                    desgaste: wear,                            
+                    kilometraje: submitDataTruck.kms,                           
+                    pr: pressure,
+                    tagInstalado: tagInstalado,
+                    condFounds: condFounds
+                }
+                            
+                StorageService.addTire(tireAdd);
+                $scope.data.addTire = $localStorage.addTire;
+                $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
+                $ionicScrollDelegate.scrollTop();
+
+            } else {
+                console.log("modo online activado")
+
+                //Procedemos a insertar llantas
+                var loading = $translate.instant('MSG_LOADING');
+                var DataPromise = Data.insertTireEdited($rootScope.url, $localStorage.languague, $scope.tireToEdit.customerId, $scope.tireToEdit.flotaId, $scope.tireToEdit.camionId, tirebrand, tireType, tireSize, tireModel, price, year, tagId, position, semaforo, desgaste, $scope.inspKm, pr, tagInstalado, condFounds, $localStorage.inspectionId);
+                DataPromise.then(function(result) {
+                    $scope.data.others = "";
+                    $scope.selection = {
+                        ids: {
+                            "ninguna": false 
+                        }
+                    };
+                    $scope.disableArea = true;
+                    if(result['result'] == "OK"){
+                        $scope.showSuccessMessage($translate.instant("INSPECTION_TIRE_SAVED_SUCCESSFULLY"));
+                    } else if(result['result'] == "ERROR"){
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                        console.log("hay errores :/")
+                        console.log(result['result'])
+                    }
+                }, function(reason) {
+                    $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                });
+
+
+                var tiresToAdd = $localStorage.addTire;
+                for (i = 0; i < tiresToAdd.length; i++) {                                
+                    if (tiresToAdd[i].posicion == position) {                                    
+                        $localStorage.addTire.splice(i, 1);
+                    }
+                }    
+                $scope.data.addTire = $localStorage.addTire;
+                $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
+                $ionicScrollDelegate.scrollTop();  
+            }                    
+            /////////////////////////INSERTAR LLANTA
+        }            
+                  
+    }  
+    $scope.insertTireEdited = function(inspId, tirebrand, tireSize, tireModel, tireType, price, year, tagId, position, desgaste, pr, tagInstalado, semaforo){
+        var nullValues = 0;
+        var otherDetected = false;
+        var submitDataTruck = $localStorage.submitDataTruck;        
+
+        $scope.data.tagInstalado = tagInstalado;
+
+        
+        inspId = Check.isNull(inspId);
+        tirebrand = Check.isNull(tirebrand);
+        tireSize = Check.isNull(tireSize);
+        tireModel = Check.isNull(tireModel);
+        tireType = Check.isNull(tireType)
+        price = Check.isNull(price)
+        year = Check.isNull(year)
+        tagId = Check.isNull(tagId)
+        position = Check.isNull(position)
+        desgaste = Check.isNull(desgaste)
+        pr = Check.isNull(pr)
+        tagInstalado = Check.isNull(tagInstalado)
+        semaforo = Check.isNull(semaforo)
+
+        console.log("los errores son? " + nullValues)
+                      
+        console.log("procedemos a insertar llanta")
+        var condFounds = "";
+        angular.forEach($scope.selection.ids, function(value, key) {
+            if(key != "ninguna" || key != 'OTRA'){
+                condFounds = condFounds + key + ","
+            }
+            if(key == "OTRA") {
+                if(value){
+                    console.log("OTRA: TRUE")
+                    otherDetected = true;
+                }
+            }
+        });
+        console.log("entonces, las condiciones encontradas son: " + condFounds) 
+        
+        if(otherDetected){
+            if($scope.data.others === undefined || $scope.data.others == ""){
+                console.log("NO LA ESCRIBIO")
+                var popTitle = $translate.instant('MSG_ERROR')
+                    var aceptar = $translate.instant('MSG_ACEPTAR')
+                    var msgError = $translate.instant('INSPECTION_WRITE_REMAINING')                
+                    $ionicPopup.alert({
+                        title: popTitle,
+                        template: '<center><p><b>!Escriba la otra condición encontrada!</b></p></center>',
+                        okText: aceptar,
+                        okType: 'button-assertive'
+                });
+
+            } else {
+
+                condFounds =  condFounds + $scope.data.others 
+                /////////////////////////INSERTAR LLANTA
+                if ($localStorage.appModeStatus) {
+                    console.log("modo Offline activado")
+                    var tiresToAdd = $localStorage.addTire;
+                    for (i = 0; i < tiresToAdd.length; i++) {                                
+                        if (tiresToAdd[i].posicion == position) {                                    
+                            $localStorage.addTire.splice(i, 1);
+                        }
+                    }    
+                    $scope.data.addTire = $localStorage.addTire;
+                    $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;                            
+                    $ionicScrollDelegate.scrollTop();
+                } else {
+                    console.log("modo online activado")
+                    //Procedemos a insertar llantas
+                    var loading = $translate.instant('MSG_LOADING');                                                                                                                                                                                                                                                                
+                    var DataPromise = Data.insertTireEdited($rootScope.url, $localStorage.languague, $scope.tireToEdit.customerId, $scope.tireToEdit.flotaId, $scope.tireToEdit.camionId, tirebrand, tireType, tireSize, tireModel, price, year, tagId, position, semaforo, desgaste, $scope.inspKm, pr, tagInstalado, condFounds, $localStorage.inspectionId);
+                    DataPromise.then(function(result) {
+                        console.log("entonces despues de subir las condiciones son? " + condFounds)
+                        console.log(result['result'])
+                        $scope.selection = {
+                            ids: {
+                                "ninguna": false
+                            }
+                        };
+                        $scope.data.others = "";
+                        if(result['result'] == "OK"){
+                            $scope.showSuccessMessage($translate.instant("INSPECTION_TIRE_SAVED_SUCCESSFULLY"));
+                        } else if(result['result'] == "TIRE EXIST"){
+                            $scope.showErrorMessage($translate.instant('TIRES_TIRE_EXIST'));
+                        }   else if(result['result'] == "error"){
+                            $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                            console.log("hay errores :/")
+                            console.log(result['result'])
+                        }                        
+                    }, function(reason) {
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                    })
+
+                    var tiresToAdd = $localStorage.addTire;
+                    for (i = 0; i < tiresToAdd.length; i++) {                                
+                        if (tiresToAdd[i].posicion == position) {                                    
+                            $localStorage.addTire.splice(i, 1);
+                        }
+                    }    
+                    $scope.data.addTire = $localStorage.addTire;
+                    $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
+                    $ionicScrollDelegate.scrollTop();  
+                }                          
+                /////////////////////////INSERTAR LLANTA                                                
+            }                    
+        } else {
+            /////////////////////////INSERTAR LLANTA
+            if ($localStorage.appModeStatus) {
+                console.log("modo Offline activado")
+                var tiresToAdd = $localStorage.addTire;
+                for (i = 0; i < tiresToAdd.length; i++) {                                
+                    if (tiresToAdd[i].posicion == position) {                                    
+                        $localStorage.addTire.splice(i, 1);
+                    }
+                }    
+
+                console.log("[company]: " + submitDataTruck.company)
+                console.log("[fleet]: " + submitDataTruck.fleet)
+                console.log("[truckId]: " + submitDataTruck.truckId)
+                console.log("[kms] : " + submitDataTruck.kms)
+
+                var tireAdd = {                            
+                    customerId: submitDataTruck.company,
+                    flotaId: submitDataTruck.fleet,
+                    camionId: submitDataTruck.truckId,
+                    tireBrand: tirebrand,
+                    tireType: tireType,
+                    tireSize: size,
+                    tireModel: design,
+                    price: price,
+                    year: dot,    
+                    tagId: tag,
+                    position: position,
+                    semaforo: semaphore,                            
+                    desgaste: wear,                            
+                    kilometraje: submitDataTruck.kms,                           
+                    pr: pressure,
+                    tagInstalado: tagInstalado,
+                    condFounds: condFounds
+                }
+                            
+                StorageService.addTire(tireAdd);
+                $scope.data.addTire = $localStorage.addTire;
+                $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
+                $ionicScrollDelegate.scrollTop();
+
+            } else {
+                console.log("modo online activado")
+
+                //Procedemos a insertar llantas
+                var loading = $translate.instant('MSG_LOADING');
+                var DataPromise = Data.insertTireEdited($rootScope.url, $localStorage.languague, $scope.tireToEdit.customerId, $scope.tireToEdit.flotaId, $scope.tireToEdit.camionId, tirebrand, tireType, tireSize, tireModel, price, year, tagId, position, semaforo, desgaste, $scope.inspKm, pr, tagInstalado, condFounds, $localStorage.inspectionId);
+                DataPromise.then(function(result) {
+                    $scope.data.others = "";
+                    $scope.selection = {
+                        ids: {
+                            "ninguna": false 
+                        }
+                    };
+                    $scope.disableArea = true;
+                    if(result['result'] == "OK"){
+                        $scope.showSuccessMessage($translate.instant("INSPECTION_TIRE_SAVED_SUCCESSFULLY"));
+                    } else if(result['result'] == "ERROR"){
+                        $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                        console.log("hay errores :/")
+                        console.log(result['result'])
+                    }
+                }, function(reason) {
+                    $scope.showErrorMessage($translate.instant('MSG_ERROR_CONEXION') + " "+ $translate.instant('MSG_TRY_AGAIN'));
+                });
+
+
+                var tiresToAdd = $localStorage.addTire;
+                for (i = 0; i < tiresToAdd.length; i++) {                                
+                    if (tiresToAdd[i].posicion == position) {                                    
+                        $localStorage.addTire.splice(i, 1);
+                    }
+                }    
+                $scope.data.addTire = $localStorage.addTire;
+                $scope.totalLlantasInspeccionar = Object.keys($localStorage.addTire).length;  
+                $ionicScrollDelegate.scrollTop();  
+            }                    
+            /////////////////////////INSERTAR LLANTA
+        }            
+                  
+    }     
+
+    $scope.showToast = function(message, time){         
+      ionicToast.show(message, 'bottom', false, time);
+    };
 
     })
