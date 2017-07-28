@@ -59,6 +59,7 @@ angular.module('logout', ['ionic', 'ionic-material', 'ionMdInput', 'ngAnimate', 
             $localStorage.inspectionTrucks = []
             $localStorage.storageTrucks = []
             $localStorage.appModeStatus = false;
+            $localStorage.tireStorage = []
             $scope.data.display = $localStorage.navBarVisible;
 
             $ionicHistory.clearCache().then(function() {
