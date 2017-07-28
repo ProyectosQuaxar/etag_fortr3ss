@@ -2,26 +2,10 @@ angular.module('starter.controllers', ['ionic', 'ionic-material', 'ionMdInput', 
 
 .run(function($localStorage, $window, $translate, $ionicPlatform, $rootScope, $cordovaBluetoothSerial, $ionicPopup) {    
 
-    //$rootScope.baseurl = 'http://10.6.159.7:8090/millantarfid/';
-    //$rootScope.url = 'http://10.6.159.7:8090/millantarfid/mobileApp/';
-    // $rootScope.urlCustomer = 'http://10.6.159.7:8090/millantarfid/mobileUserApp/';
-    
-    //$rootScope.baseurl = 'http://10.6.159.11/millantarfid/';
-    //$rootScope.url = 'http://10.6.159.11/millantarfid/mobileApp/';
-    //$rootScope.urlCustomer = 'http://10.6.159.11/millantarfid/mobileUserApp/';
-
-    $rootScope.baseurl = 'http://10.6.159.13:8090/millantarfid/';
-    $rootScope.url = 'http://10.6.159.13:8090/millantarfid/mobileApp/';
-    $rootScope.urlCustomer = 'http://10.6.159.13:8090/millantarfid/mobileUserApp/';
+    $rootScope.baseurl = 'http://sandbox.etag.com.mx/millantarfid/';
+    $rootScope.url = 'http://sandbox.etag.com.mx/millantarfid/mobileApp/';
+    $rootScope.urlCustomer = 'http://sandbox.etag.com.mx/millantarfid/mobileUserApp/';
         
-        
-    //$rootScope.baseurl = 'http://52.41.40.176/millantarfid/';
-    //$rootScope.url = 'http://52.41.40.176/millantarfid/mobileApp/';
-    //$rootScope.urlCustomer = 'http://52.41.40.176/millantarfid/mobileUserApp/';
-    
-    //$rootScope.baseurl = 'http://millantacamion.com/millantarfid/';
-    //$rootScope.url = 'http://millantacamion.com/millantarfid/mobileApp/';
-    //$rootScope.urlCustomer = 'http://millantacamion.com/millantarfid/mobileUserApp/';
 
     if ($localStorage.appModeStatus == '' || $localStorage.appModeStatus === undefined)
         $localStorage = $localStorage.$default({appModeStatus: false});
